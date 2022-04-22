@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import { SvgUri } from 'react-native-svg'
+import { StyleSheet, Text, View } from 'react-native';
 import HomePageButton from '../components/homepage-button';
 
 
@@ -39,10 +38,6 @@ function HomePage(props){
         }
     });
     
-    const SearchTab = (props) => {
-        return <View style={{ flex: 1, justifyContent: 'center' }}><Text>Search</Text></View>;
-    };
-    
     const navigateTo = (name) => {
         props.navigation.navigate(name);
     }
@@ -50,9 +45,6 @@ function HomePage(props){
     return (
         <View style={styles.container}>
             <Text style={styles.title}>iPath</Text>
-            {/* <TouchableHighlight style={styles.button} underlayColor='gray' onPress={() => {props.navigation.navigate("Survey")}}>
-                <View></View>
-            </TouchableHighlight> */}
             <View style={styles.flexContainer}>
             <HomePageButton content="Take Survey" name="Survey" press={navigateTo} />
             <HomePageButton content="View Past Results" name="History" press={navigateTo} />

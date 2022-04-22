@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import RightArrow from '../assets/icons/right.svg';
-import { createStackNavigator } from '@react-navigation/native';
 
 function HomePageButton(props){
     const styles = StyleSheet.create({
