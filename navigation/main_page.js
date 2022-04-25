@@ -7,12 +7,13 @@ import MainTabBar from './main_tab_bar';
 
 const Stack = createNativeStackNavigator();
 
-const HomePages = () => {
+const HomePages = (props) => {
+  console.log(props);
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="iPath" component={FirstPage}/>
-        <Stack.Screen name="Login" component={LoginPage} options={{headerBackVisible: false}}/>
+        <Stack.Screen name="Login"  component={LoginPage} options={{headerBackVisible: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
