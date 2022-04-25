@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, Image, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import LoginInput from '../components/login-input';
+import MainTabBar from '../navigation/main_tab_bar';
 
 function LoginPage({ navigation }) {
 
@@ -14,7 +15,7 @@ function LoginPage({ navigation }) {
         <Text style={styles.option}>Stay logged in?</Text>
         <Text style={[styles.option, styles.link]}>Forgot Password</Text>
       </View>
-      <TouchableHighlight>
+      <TouchableHighlight onPress={() => navigation.navigate('')}>
         <Text style={styles.signbutton}>Sign in</Text>
       </TouchableHighlight>
       <Text style={styles.link}>Or Create Account</Text>
