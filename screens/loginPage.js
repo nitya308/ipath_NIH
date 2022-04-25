@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, Image, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 import LoginInput from '../components/login-input';
 
 function LoginPage({ navigation }) {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
   return (
     <View style={styles.container}>
@@ -13,9 +12,11 @@ function LoginPage({ navigation }) {
       <LoginInput placeholder="Password"></LoginInput>
       <View style={styles.flexContainer}>
         <Text style={styles.option}>Stay logged in?</Text>
-        <Text style={styles.option}>Forgot Password</Text>
+        <Text style={[styles.option, styles.link]}>Forgot Password</Text>
       </View>
-      <Button></Button>
+      <TouchableHighlight>
+        <Text style={styles.signbutton}>Sign in</Text>
+      </TouchableHighlight>
       <Text style={styles.link}>Or Create Account</Text>
     </View>
   );
@@ -30,22 +31,19 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   container: {
+    fontSize: 30,
     margin: 0,
     padding: 0,
-    marginTop: 70
+    marginTop: 70,
+    height: '100%'
   },
   logo: {
     alignSelf: 'center',
     alignContent: 'center',
+    marginBottom: 50,
     width: 150,
     height: 150,
     margin: 30
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 20,
   },
   flexContainer: {
     flexDirection: 'row',
@@ -54,19 +52,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 20,
   },
-  button: {
-    height: 150,
-    width: 150,
-    borderRadius: 10,
-    backgroundColor: 'skyblue',
-    margin: 8,
-  },
-  buttonContent: {
+  signbutton: {
     textAlign: 'center',
-    padding: 15,
-    paddingTop: 20,
-    fontSize: 20
-  }
+    fontSize: 20,
+    lineHeight: 45,
+    borderRadius: 20,
+    marginLeft: 30,
+    marginRight: 30,
+    height: 50,
+    margin: 20,
+    borderWidth: 1,
+  },
 });
 
 export default LoginPage;

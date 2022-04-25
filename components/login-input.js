@@ -18,8 +18,11 @@ const LoginInput = (props) => {
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
-    margin: 12,
+    borderRadius: 20,
+    marginLeft: 30,
+    marginRight: 30,
+    height: 50,
+    margin: 10,
     borderWidth: 1,
     padding: 10,
   },
