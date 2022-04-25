@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 
 function LoginPage({ navigation }){
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Username</Text>
+          <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image>
+          <Text style={styles.title}>Username</Text>
         </View>
     );
 }

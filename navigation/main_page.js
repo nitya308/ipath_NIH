@@ -10,8 +10,8 @@ const HomePages = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="First Page" component={FirstPage}/>
-        <Stack.Screen name="Login Page" component={LoginPage}/>
+        <Stack.Screen name="iPath" component={FirstPage}/>
+        <Stack.Screen name="Login" component={LoginPage} options={{headerBackVisible: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
