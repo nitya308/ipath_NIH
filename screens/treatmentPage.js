@@ -1,39 +1,46 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
+import TreatmentsOverview from '../components/treatments-overview';
+import TreatmentsComparison from '../components/treatments-comparison';
+import TreatmentsList from '../components/treatments-list';
+import TreatmentInfo from '../components/treatment-info';
 
+const windowHeight= Dimensions.get('window').height;
+const windowWidth= Dimensions.get('window').width;
 
 function TreatmentPage(props){
+    const [scrollRef, setScrollRef] = useState(null);
+    const [selectedTreatment, setSelectedTreatment] = useState(null)
+    const [pageNumber, setPageNumber] = useState(0);
+
+    const setTreatment = (treatment) => {
+        setSelectedTreatment(treatment)
+    }
+    const scrollRight = () => {
+        setPageNumber(pageNumber + 1)
+        scrollRef.scrollTo({x: windowWidth * pageNumber})
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>iPath</Text>
-            <View style={styles.flexContainer}>
-            <HomePageButton content="Take Survey" name="Survey" press={navigateTo} />
-            <HomePageButton content="View Past Results" name="History" press={navigateTo} />
-            <HomePageButton content="Explore Treatments" name="Explore" press={navigateTo} />
-            <HomePageButton content="View Additional Resourcses" name="" press={navigateTo} />
-            </View>
+            <ScrollView horizontal={true} pagingEnabled={true} scrolledEnabled={false} ref={(ref) => {setScrollRef(ref)}}>
+                <TreatmentsOverview scroll={scrollRight}/>
+                <TreatmentsComparison />
+                <TreatmentsList selectTreatment={setTreatment} scroll={scrollRight}/>
+                <TreatmentInfo treatment={selectedTreatment}/>
+                <View></View>
+                <View></View>
+            </ScrollView>
         </View>
     );
 }
 const styles = StyleSheet.create({
     container: {
+        height: windowHeight, 
         margin: 0,
         padding: 0,
-        marginTop: 70
+        marginTop: '25%',
     }, 
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 20,
-    },
-    flexContainer: {
-        flex: 1, 
-        flexDirection: 'row',
-        justifyContent: 'center', 
-        flexWrap: 'wrap',
-        marginTop: 20,
-    },
     button: {
         height: 150,
         width: 150,

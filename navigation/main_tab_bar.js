@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
 import SurveyPage from '../screens/surveyPage';
+import TreatmentPage from '../screens/treatmentPage';
 
 const AboutTab = (props) => {
   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
@@ -26,7 +27,9 @@ const MainTabBar = () => {
           headerShown: false
         }}/>
         <Tab.Screen name="History" component={AboutTab} />
-        <Tab.Screen name="Explore" component={AboutTab} />
+        <Tab.Screen name="Explore" component={TreatmentPage} options={{
+          headerShown: false
+        }} />
         <Tab.Screen name="Profile" component={AboutTab} />
       </Tab.Navigator>
     </NavigationContainer>
