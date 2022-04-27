@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         flex: 1,
         alignItems: 'center',
-        width: windowWidth
+        width: windowWidth,
     },
     questionText: {
         fontSize: 20,

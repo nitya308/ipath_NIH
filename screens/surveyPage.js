@@ -1,17 +1,36 @@
 import React, { useState, useEffect }  from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
 import SurveyQuestion from '../components/survey-question';
+import SurveyIntro from '../components/survey-intro';
+import SurveyResult from '../components/survey-result';
 import * as Progress from 'react-native-progress';
 
-function Survey(props){
+function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
     const [selectedId, setSelectedId] = useState(0); //reference current question
-    const [ref, setRef] = useState(null) //used to reference flatlist position
+    const [introRef, setIntroRef] = useState(null) //used to reference
+    const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
 
     const renderItem = ({ item }) => {
-        return <SurveyQuestion questionTitle={item.title} press={scrollForward}/>
+        return (
+            <View>
+                <SurveyQuestion questionTitle={item.title} press={scrollForward}/>
+            </View>
+            
+        )
     }
 
+    const renderSubmitButton = () => {
+        if(selectedId == 8){
+            return (
+                <TouchableHighlight style={styles.submitButton} onPress={() => introRef.scrollToEnd()}>
+                    <Text style={styles.backText}>Submit</Text>
+                </TouchableHighlight>
+            );
+        } else {
+            return null;
+        }
+    }
     const scrollForward = () => {
         if(selectedId < 8){
             setSelectedId(selectedId+1);
@@ -25,26 +44,33 @@ function Survey(props){
     }
 
     useEffect(() => {
-        if(ref){
-            ref.scrollToIndex({index: selectedId})
+        if(questionRef){
+            questionRef.scrollToIndex({index: selectedId})
         }
     }, [selectedId])
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>PHQ-9 Survey</Text>
-            <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
-            <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={windowWidth} height={20} color="rgb(26,177,147)" borderRadius={0} borderWidth={0}/>
-            <FlatList data={questionData} 
-            ref={(ref)=>{setRef(ref)}}
-            renderItem={renderItem} 
-            keyExtractor={(item) => item.id}
-            horizontal={true}
-            pagingEnabled={true}
-            scrollEnabled={false}/>
-            <TouchableHighlight style={styles.backButton} onPress={scrollBack}>
-                <Text style={styles.backText}>Back</Text>
-            </TouchableHighlight>
+            <ScrollView scrollEnabled={false} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
+                <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight})} />
+                <View style={styles.survey}>
+                    <Text style={styles.title}>PHQ-9 Survey</Text>
+                    <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
+                    <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={windowWidth} height={20} color="rgb(26,177,147)" borderRadius={0} borderWidth={0}/>
+                    <FlatList data={questionData} 
+                    ref={(ref)=>{setQuestionRef(ref)}}
+                    renderItem={renderItem} 
+                    keyExtractor={(item) => item.id}
+                    horizontal={true}
+                    pagingEnabled={true}
+                    scrollEnabled={false}/>
+                    <TouchableHighlight style={styles.backButton} onPress={scrollBack}>
+                        <Text style={styles.backText}>Back</Text>
+                    </TouchableHighlight>
+                    {renderSubmitButton()}
+                </View>
+                <SurveyResult press={() => props.navigation.navigate('Explore')}/>
+            </ScrollView>
         </View>
     );
 }
@@ -88,18 +114,24 @@ const questionData = [
     },
 
 ]
+const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     container: {
         margin: 0,
         padding: 0,
-        marginTop: 70,
-        flex: 1
+        // marginTop: 70,
+        flex: 1,
     }, 
     title: {
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 20,
+        // marginTop: 20,
+    },
+    survey: {
+        paddingTop: 50,
+        paddingBottom: 50,
+        height: windowHeight,
     },
     questionIntro: {
         marginTop: 15,
@@ -132,7 +164,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        bottom: 15,
+        bottom: 130,
         left: 15,
         width: 130,
         height: 50,
@@ -146,11 +178,17 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    progressBar: {
-        // position: 'absolute',
-        // bottom: 35,
-        // right: 15,
+    submitButton: {
+        position: 'absolute',
+        bottom: 130,
+        right: 15,
+        width: 130,
+        height: 50,
+        backgroundColor: 'green',
+        flex: 1,
+        justifyContent: 'center',
+        borderRadius: 10
     }
 });
 
-export default Survey;
+export default SurveyPage;

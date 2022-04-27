@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
-import Survey from '../screens/survey';
+import SurveyPage from '../screens/surveyPage';
 
 const AboutTab = (props) => {
   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
@@ -22,7 +22,7 @@ const MainTabBar = () => {
         <Tab.Screen name="Home" component={HomePage} options={{
           headerShown: false
         }}/>
-        <Tab.Screen name="Survey" component={Survey} options={{
+        <Tab.Screen name="Survey" component={SurveyPage} options={{
           headerShown: false
         }}/>
         <Tab.Screen name="History" component={AboutTab} />
