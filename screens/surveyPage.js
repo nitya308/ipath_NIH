@@ -51,8 +51,8 @@ function SurveyPage(props){
 
     return (
         <View style={styles.container}>
-            <ScrollView scrollEnabled={false} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
-                <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight})} />
+            <ScrollView scrollEnabled={true} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
+                <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight * .8})} />
                 <View style={styles.survey}>
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
@@ -63,7 +63,7 @@ function SurveyPage(props){
                     keyExtractor={(item) => item.id}
                     horizontal={true}
                     pagingEnabled={true}
-                    scrollEnabled={false}/>
+                    scrollEnabled={true}/>
                     <TouchableHighlight style={styles.backButton} onPress={scrollBack}>
                         <Text style={styles.backText}>Back</Text>
                     </TouchableHighlight>
@@ -129,9 +129,8 @@ const styles = StyleSheet.create({
         // marginTop: 20,
     },
     survey: {
-        paddingTop: 50,
-        paddingBottom: 50,
-        height: windowHeight,
+        paddingTop: 20,
+        height: windowHeight * .8,
     },
     questionIntro: {
         marginTop: 15,
@@ -164,7 +163,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        bottom: 130,
+        bottom: 30,
         left: 15,
         width: 130,
         height: 50,
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         position: 'absolute',
-        bottom: 130,
+        bottom: 30,
         right: 15,
         width: 130,
         height: 50,

@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
         padding: 0,
         flex: 1,
         alignItems: 'center',
-        height: windowHeight,
+        height: windowHeight * .8,
     },
     resultTitle: {
-        paddingTop: 150,
+        paddingTop: 50,
         fontSize: 30,
         fontWeight: 'bold'
     },

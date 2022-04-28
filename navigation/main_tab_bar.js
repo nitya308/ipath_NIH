@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
@@ -20,20 +20,30 @@ const MainTabBar = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomePage} options={{
-          headerShown: false
-        }}/>
-        <Tab.Screen name="Survey" component={SurveyPage} options={{
-          headerShown: false
-        }}/>
-        <Tab.Screen name="History" component={AboutTab} />
-        <Tab.Screen name="Explore" component={TreatmentPage} options={{
-          headerShown: false
-        }} />
+        <Tab.Screen name="Home" component={HomePage} options={headerOptions}/>
+        <Tab.Screen name="Survey" component={SurveyPage} options={headerOptions}/>
+        <Tab.Screen name="History" component={AboutTab} options={headerOptions}/>
+        <Tab.Screen name="Explore" component={TreatmentPage} options={headerOptions} />
         <Tab.Screen name="Profile" component={AboutTab} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
+const windowHeight= Dimensions.get('window').height;
+
+const headerStyling = {
+  backgroundColor: 'gray',
+  height: windowHeight * .12,
+};
+
+const headerTitleStyling = {
+  color: 'white',
+}
+
+const headerOptions = {
+  headerTitle: "iPath",
+  headerStyle: headerStyling,
+  headerTitleStyle: headerTitleStyling,
+}
 
 export default MainTabBar;

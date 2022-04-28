@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         height: windowHeight, 
         margin: 0,
         padding: 0,
-        marginTop: '25%',
+        marginTop: '5%',
     }, 
     button: {
         height: 150,

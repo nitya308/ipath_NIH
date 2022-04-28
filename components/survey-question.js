@@ -31,18 +31,17 @@ function surveyQuestion(props){
 const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     questionContainer: {
-        backgroundColor: 'lightgray',
+        // backgroundColor: 'lightgray',
         marginTop: 0,
         flex: 1,
         alignItems: 'center',
         width: windowWidth,
     },
     questionText: {
-        fontSize: 20,
-        padding: 20,
+        fontSize: 18,
+        padding: 10,
         marginTop: 10,
         marginBottom: 10,
-        height: 'fit-content'
     },
     touchContainer: {
         height: 60, 

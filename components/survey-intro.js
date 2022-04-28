@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         paddingBottom: 50,
         width: windowWidth,
-        height: windowHeight,
+        height: windowHeight * .8,
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
     }, 
     title:{
         fontSize: 50,
