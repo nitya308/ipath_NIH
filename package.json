@@ -32,6 +32,7 @@
     "react-native-screens": "~3.10.1",
     "react-native-svg": "12.1.1",
     "react-native-svg-transformer": "^1.0.0",
+    "react-native-unordered-list": "^1.0.4",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
-import TreatmentsOverview from '../components/treatments-overview';
-import TreatmentsComparison from '../components/treatments-comparison';
-import TreatmentsList from '../components/treatments-list';
-import TreatmentInfo from '../components/treatment-info';
-import TreatmentsFilter from '../components/treatments-filter';
+import TreatmentsOverview from '../components/treatment/treatments-overview';
+import TreatmentsComparison from '../components/treatment/treatments-comparison';
+import TreatmentsList from '../components/treatment/treatments-list';
+import TreatmentInfo from '../components/treatment/treatment-info';
+import TreatmentsFilter from '../components/treatment/treatments-filter';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;

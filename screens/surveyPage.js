@@ -1,8 +1,8 @@
 import React, { useState, useEffect }  from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
-import SurveyQuestion from '../components/survey-question';
-import SurveyIntro from '../components/survey-intro';
-import SurveyResult from '../components/survey-result';
+import SurveyQuestion from '../components/survey/survey-question';
+import SurveyIntro from '../components/survey/survey-intro';
+import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
 
 function SurveyPage(props){

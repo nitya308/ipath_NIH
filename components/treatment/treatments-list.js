@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView} from 'react-native';
-import CheckMark from '../assets/icons/check.svg';
-import MapPin from '../assets/icons/mapPin.svg';
-import Bookmark from '../assets/icons/bookmark.svg';
+import CheckMark from '../../assets/icons/check.svg';
+import MapPin from '../../assets/icons/mapPin.svg';
+import Bookmark from '../../assets/icons/bookmark.svg';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;

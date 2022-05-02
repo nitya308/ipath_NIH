@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import DropDownPicker from 'react-native-dropdown-picker';
-import RightArrow from '../assets/icons/right.svg';
+import RightArrow from '../../assets/icons/right.svg';
 
 
 const windowHeight= Dimensions.get('window').height;
@@ -16,9 +16,9 @@ function TreatmentsComparison(props){
         value: {
             id: 1,
             name: "Watchful Waiting",
-            cost: "",
-            efficacy: "",
-            risks: "",
+            cost: "costs of watchful waiting",
+            efficacy: "efficacy of watchful waiting",
+            risks: "risks of watcful waiting",
         },
         label: "Watchful Waiting"
     },
@@ -27,9 +27,9 @@ function TreatmentsComparison(props){
         value: {
             id: 2,
             name: "Talk Therapy",
-            cost: "",
-            efficacy: "",
-            risks: "",
+            cost: "costs of talk therapy",
+            efficacy: "efficacy of talk therapy",
+            risks: "risks of talk therapy",
         },
         label: "Talk Therapy"
     },
@@ -38,9 +38,9 @@ function TreatmentsComparison(props){
         value: {
             id: 3,
             name: "Medication",
-            cost: "",
-            efficacy: "",
-            risks: "",
+            cost: "costs of medication",
+            efficacy: "efficacy of medication",
+            risks: "risks of medication",
         },
         label: "Medication"
     },
@@ -49,14 +49,23 @@ function TreatmentsComparison(props){
         value: {
             id: 4,
             name: "Talk Therapy + Medication",
-            cost: "",
-            efficacy: "",
-            risks: "",
+            cost: "costs of talk therapy + medication",
+            efficacy: "efficacy of talk therapy + medication",
+            risks: "risks of talk therapy + medication",
         },
         label: "Talk Therapy + Medication"
     }
     ])
-
+    const renderInfo = () => {
+        dropdownValue.map((value) => {
+            return(
+                <View>
+                    <Text>{value.name}</Text>
+                    <Text>{value[selected]}</Text>
+                </View>
+            );
+        })
+    }
     return(
         <View style={styles.container}>
             <Text style={styles.header}>Compare Treatment Types</Text>
@@ -74,14 +83,6 @@ function TreatmentsComparison(props){
             setValue={setDropdownValue}
             placeholder="Select Treatments..."
             open={dropdownOpen} />
-            {dropdownValue.map((value) => {
-                // alert(value);
-                return(
-                    <View key={value.id}>
-                        <Text key={value.id}>{value.name}</Text>
-                    </View>       
-                )
-            })}
             <RadioButtonGroup 
             selected={selected}
             onSelected={(value) => setSelected(value)}
@@ -101,26 +102,35 @@ function TreatmentsComparison(props){
                 padding: 0
             }}>
                 <RadioButtonItem style={styles.radio}
-                value="costs" 
+                value="cost" 
                 label={
-                    <View style={styles.costsLabel}>
+                    <View style={{...styles.costsLabel, backgroundColor: selected === "cost" ? 'gray' : 'white'}}>
                         <Text>COSTS</Text>
                     </View>
                 }    />
                 <RadioButtonItem style={styles.radio}
                 value="efficacy" label={
-                    <View style={styles.efficacyLabel}>
+                    <View style={{...styles.efficacyLabel, backgroundColor: selected === "efficacy" ? 'gray' : 'white'}}>
                         <Text>EFFICACY</Text>
                     </View>
                 }/>
                 <RadioButtonItem style={styles.radio}
                 value="risks" label={
-                    <View style={styles.risksLabel}>
+                    <View style={{ ...styles.risksLabel, backgroundColor: selected === "risks" ? 'gray' : 'white'}}>
                             <Text>RISKS</Text>
                     </View>
                 }/>
             </RadioButtonGroup>
-            <Text>{selected}</Text>
+            <View style={styles.infoContainer}>
+                {dropdownValue.map((value) => {
+                    return(
+                    <View>
+                        <Text style={styles.treatmentSubHeader}>{value.name}</Text>
+                        <Text style={styles.treatmentSubInfo}>{value[selected]}</Text>
+                    </View>     
+                    )
+                })}
+            </View>
             <TouchableHighlight style={styles.compareButton} onPress={props.scroll}>
                 <View style={styles.compareButtonContainer}>
                     <Text style={styles.compareButtonText}>Compare Treatment Types</Text>
@@ -132,6 +142,7 @@ function TreatmentsComparison(props){
 }
 const styles = StyleSheet.create({
     header: {
+        paddingTop: 10,
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -163,10 +174,10 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 90, 
+        width: 100, 
         height: 40,
-        borderTopLeftRadius: 15,
-        borderBottomLeftRadius: 15,
+        borderTopLeftRadius: 8,
+        borderBottomLeftRadius: 8,
         backgroundColor: 'red',
         margin: 0, 
         marginLeft: 0
@@ -175,9 +186,8 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 90,
+        width: 100,
         height: 40,
-        backgroundColor: 'gray',
         margin:0,
         marginLeft: 0
     },
@@ -185,15 +195,31 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 90, 
+        width: 100, 
         height: 40,
-        borderTopRightRadius: 15,
-        borderBottomRightRadius: 15,
-        backgroundColor: 'red',
+        borderTopRightRadius: 8,
+        borderBottomRightRadius: 8,
+        // backgroundColor: 'red',
         margin: 0, 
         marginLeft: 0
     },
+    infoContainer:{
+        width: '95%',
+        flex: 0,
+        alignItems: 'flex-start',
+    },
+    treatmentSubHeader:{
+        fontSize: 23,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        marginTop: 20
+    },  
+    treatmentSubInfo: {
+        fontSize: 20
+    },
     compareButton: {
+        position: 'absolute',
+        bottom: '5%',
         width: '95%',
         height: '10%',
         paddingLeft: 10,
