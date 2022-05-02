@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
     },
     container:{
         width: windowWidth,
+        margin: 0,
+        padding: 0,
+        paddingTop: '1%',
     },
     list: {
         flex: 1,

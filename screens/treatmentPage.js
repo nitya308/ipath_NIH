@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
 import TreatmentsOverview from '../components/treatments-overview';
 import TreatmentsComparison from '../components/treatments-comparison';
 import TreatmentsList from '../components/treatments-list';
 import TreatmentInfo from '../components/treatment-info';
+import TreatmentsFilter from '../components/treatments-filter';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
@@ -20,15 +21,19 @@ function TreatmentPage(props){
         setPageNumber(pageNumber + 1)
         scrollRef.scrollTo({x: windowWidth * pageNumber})
     }
-
+    useEffect(() => {
+        if(scrollRef){
+            scrollRef.scrollTo({x: windowWidth * pageNumber})
+        }
+    }, [pageNumber])
     return (
         <View style={styles.container}>
             <ScrollView horizontal={true} pagingEnabled={true} scrolledEnabled={false} ref={(ref) => {setScrollRef(ref)}}>
                 <TreatmentsOverview scroll={scrollRight}/>
-                <TreatmentsComparison />
+                <TreatmentsComparison scroll={scrollRight}/>
+                <TreatmentsFilter scroll={scrollRight}/>
                 <TreatmentsList selectTreatment={setTreatment} scroll={scrollRight}/>
                 <TreatmentInfo treatment={selectedTreatment}/>
-                <View></View>
                 <View></View>
             </ScrollView>
         </View>
@@ -39,7 +44,6 @@ const styles = StyleSheet.create({
         height: windowHeight, 
         margin: 0,
         padding: 0,
-        marginTop: '5%',
     }, 
     button: {
         height: 150,

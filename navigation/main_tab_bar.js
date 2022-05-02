@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Dimensions } from 'react-native';
+import { Text, View, Dimensions, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
@@ -40,10 +40,20 @@ const headerTitleStyling = {
   color: 'white',
 }
 
+const headerTitleContainerStyling = {
+  padding: 0,
+  margin: 0,
+}
+
 const headerOptions = {
   headerTitle: "iPath",
   headerStyle: headerStyling,
   headerTitleStyle: headerTitleStyling,
+  headerTitleContainerStyle: headerTitleContainerStyling,
+  headerBackgroundContainerStyle: {
+    margin:0,
+    padding: 0
+  }
 }
 
 export default MainTabBar;
