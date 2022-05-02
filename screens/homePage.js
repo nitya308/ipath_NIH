@@ -20,6 +20,7 @@ function HomePage(props){
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         margin: 0,
@@ -53,5 +54,6 @@ const styles = StyleSheet.create({
         fontSize: 20
     }
 });
+
 
 export default HomePage;
