@@ -119,14 +119,12 @@ const styles = StyleSheet.create({
     container: {
         margin: 0,
         padding: 0,
-        // marginTop: 70,
         flex: 1,
     }, 
     title: {
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        // marginTop: 20,
     },
     survey: {
         paddingTop: 50,
