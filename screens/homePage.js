@@ -39,6 +39,7 @@ function HomePage(props){
     );
 }
 const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
     container: {
         margin: 0,
