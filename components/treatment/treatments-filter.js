@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; 
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions} from 'react-native';
-import RightArrow from '../../assets/icons/right.svg'
+import RightArrow from '../../assets/icons/right.svg';
+import Filter from '../../assets/icons/filter.svg';
 
 function TreatmentsFilter(props){
     const [therapyChecked, setTherapyChecked] = useState(false);
@@ -10,6 +11,7 @@ function TreatmentsFilter(props){
     return(
         <View style={styles.container}>
             <Text style={styles.header}>Filter Treatments</Text>
+            <Filter />
             {/* <CheckBox />
             <CheckBox />
             <CheckBox /> */}

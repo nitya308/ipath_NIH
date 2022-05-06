@@ -4,9 +4,11 @@ import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-na
 function SurveyIntro(props){
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>PHQ-9</Text>
-            <Text style={styles.subTitle}>Depression Screening Survey</Text>
-            <Text style={styles.infoText}>A 9-item depression scale of the patient health questionnaire. The questions are based directly on the diagnostic criteria for major depressive disorder in the DSM-IV.</Text>
+            <View style={styles.flexContainer}>
+                <Text style={styles.title}>PHQ-9</Text>
+                <Text style={styles.subTitle}>Depression Screening Survey</Text>
+                <Text style={styles.infoText}>A 9-item depression scale of the patient health questionnaire. The questions are based directly on the diagnostic criteria for major depressive disorder in the DSM-IV.</Text>
+            </View>
             <TouchableHighlight style={styles.startButton} onPress={props.transition}>
                 <Text style={styles.buttonText}>Begin Survey</Text>
             </TouchableHighlight>
@@ -22,37 +24,50 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
         width: windowWidth,
         height: windowHeight * .8,
-        flex: 1,
-        alignItems: 'center',
+        backgroundColor: '#373737',
     }, 
+    flexContainer:{
+        flex: 0, 
+        alignItems: 'flex-start',
+        paddingLeft: 30
+    },
     title:{
         fontSize: 50,
         marginTop: 50,
-        padding: 10
+        padding: 10,
+        fontWeight: 'bold',
+        color: 'white',
     },
     subTitle:{
         fontSize: 30,
-        padding: 10
+        padding: 10,
+        color: 'white',
+        width: 275,
+        fontWeight: 'bold'
     },
     infoText:{
-        textAlign: 'center',
-        marginTop: 50,
+        marginTop: 30,
         padding: 10,
-        fontSize: 20
+        fontSize: 17,
+        color: 'white',
+        fontStyle: 'italic',
     },
     startButton: {
-        width: 200,
-        height: 60,
-        backgroundColor: 'skyblue',
-        marginTop: 20,
-        borderRadius: 10,
+        width: 300,
+        height: 50,
+        backgroundColor: '#51B5AF',
+        borderRadius: 25,
         flex: 0,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 50
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: 17,
         padding: 10,
         textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
     }
 });
 

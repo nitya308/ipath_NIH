@@ -11,6 +11,7 @@
     "test": "eslint ."
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.3.1",

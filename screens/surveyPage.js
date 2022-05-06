@@ -16,7 +16,6 @@ function SurveyPage(props){
             <View>
                 <SurveyQuestion questionTitle={item.title} press={scrollForward}/>
             </View>
-            
         )
     }
 
@@ -28,7 +27,12 @@ function SurveyPage(props){
                 </TouchableHighlight>
             );
         } else {
-            return null;
+            return(
+                <View style={styles.progressContainer}>
+                    <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={65} height={10} color="rgb(26,177,147)" unfilledColor="lightgray" borderRadius={5} borderWidth={0}/>
+                    <Text style={styles.progressNumber}>{selectedId}/9</Text>
+                </View>
+            );
         }
     }
     const scrollForward = () => {
@@ -51,12 +55,11 @@ function SurveyPage(props){
 
     return (
         <View style={styles.container}>
-            <ScrollView scrollEnabled={true} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
+            <ScrollView scrollEnabled={false} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
                 <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight * .8})} />
                 <View style={styles.survey}>
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
-                    <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={windowWidth} height={20} color="rgb(26,177,147)" borderRadius={0} borderWidth={0}/>
                     <FlatList data={questionData} 
                     ref={(ref)=>{setQuestionRef(ref)}}
                     renderItem={renderItem} 
@@ -65,7 +68,7 @@ function SurveyPage(props){
                     pagingEnabled={true}
                     scrollEnabled={true}/>
                     <TouchableHighlight style={styles.backButton} onPress={scrollBack}>
-                        <Text style={styles.backText}>Back</Text>
+                        <Text style={styles.backText}>Previous Question</Text>
                     </TouchableHighlight>
                     {renderSubmitButton()}
                 </View>
@@ -119,14 +122,13 @@ const styles = StyleSheet.create({
     container: {
         margin: 0,
         padding: 0,
-        // marginTop: 70,
         flex: 1,
+        backgroundColor: 'white'
     }, 
     title: {
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        // marginTop: 20,
     },
     survey: {
         paddingTop: 20,
@@ -137,7 +139,6 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 20,
         alignSelf: 'center',
-        backgroundColor: 'rgb(200,200,200)',
         width: '100%',
         textAlign: 'center',
     },
@@ -149,10 +150,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        height: 150,
-        width: 150,
+        // height: 150,
+        // width: 150,
         borderRadius: 10,
-        backgroundColor: 'skyblue',
+        backgroundColor: '#72CCD4',
         margin: 8,
     },
     buttonContent: {
@@ -165,12 +166,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 30,
         left: 15,
-        width: 130,
+        width: 200,
         height: 50,
-        backgroundColor: 'skyblue',
+        backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 25
     },
     backText: {
         textAlign: 'center',
@@ -183,10 +184,26 @@ const styles = StyleSheet.create({
         right: 15,
         width: 130,
         height: 50,
-        backgroundColor: 'green',
+        backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 25
+    },
+    progressContainer:{
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 40,
+        right: 20,
+    },
+    progressBar: {
+        height: 10
+    },
+    progressNumber:{
+        color: 'black',
+        padding: 10
     }
 });
 

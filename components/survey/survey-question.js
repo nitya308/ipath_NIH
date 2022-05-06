@@ -31,11 +31,11 @@ function surveyQuestion(props){
 const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     questionContainer: {
-        // backgroundColor: 'lightgray',
         marginTop: 0,
         flex: 1,
         alignItems: 'center',
         width: windowWidth,
+        backgroundColor: 'white',
     },
     questionText: {
         fontSize: 18,
@@ -46,19 +46,17 @@ const styles = StyleSheet.create({
     touchContainer: {
         height: 60, 
         width: 300,
-        borderRadius: 10,
+        borderRadius: 30,
         margin: 8
     }, 
     answer: {
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 10,
-        backgroundColor: 'rgb(26,177,147)',
+        borderRadius: 30,
+        backgroundColor: '#E1F0F1',
     }, 
     answerText: {
         textAlign: 'center',
-        fontWeight: 'bold',
-        color: 'white',
         padding: 15,
         fontSize: 20
     },

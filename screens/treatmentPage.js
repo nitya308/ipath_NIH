@@ -28,13 +28,9 @@ function TreatmentPage(props){
     }, [pageNumber])
     return (
         <View style={styles.container}>
-            <ScrollView horizontal={true} pagingEnabled={true} scrolledEnabled={false} ref={(ref) => {setScrollRef(ref)}}>
+            <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => {setScrollRef(ref)}}>
                 <TreatmentsOverview scroll={scrollRight}/>
-                <TreatmentsComparison scroll={scrollRight}/>
-                <TreatmentsFilter scroll={scrollRight}/>
-                <TreatmentsList selectTreatment={setTreatment} scroll={scrollRight}/>
-                <TreatmentInfo treatment={selectedTreatment}/>
-                <View></View>
+                <TreatmentsComparison scroll={scrollRight} navigation={props.navigation}/>
             </ScrollView>
         </View>
     );

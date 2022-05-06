@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
-// import HomePageButton from '../components/homepage/homepage-button';
+import Chart from '../assets/icons/chart.svg'
 
 
 function HomePage(props){
@@ -13,30 +13,27 @@ function HomePage(props){
             <Text style={styles.title}>Welcome to iPath</Text>
             <Text style={styles.description}>iPath is a decision aid tool funded by the NCI. iPath aims to support cancer patients displaying symptoms of depression by helping them find the best treatment option for them.</Text>
             <View style={styles.flexContainer}>
-            <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => navigateTo("Survey")}>
-                <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonTitle}>Take PHQ-9 Depression Screening Survey</Text>
-                    {/* <RightArrow style={styles.ar?row}/> */}
+                <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => navigateTo("Survey")}>
+                    <View style={styles.buttonContainer}>
+                        <Text style={styles.buttonTitle}>Take PHQ-9 Depression Screening Survey</Text>
+                    </View>
+                </TouchableHighlight>
+                <View style={styles.parallelButtons}>
+                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("History")}>
+                        <View style={styles.buttonContainer}>
+                            <Text style={styles.buttonTitle}>View My History</Text>
+                            <Chart style={styles.chart}/>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("Learn")}>
+                        <View style={styles.buttonContainer}>
+                            <Text style={styles.buttonTitle}>Explore Treatments</Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
-            </TouchableHighlight>
-            <View style={styles.parallelButtons}>
-                <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("History")}>
-                    <View style={styles.buttonContainer}>
-                        <Text style={styles.buttonTitle}>View My History</Text>
-                        {/* <RightArrow style={styles.ar?row}/> */}
-                    </View>
+                <TouchableHighlight style={styles.additionalTouchContainer} underlayColor='gray' onPress={() => navigateTo("")}>
+                    <Text style={styles.buttonTitle}>View Additional Resources</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("Explore")}>
-                    <View style={styles.buttonContainer}>
-                        <Text style={styles.buttonTitle}>Explore Treatments</Text>
-                        {/* <RightArrow style={styles.ar?row}/> */}
-                    </View>
-                </TouchableHighlight>
-            </View>
-            {/* <HomePageButton content="Take Survey" name="Survey" press={navigateTo} />
-            <HomePageButton content="View Past Results" name="History" press={navigateTo} />
-            <HomePageButton content="Explore Treatments" name="Explore" press={navigateTo} />
-            <HomePageButton content="View Additional Resourcses" name="" press={navigateTo} /> */}
             </View>
         </View>
     );
@@ -78,18 +75,32 @@ const styles = StyleSheet.create({
     },
     surveyTouchContainer:{
         width: '100%',
-        backgroundColor: 'gray',
+        backgroundColor: '#469C97',
         height: 130,
         borderRadius: 10
     },
     mediumTouchContainer:{
-        width: '48%',
-        backgroundColor: 'gray',
+        width: 145.06,
+        backgroundColor: '#469C97',
         height: 130,
         borderRadius: 10,
     },
+    additionalTouchContainer:{
+        flex: 0,
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: '#469C97',
+        height: 65,
+        borderRadius: 10,
+        marginTop: 20
+    },
     buttonContainer:{
-      width: '95%' 
+      width: '95%'
+    },
+    chart:{
+        position: 'absolute',
+        top: 70,
+        left: -20,
     },
     buttonTitle: {
         fontSize: 20,
