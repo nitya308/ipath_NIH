@@ -11,7 +11,6 @@ const windowWidth= Dimensions.get('window').width;
 
 function TreatmentPage(props){
     const [scrollRef, setScrollRef] = useState(null);
-    const [selectedTreatment, setSelectedTreatment] = useState(null)
     const [pageNumber, setPageNumber] = useState(0);
 
     const setTreatment = (treatment) => {

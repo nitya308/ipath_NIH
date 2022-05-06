@@ -11,7 +11,6 @@ function TreatmentsFilter(props){
     return(
         <View style={styles.container}>
             <Text style={styles.header}>Filter Treatments</Text>
-            <Filter />
             {/* <CheckBox />
             <CheckBox />
             <CheckBox /> */}

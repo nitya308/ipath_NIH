@@ -1,35 +1,46 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
+import React, { useState, useEffect }  from 'react';
+import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
 import Bookmark from '../assets/icons/bookmark.svg';
-
+import Notifications from '../components/profile/notifications';
+import SavedTreatments from '../components/profile/saved-treatments';
+import VariablePage from '../navigation/variable-page';
 function ProfilePage(props){
-    const navigateTo = (name) => {
-        props.navigation.navigate(name);
-    }
+    const [nextPage, setNextPage] = useState(0);
+    const [scrollRef, setScrollRef] = useState(null);
 
+    const scroll = () => {
+        if(scrollRef){
+            scrollRef.scrollToEnd();
+        }
+    }
     return (
-        <View style={styles.container}>
-            <Text style={styles.name}>Name</Text>
-            <Text style={styles.email}>name@gmail.com</Text>
-            <TouchableHighlight>
+        <ScrollView horizontal={true} pagingEnabled={true} ref={(ref) => {setScrollRef(ref)}}>
+            <View style={styles.container}>
+                <Text style={styles.name}>Name</Text>
+                <Text style={styles.email}>name@gmail.com</Text>
+                <TouchableHighlight onPress={() => {setNextPage(1); scroll()}}>
+                    <View style={styles.button}>
+                        <Bookmark style={styles.icon}/>
+                        <Text style={styles.buttonText}>Saved Treatments</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.touchable} onPress={() => {setNextPage(2); scroll();}}>
+                    <View style={styles.button}>
+                        <Bookmark style={styles.icon}/>
+                        <Text style={styles.buttonText}>Notifications</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight>
                 <View style={styles.button}>
-                    <Bookmark style={styles.icon}/>
-                    <Text style={styles.buttonText}>Saved Treatments</Text>
-                </View>
-            </TouchableHighlight>
-            <TouchableHighlight>
-            <View style={styles.button}>
-                    <Bookmark style={styles.icon}/>
-                    <Text style={styles.buttonText}>Notifications</Text>
-                </View>
-            </TouchableHighlight>
-            <TouchableHighlight>
-            <View style={styles.button}>
-                    <Bookmark style={styles.icon}/>
-                    <Text style={styles.buttonText}>Log Out</Text>
-                </View>
-            </TouchableHighlight>
-        </View>
+                        <Bookmark style={styles.icon}/>
+                        <Text style={styles.buttonText}>Log Out</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+            <View style={styles.container}>
+                {nextPage === 1? <SavedTreatments /> : nextPage === 2? <Notifications/ > : null}
+            </View>
+        </ScrollView>
     );
 }
 const windowWidth = Dimensions.get('window').width;
@@ -39,7 +50,8 @@ const styles = StyleSheet.create({
         padding: 0,
         marginTop: 10,
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        width: windowWidth,
     }, 
     name:{
         fontSize: 25,

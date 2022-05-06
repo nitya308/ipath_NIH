@@ -18,7 +18,6 @@ function MainTabBar(props){
     headerTitle: "iPath",
     headerStyle: headerStyling,
     headerRight: () => <ProfileButton navigate={() => props.navigation.navigate("Profile")}/>,
-    // headerTitleStyle: headerTitleStyling,
     headerTitleContainerStyle: headerTitleContainerStyling,
     headerBackgroundContainerStyle: {
       margin:0,

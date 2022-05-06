@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
         width: windowWidth,
         height: windowHeight * .8,
-        backgroundColor: '#373737',
+        // backgroundColor: '#373737',
     }, 
     flexContainer:{
         flex: 0, 
@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
         marginTop: 50,
         padding: 10,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'black',
     },
     subTitle:{
         fontSize: 30,
         padding: 10,
-        color: 'white',
+        color: 'black',
         width: 275,
         fontWeight: 'bold'
     },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         padding: 10,
         fontSize: 17,
-        color: 'white',
+        color: 'black',
         fontStyle: 'italic',
     },
     startButton: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         padding: 10,
         textAlign: 'center',
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
     }
 });

@@ -47,7 +47,7 @@ function TreatmentsList(props){
                 <View style={styles.list}>
                     {treatmentData.filter((treat) => checkFilters(treat)).map((treatment) => {
                         return (
-                            <TouchableHighlight style={styles.treatmentContainer} onPress={() => {
+                            <TouchableHighlight key={treatment} style={styles.treatmentContainer} onPress={() => {
                                 setSelectedTreatment(treatment);
                                 scrollRef.scrollToEnd();
                             }}>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     treatmentContainer:{
         height: 150,
         width: '95%',
-        backgroundColor: 'lightgray',
+        backgroundColor: '#E3EFF0',
         borderRadius: 10,
         marginTop: '2%',
     },

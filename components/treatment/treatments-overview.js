@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable, ScrollView } from 'react-native';
 import UnorderedList from 'react-native-unordered-list';
 import RightArrow from '../../assets/icons/right.svg';
 import Speech from '../../assets/icons/speech.svg';
@@ -8,96 +8,72 @@ import Watch from '../../assets/icons/watch.svg';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
+const treatmentData = {
+    "Talk Therapy": {
+        description: "A weekly 30-60 minute session working with a therapist either in person or on a computer: using a program on your own or with support from your clinician by email or phone.",
+        efficacy: "In addition to the 23 out of 100 people that recover without treatment, another 14 out of 100 will recover in 2 months using talk therapy. In addition to the 23 people who recover without treatment, another 26 in 100 people recover with a combination of SSRIs and talk therapy.",
+        cost: "cost",
+        sideEffects: "possible side effects",
+    },
+    "Medication": {
+        description: "Selective Serotonin Reuptake Inhibitors (SSRIs) are medications that address symptoms by affecting your brain chemistry. These pills are usually taken once per day.",
+        efficacy: "this will work",
+        cost: "cost",
+        sideEffects: "possible side effects",
+    },
+    "Watchful Waiting": {
+        description: "You may visit your clinician more frequently to monitor your symptoms and compare options to discuss your lifestyle, current support and coping strategies.",
+        efficacy: "this will work",
+        cost: "cost",
+        sideEffects: "possible side effects",
+    }
+};
 function TreatmentsOverview(props){
-    const [therapyModalVisible, setTherapyModalVisible] = useState(false);
-    const [waitingModalVisible, setWaitingModalVisible] = useState(false);
-    const [medicationModalVisible, setMedicationModalVisible] = useState(false);
-
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedType, setSelectedType] = useState("Watchful Waiting");
     return(
         <View style={styles.options}>
             <Text style={styles.header}>Treatment Options</Text>
-            <TouchableHighlight style={styles.option} onPress={() => setTherapyModalVisible(true)}>
+            <TouchableHighlight style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true)}}>
                 <View>
                     <Text style={styles.optionHeader}>Talk Therapy</Text>
                     <Text style={styles.optionText}>Weekly sessions working with a therapist. In person or remote format</Text>
                     <Speech style={styles.icon}/>
                 </View>
             </TouchableHighlight>
-            <Modal animationType="slide" visible={therapyModalVisible} transparent={true} onRequestClose={() => setTherapyModalVisible(!therapyModalVisible)}>
-                <View style={styles.modalViewContainer}>
-                    <Text style={styles.modalHeader}>Talk Therapy</Text>
-                    <View style={styles.modalContainer}>
-                        <Text style={styles.modalDescription}>Longer definition, blah blah blah blah watchful waiting involves not doing anything but monitoring symptoms, etc.</Text>
-                        <Text style={styles.modalSubHeader}>Efficacy</Text>
-                        <Text style={styles.modalDescription}>20% of cancer patients with depression claim to have noticed decreased symptoms over time with careful monitoring.</Text>
-                        <Text style={styles.modalSubHeader}>Cost</Text>
-                        <Text style={styles.modalDescription}>Free</Text>
-                        <Text style={styles.modalSubHeader}>Accepts Insurance</Text>
-                        <Text style={styles.modalDescription}>Yes</Text>
-                        <Text style={styles.modalSubHeader}>Possible Side Effects</Text>
-                        <UnorderedList style={{fontSize: 20}}>
-                            <Text style={styles.modalDescription}>Increased symptoms of depression</Text>
-                        </UnorderedList>
-                    </View>
-                    <Pressable style={styles.closeModal} onPress={() => {setTherapyModalVisible(!therapyModalVisible)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
-                    </Pressable>
-                </View>
-            </Modal>
-            <TouchableHighlight style={styles.option} onPress={() => setWaitingModalVisible(true)}>
+            <TouchableHighlight style={styles.option} onPress={() => {setSelectedType("Watchful Waiting"); setModalVisible(true)}}>
                 <View>
                     <Text style={styles.optionHeader}>Watchful Waiting</Text>
                     <Text style={styles.optionText}>Monitor symptoms without direct action.</Text>
                     <Watch style={styles.icon}/>
                 </View>
             </TouchableHighlight>
-            <Modal animationType="slide" visible={waitingModalVisible} transparent={true} onRequestClose={() => settWaitingModalVisible(!waitingModalVisible)}>
-                <View style={styles.modalViewContainer}>
-                    <Text style={styles.modalHeader}>Watchful Waiting</Text>
-                    <View style={styles.modalContainer}>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Efficacy</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Cost</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Accepts Insurance</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Possible Side Effects</Text>
-                        <UnorderedList style={{fontSize: 20}}>
-                            <Text style={styles.modalDescription}></Text>
-                        </UnorderedList>
-                    </View>
-                    <Pressable style={styles.closeModal} onPress={() => {setWaitingModalVisible(!waitingModalVisible)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
-                    </Pressable>
-                </View>
-            </Modal>
-            <TouchableHighlight style={styles.option} onPress={() => setMedicationModalVisible(true)}>
+            <TouchableHighlight style={styles.option} onPress={() => {setSelectedType("Medication"); setModalVisible(true)}}>
                 <View>
                     <Text style={styles.optionHeader}>Medication</Text>
                     <Text style={styles.optionText}>Specialist-prescribed anti-depressants.</Text>
                     <Thermo style={styles.icon} />
                 </View>
             </TouchableHighlight>
-            <Modal animationType="slide" visible={medicationModalVisible} transparent={true} onRequestClose={() => setMedicationModalVisible(!medicationModalVisible)}>
+            <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
                 <View style={styles.modalViewContainer}>
-                    <Text style={styles.modalHeader}>Medication</Text>
-                    <View style={styles.modalContainer}>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Efficacy</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Cost</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Accepts Insurance</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <Text style={styles.modalSubHeader}>Possible Side Effects</Text>
-                        <Text style={styles.modalDescription}></Text>
-                        <UnorderedList style={{fontSize: 20}}>
-                            <Text style={styles.modalDescription}></Text>
-                        </UnorderedList>
+                    <View style={styles.modalHeaderContainer}>
+                        <Text style={styles.modalHeader}>{selectedType}</Text>
                     </View>
-                    <Pressable style={styles.closeModal} onPress={() => {setMedicationModalVisible(!medicationModalVisible)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                    <ScrollView style={styles.modalContainer}>
+                        <Text style={styles.modalDescription}>{treatmentData[selectedType].description}</Text>
+                        <View style={styles.line} />
+                        <Text style={styles.modalSubHeader}>Will this work?</Text>
+                        <Text style={styles.modalDescription}>{treatmentData[selectedType].efficacy}</Text>
+                        <View style={styles.line} />
+                        <Text style={styles.modalSubHeader}>Cost</Text>
+                        <Text style={styles.modalDescription}>{treatmentData[selectedType].cost}</Text>
+                        <View style={styles.line} />
+                        <Text style={styles.modalSubHeader}>Possible Side Effects</Text>
+                        <Text style={styles.modalDescription}>{treatmentData[selectedType].sideEffects}</Text>
+                    </ScrollView>
+                    <Pressable style={styles.closeModal} onPress={() => {setModalVisible(!modalVisible)}}>
+                        <Text style={styles.closeModalIcon}>x</Text>
                     </Pressable>
                 </View>
             </Modal>
@@ -127,7 +103,7 @@ const styles = StyleSheet.create({
         height: '24%',
         width: '95%',
         margin: '2%',
-        backgroundColor: 'lightgray',
+        backgroundColor: '#E3EFF0',
         borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {
@@ -159,7 +135,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         backgroundColor: 'white',
         width: windowWidth,
-        marginTop: windowHeight * .1,
+        marginTop: windowHeight * .05,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         shadowColor: "#000",
@@ -172,23 +148,41 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         width: '100%',
-        paddingLeft: 30
+        paddingLeft: 30,
+        marginTop: 20
+    },
+    modalHeaderContainer:{
+        flex:0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 100,
+        width: '100%',
+        backgroundColor: "#E3EFF0",
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+    },
+    line:{
+        height: 2,
+        width: '95%',
+        backgroundColor: '#469C97',
+        marginTop: 20,
+        marginBottom: 20
     },
     modalHeader:{
+        padding: 35,
+        marginBottom: 20,
         alignSelf: 'center',
         textAlign: 'center',
-        marginTop: 30,
-        marginBottom: 20,
-        fontSize: 20,
         fontWeight: 'bold',
+        fontSize: 20,
+        width: "100%",
     },
     modalDescription:{
-        fontSize: 20
+        fontSize: 20,
     },
     modalSubHeader:{
         fontSize: 20,
         fontWeight: 'bold',
-        marginTop: 30
     },  
     closeModal: {
         position: 'absolute',
@@ -203,7 +197,7 @@ const styles = StyleSheet.create({
         height: '10%',
         paddingLeft: 10,
         marginTop: 10,
-        backgroundColor: 'grey',
+        backgroundColor: '#469C97',
         borderRadius: 10,
     },
     compareButtonContainer: {
@@ -215,6 +209,8 @@ const styles = StyleSheet.create({
     },
     compareButtonText: {
         fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold',
     },
 })
 export default TreatmentsOverview

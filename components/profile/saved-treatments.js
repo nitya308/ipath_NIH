@@ -1,16 +1,9 @@
 import React from 'react';
 import { View, Pressable, StyleSheet, Text } from 'react-native';
-import Unchecked from '../assets/icons/unchecked.svg';
-import Checked from '../assets/icons/checked.svg';
-function Checkbox(props){
-    const iconName = props.isChecked ? 
-        "checkbox-marked" : "checkbox-blank-outline";
+function SavedTreatments(props){
     return(
         <View style={styles.container}>
-            <Pressable onPress={props.onPress}>
-                {props.isChecked? <Checked /> : <Unchecked />}
-            </Pressable>
-            <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.title}>Saved Treatments</Text>
         </View>
     )
 }
@@ -20,7 +13,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        width: 150,
+        width: '100%',
         marginTop: 5,
         marginHorizontal: 5,
     },
@@ -31,4 +24,4 @@ const styles = StyleSheet.create({
         fontWeight: "600",
     },
 })
-export default Checkbox;
+export default SavedTreatments;

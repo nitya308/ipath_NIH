@@ -41,7 +41,7 @@ const headerStyling = {
     isSignedIn?
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' >
-        <Stack.Screen name="Home" component={MainTabBar} options={headerOptions}/>
+        <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
         <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>
       </Stack.Navigator>
     </NavigationContainer>

@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
         height: '10%',
         paddingLeft: 10,
         marginTop: 10,
-        backgroundColor: 'grey',
+        backgroundColor: '#469C97',
         borderRadius: 10,
     },
     compareButtonContainer: {
@@ -425,6 +425,8 @@ const styles = StyleSheet.create({
     },
     compareButtonText: {
         fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold',
     },
 })
 export default TreatmentsComparison
