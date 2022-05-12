@@ -8,7 +8,7 @@ import * as Progress from 'react-native-progress';
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
     const [selectedId, setSelectedId] = useState(0); //reference current question
-    const [introRef, setIntroRef] = useState(null) //used to reference
+    const [introRef, setIntroRef] = useState(null) 
     const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
 
     const renderItem = ({ item }) => {
@@ -72,7 +72,7 @@ function SurveyPage(props){
                     </TouchableHighlight>
                     {renderSubmitButton()}
                 </View>
-                <SurveyResult press={() => props.navigation.navigate('Explore')}/>
+                <SurveyResult press={() => props.navigation.navigate('Learn')}/>
             </ScrollView>
         </View>
     );

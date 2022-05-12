@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
 import CheckMark from '../../assets/icons/check.svg';
 import MapPin from '../../assets/icons/mapPin.svg';
-import Bookmark from '../../assets/icons/bookmark.svg';
+import Bookmark from '../../assets/icons/bookmark.js';
 
 
 const windowHeight= Dimensions.get('window').height;
@@ -13,7 +13,7 @@ function TreatmentInfo(props){
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.headerName}>{props.treatment.name}</Text>
-                    <Bookmark />
+                    <Bookmark width="30" height="30"/>
                 </View>
                 <View style={styles.traits}>
                     <View style={styles.overview}>

@@ -1,13 +1,21 @@
-import HomePages from './navigation/main_page';
-import MainTabBar from './navigation/main_tab_bar';
-import Profile from './screens/profilePage';
+import HomePages from './src/navigation/main_page';
+import MainTabBar from './src/navigation/main_tab_bar';
+import Profile from './src/screens/profilePage';
 import { createStackNavigator} from '@react-navigation/stack';
 import { View, Text, Dimensions } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import React from "react";
-import ProfileButton from './components/profileButton';
+import ProfileButton from './src/components/profileButton';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+
+import rootReducer from './src/reducers';
 
 const Stack = createStackNavigator();
+const store = configureStore({
+  reducer: rootReducer,
+});
+
 export default function App() {
 
   const [isSignedIn, setSignIn] = React.useState(true);
@@ -38,15 +46,17 @@ const headerStyling = {
     margin: 0,
   }
   return (
-    isSignedIn?
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home' >
-        <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
-        <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-    :
-    <HomePages/>
+    <Provider store={store}>
+      {isSignedIn?
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Home' >
+          <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
+          <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+      :
+      <HomePages/>}
+    </Provider>
   );
 }
 

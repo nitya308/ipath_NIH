@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView, Pressable, Modal} from 'react-native';
-import CheckMark from '../../assets/icons/check.svg';
-import MapPin from '../../assets/icons/mapPin.svg';
-import Bookmark from '../../assets/icons/bookmark.svg';
 import Filter from '../../assets/icons/filter.svg';
 import Checkbox from '../checkbox';
 import TreatmentInfo from './treatment-info';
+import TreatmentItem from './treatment-item';
+// import { connect } from 'react-redux';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentsList(props){
+    const savedTreatments = useSelector((state) => state.savedTreatments)
+
     const [therapyFilter, setTherapyFilter] = useState(false);
     const [medFilter, setMedFilter] = useState(false);
     const [comboFilter, setComboFilter] = useState(false);
@@ -47,29 +49,15 @@ function TreatmentsList(props){
                 <View style={styles.list}>
                     {treatmentData.filter((treat) => checkFilters(treat)).map((treatment) => {
                         return (
-                            <TouchableHighlight key={treatment} style={styles.treatmentContainer} onPress={() => {
+                            <TreatmentItem press={() => {
                                 setSelectedTreatment(treatment);
                                 scrollRef.scrollToEnd();
-                            }}>
-                                <View>
-                                    <Text style={styles.treatmentName}>{treatment.name}  {"$".repeat(treatment.cost)}</Text>
-                                    <View style={styles.treatmentTrait}>
-                                        <MapPin />
-                                        <Text style={styles.treatmentInfo}>{treatment.type}</Text>
-                                    </View>
-                                    <View style={styles.treatmentTrait}>
-                                        <CheckMark />
-                                        <Text style={styles.treatmentInfo}>{treatment.takesInsurance ? "Accepts Insurance" : "No Insurance"}</Text>
-                                    </View>
-                                    <View style={styles.treatmentTrait}>
-                                        <CheckMark />
-                                        <Text style={styles.treatmentInfo}>{treatment.quickAccess ? "Quick Access" : "No Quick Access"}</Text>
-                                    </View>
-                                    <TouchableHighlight style={styles.bookmarkContainer}>
-                                        <Bookmark />
-                                    </TouchableHighlight>
-                                </View>
-                            </TouchableHighlight>
+                            }} treatment={treatment}/>
+                        )
+                    })}
+                    {Array.from(savedTreatments.treatments)?.map((treatment) => {
+                        return (
+                            <Text>{treatment.name}</Text>
                         )
                     })}
                 </View>
@@ -118,39 +106,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingBottom: 200,
-    },
-    treatmentContainer:{
-        height: 150,
-        width: '95%',
-        backgroundColor: '#E3EFF0',
-        borderRadius: 10,
-        marginTop: '2%',
-    },
-    treatmentName: {
-        fontSize: 20,
-        paddingTop: 10,
-        paddingLeft: 10,
-        marginBottom: 10
-    },
-    treatmentTrait: {
-        flex: 0,
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        paddingTop: 5,
-        paddingBottom: 5
-    },
-    treatmentInfo: {
-        paddingLeft: 10
-    },
-    bookmarkContainer:{
-        position: 'absolute',
-        top: 15,
-        right: 15,
-    },
-    bookmark: {
-        height: 50,
-        width: 50,
     },
     modalViewContainer:{
         flex: 1,
