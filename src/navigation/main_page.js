@@ -8,7 +8,6 @@ import MainTabBar from './main_tab_bar';
 const Stack = createNativeStackNavigator();
 
 const HomePages = (props) => {
-  console.log(props);
   return (
     <NavigationContainer>
       <Stack.Navigator>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect }  from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
-import SurveyQuestion from '../components/survey-question';
-import SurveyIntro from '../components/survey-intro';
-import SurveyResult from '../components/survey-result';
+import SurveyQuestion from '../components/survey/survey-question';
+import SurveyIntro from '../components/survey/survey-intro';
+import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
 
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
     const [selectedId, setSelectedId] = useState(0); //reference current question
-    const [introRef, setIntroRef] = useState(null) //used to reference
+    const [introRef, setIntroRef] = useState(null) 
     const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
 
     const renderItem = ({ item }) => {
@@ -16,7 +16,6 @@ function SurveyPage(props){
             <View>
                 <SurveyQuestion questionTitle={item.title} press={scrollForward}/>
             </View>
-            
         )
     }
 
@@ -28,7 +27,12 @@ function SurveyPage(props){
                 </TouchableHighlight>
             );
         } else {
-            return null;
+            return(
+                <View style={styles.progressContainer}>
+                    <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={65} height={10} color="rgb(26,177,147)" unfilledColor="lightgray" borderRadius={5} borderWidth={0}/>
+                    <Text style={styles.progressNumber}>{selectedId}/9</Text>
+                </View>
+            );
         }
     }
     const scrollForward = () => {
@@ -52,24 +56,23 @@ function SurveyPage(props){
     return (
         <View style={styles.container}>
             <ScrollView scrollEnabled={false} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
-                <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight})} />
+                <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight * .8})} />
                 <View style={styles.survey}>
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
-                    <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={windowWidth} height={20} color="rgb(26,177,147)" borderRadius={0} borderWidth={0}/>
                     <FlatList data={questionData} 
                     ref={(ref)=>{setQuestionRef(ref)}}
                     renderItem={renderItem} 
                     keyExtractor={(item) => item.id}
                     horizontal={true}
                     pagingEnabled={true}
-                    scrollEnabled={false}/>
+                    scrollEnabled={true}/>
                     <TouchableHighlight style={styles.backButton} onPress={scrollBack}>
-                        <Text style={styles.backText}>Back</Text>
+                        <Text style={styles.backText}>Previous Question</Text>
                     </TouchableHighlight>
                     {renderSubmitButton()}
                 </View>
-                <SurveyResult press={() => props.navigation.navigate('Explore')}/>
+                <SurveyResult press={() => props.navigation.navigate('Learn')}/>
             </ScrollView>
         </View>
     );
@@ -120,6 +123,7 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 0,
         flex: 1,
+        backgroundColor: 'white'
     }, 
     title: {
         fontSize: 30,
@@ -127,16 +131,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     survey: {
-        paddingTop: 50,
-        paddingBottom: 50,
-        height: windowHeight,
+        paddingTop: 20,
+        height: windowHeight * .8,
     },
     questionIntro: {
         marginTop: 15,
         padding: 10,
         fontSize: 20,
         alignSelf: 'center',
-        backgroundColor: 'rgb(200,200,200)',
         width: '100%',
         textAlign: 'center',
     },
@@ -148,10 +150,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        height: 150,
-        width: 150,
+        // height: 150,
+        // width: 150,
         borderRadius: 10,
-        backgroundColor: 'skyblue',
+        backgroundColor: '#72CCD4',
         margin: 8,
     },
     buttonContent: {
@@ -162,14 +164,14 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        bottom: 130,
+        bottom: 30,
         left: 15,
-        width: 130,
+        width: 200,
         height: 50,
-        backgroundColor: 'skyblue',
+        backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 25
     },
     backText: {
         textAlign: 'center',
@@ -178,14 +180,30 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         position: 'absolute',
-        bottom: 130,
+        bottom: 30,
         right: 15,
         width: 130,
         height: 50,
-        backgroundColor: 'green',
+        backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 25
+    },
+    progressContainer:{
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 40,
+        right: 20,
+    },
+    progressBar: {
+        height: 10
+    },
+    progressNumber:{
+        color: 'black',
+        padding: 10
     }
 });
 

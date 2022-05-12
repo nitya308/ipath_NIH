@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import RightArrow from '../assets/icons/right.svg';
+import RightArrow from '../../assets/icons/right.svg';
 
 function HomePageButton(props){
     

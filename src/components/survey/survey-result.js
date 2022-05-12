@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
+import RightArrow from '../../assets/icons/right.svg';
 
 function SurveyResult(props){
     return(
@@ -9,7 +10,10 @@ function SurveyResult(props){
             <Text style={styles.h2}>What does this mean?</Text>
             <Text style={styles.p}>Depression is more common than you might think. Around 20% of cancer patients display symptoms of depression</Text> 
             <TouchableHighlight style={styles.treatmentButton} onPress={props.press}>
-                <Text style={styles.buttonText}>Treatment Options</Text> 
+                <View style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>Explore Treatments</Text> 
+                    <RightArrow />
+                </View>
             </TouchableHighlight>
         </View>
     );
@@ -21,10 +25,10 @@ const styles = StyleSheet.create({
         padding: 0,
         flex: 1,
         alignItems: 'center',
-        height: windowHeight,
+        height: windowHeight * .8,
     },
     resultTitle: {
-        paddingTop: 150,
+        paddingTop: 50,
         fontSize: 30,
         fontWeight: 'bold'
     },
@@ -45,16 +49,25 @@ const styles = StyleSheet.create({
     },
     treatmentButton: {
         marginTop: 30,
-        width: 250,
-        height: 60,
-        backgroundColor: 'skyblue',
+        width: 350,
+        height: 65,
+        backgroundColor: '#469C97',
+        borderRadius: 10,
         flex: 0,
-        justifyContent: 'center',
-        borderRadius: 10
+        alignItems: 'center',
+    },
+    buttonContainer: {
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: '100%',
+        width: '90%',
     },
     buttonText:{
         textAlign: 'center',
         color: 'white',
+        fontWeight: 'bold',
         fontSize: 20
     }
 })
