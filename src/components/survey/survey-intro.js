@@ -60,7 +60,14 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         alignSelf: 'center',
-        marginTop: 50
+        marginTop: 50,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     buttonText: {
         fontSize: 17,

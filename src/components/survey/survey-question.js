@@ -47,13 +47,20 @@ const styles = StyleSheet.create({
         height: 60, 
         width: 300,
         borderRadius: 30,
-        margin: 8
+        margin: 8,
     }, 
     answer: {
         flex: 1,
         justifyContent: 'center',
         borderRadius: 30,
         backgroundColor: '#E1F0F1',
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     }, 
     answerText: {
         textAlign: 'center',

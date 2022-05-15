@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
+import { useSelector } from 'react-redux';
 import CheckMark from '../../assets/icons/check.svg';
 import MapPin from '../../assets/icons/mapPin.svg';
 import Bookmark from '../../assets/icons/bookmark.js';
@@ -8,12 +9,14 @@ import Bookmark from '../../assets/icons/bookmark.js';
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentInfo(props){
+    const savedTreatments = useSelector((state) => state.savedTreatments);
+    var tempSet = new Set(savedTreatments.treatments);
     if(props.treatment){
         return(
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.headerName}>{props.treatment.name}</Text>
-                    <Bookmark width="30" height="30"/>
+                    <Bookmark width="30" height="30" color={tempSet.has(props.treatment)? "black" : "none"}/>
                 </View>
                 <View style={styles.traits}>
                     <View style={styles.overview}>

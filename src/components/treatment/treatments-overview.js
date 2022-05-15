@@ -199,6 +199,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: '#469C97',
         borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     compareButtonContainer: {
         width: '95%',

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import Bookmark from '../../assets/icons/bookmark';
@@ -10,7 +10,7 @@ function TreatmentItem(props){
     const savedTreatments = useSelector((state) => state.savedTreatments);
     var tempSet = new Set(savedTreatments.treatments);
     return(
-        <TouchableHighlight style={styles.treatmentContainer} onPress={props.press}>
+        <TouchableHighlight underlayColor="gray" style={styles.treatmentContainer} onPress={props.press}>
             <View>
                 <Text style={styles.treatmentName}>{props.treatment.name}  {"$".repeat(props.treatment.cost)}</Text>
                 <View style={styles.treatmentTrait}>
@@ -27,7 +27,7 @@ function TreatmentItem(props){
                 </View>
                 <View style={styles.bookmarkContainer}>
                     <Bookmark width="30" height="30" treatment={props.treatment} press={() =>  dispatch({type: "SAVE_TREATMENT", payload: props.treatment})}
-                color={tempSet.has(props.treatment)? "black" : "none"}/>
+                fill={tempSet.has(props.treatment)? "black" : "none"} strokeColor="black"/>
                 </View>
             </View>
         </TouchableHighlight>
@@ -41,6 +41,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#E3EFF0',
         borderRadius: 10,
         marginTop: '2%',
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     treatmentName: {
         fontSize: 20,

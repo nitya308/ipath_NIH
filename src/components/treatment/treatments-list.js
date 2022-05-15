@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView, Pressable, Modal} from 'react-native';
+import { useSelector } from 'react-redux';
 import Filter from '../../assets/icons/filter.svg';
+import Bookmark from '../../assets/icons/bookmark';
+import BookmarkSvg from '../../assets/icons/bookmark.svg';
 import Checkbox from '../checkbox';
 import TreatmentInfo from './treatment-info';
 import TreatmentItem from './treatment-item';
-// import { connect } from 'react-redux';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentsList(props){
-    const savedTreatments = useSelector((state) => state.savedTreatments)
-
+    const savedTreatments = useSelector((state) => state.savedTreatments.treatments);
     const [therapyFilter, setTherapyFilter] = useState(false);
     const [medFilter, setMedFilter] = useState(false);
     const [comboFilter, setComboFilter] = useState(false);
     const [waitFilter, setWaitFilter] = useState(false);
+    const [savedFilter, setSavedFilter] = useState(false);
 
     const [filterModal, setFilterModal] = useState(false);
 
@@ -41,25 +42,38 @@ function TreatmentsList(props){
     return(
         <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={true} ref={(ref) => {setScrollRef(ref)}}>
             <ScrollView style={styles.container}>
-                <Text style={styles.header}>Connect to Treatments</Text>
-                <Pressable onPress={() => setFilterModal(true)}style={styles.filterContainer}>
-                    <Filter />
-                    <Text style={styles.filterText}>Filter</Text>
-                </Pressable>
+                <Text style={styles.header}>Treatment Options</Text>
+                <View style={styles.filtersContainer}>
+                    <Pressable onPress={() => setFilterModal(true)} style={styles.filterContainer}>
+                        <Text style={styles.filterText}>Filter</Text>
+                        <Filter />
+                    </Pressable>
+                    <Pressable onPress={() => setSavedFilter(!savedFilter)} style={styles.filterContainer}>
+                        <Text style={styles.filterText}>Saved</Text>
+                        <Bookmark width="24" height="24" fill="none" strokeColor="white"/>
+                    </Pressable>
+                </View>
                 <View style={styles.list}>
-                    {treatmentData.filter((treat) => checkFilters(treat)).map((treatment) => {
-                        return (
-                            <TreatmentItem press={() => {
-                                setSelectedTreatment(treatment);
-                                scrollRef.scrollToEnd();
-                            }} treatment={treatment}/>
-                        )
-                    })}
-                    {Array.from(savedTreatments.treatments)?.map((treatment) => {
-                        return (
-                            <Text>{treatment.name}</Text>
-                        )
-                    })}
+                    {
+                        savedFilter ? 
+                        savedTreatments.filter((treat) => checkFilters(treat)).map((treatment) => {
+                            return (
+                                <TreatmentItem press={() => {
+                                    setSelectedTreatment(treatment);
+                                    scrollRef.scrollToEnd();
+                                }} treatment={treatment}/>
+                            )
+                        })
+                        :
+                        treatmentData.filter((treat) => checkFilters(treat)).map((treatment) => {
+                            return (
+                                <TreatmentItem press={() => {
+                                    setSelectedTreatment(treatment);
+                                    scrollRef.scrollToEnd();
+                                }} treatment={treatment}/>
+                            )
+                        }) 
+                    }
                 </View>
             </ScrollView>
             <TreatmentInfo treatment={selectedTreatment}/>
@@ -93,19 +107,29 @@ const styles = StyleSheet.create({
         padding: 0,
         paddingTop: '1%',
     },
-    filterContainer:{
+    filtersContainer:{
         flexDirection: 'row',
         alignSelf: 'center',
-        margin: 15
+    },
+    filterContainer:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        alignSelf: 'center',
+        margin: 15,
+        width: 100,
+        backgroundColor: '#469C97',
+        height: 32,
+        borderRadius: 15,   
     },
     filterText:{
-        fontSize: 20,
-        marginLeft: 10
+        fontSize: 16,
+        color: 'white'
     },
     list: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 200,
+        paddingBottom: 50,
     },
     modalViewContainer:{
         flex: 1,

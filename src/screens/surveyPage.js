@@ -10,7 +10,7 @@ function SurveyPage(props){
     const [selectedId, setSelectedId] = useState(0); //reference current question
     const [introRef, setIntroRef] = useState(null) 
     const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
-
+            
     const renderItem = ({ item }) => {
         return (
             <View>
@@ -171,7 +171,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 25
+        borderRadius: 25,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     backText: {
         textAlign: 'center',
@@ -187,7 +194,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 25
+        borderRadius: 25,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     progressContainer:{
         flex: 0,
