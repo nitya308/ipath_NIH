@@ -3,10 +3,22 @@ import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-na
 import RightArrow from '../../assets/icons/right.svg';
 
 function SurveyResult(props){
+
+    const sc = props.scores;
+    const totalScore = sc.reduce((sum, num) => sum + num, 0);
+
+    var result = "";
+
+    if (totalScore <=4) result = "no depression";
+    else if (totalScore <= 9) result = "mild depression";
+    else if (totalScore <= 14) result = "moderate depression";
+    else if (totalScore <= 19) result = "moderate to severe depression";
+    else if (totalScore <= 27) result = "severe depression";
+
     return(
         <View style={styles.container}>
             <Text style={styles.resultTitle}>Survey Results</Text>
-            <Text style={styles.h1}>Based on your survey results, you are displaying symptoms of <Text style={{fontWeight: 'bold'}}>moderate depression</Text></Text>
+            <Text style={styles.h1}>Based on your survey results, you are displaying symptoms of <Text style={{fontWeight: 'bold'}}>{result}</Text></Text>
             <Text style={styles.h2}>What does this mean?</Text>
             <Text style={styles.p}>Depression is more common than you might think. Around 20% of cancer patients display symptoms of depression</Text> 
             <TouchableHighlight style={styles.treatmentButton} onPress={props.press}>

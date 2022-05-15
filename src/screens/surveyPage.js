@@ -4,9 +4,14 @@ import SurveyQuestion from '../components/survey/survey-question';
 import SurveyIntro from '../components/survey/survey-intro';
 import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
+import { addSurveyRes } from '../services/datastore';
 
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
+
+    const scoresArray = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
+    const [selAns, setSelAns] = useState(-1);
+    const [scores, setScore] = useState(scoresArray); // array of scores scores stored here
     const [selectedId, setSelectedId] = useState(0); //reference current question
     const [introRef, setIntroRef] = useState(null) 
     const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
@@ -14,7 +19,7 @@ function SurveyPage(props){
     const renderItem = ({ item }) => {
         return (
             <View>
-                <SurveyQuestion questionTitle={item.title} press={scrollForward}/>
+                <SurveyQuestion questionTitle={item.title} press={scrollForward} set0={add0} set1={add1} set2={add2} set3={add3} selAns={selAns}/>
             </View>
         )
     }
@@ -22,7 +27,7 @@ function SurveyPage(props){
     const renderSubmitButton = () => {
         if(selectedId == 8){
             return (
-                <TouchableHighlight style={styles.submitButton} onPress={() => introRef.scrollToEnd()}>
+                <TouchableHighlight style={styles.submitButton} onPress={() => {console.log("submitted"); addSurveyRes("users/test-username", scores, new Date()); introRef.scrollToEnd()}}>
                     <Text style={styles.backText}>Submit</Text>
                 </TouchableHighlight>
             );
@@ -35,17 +40,44 @@ function SurveyPage(props){
             );
         }
     }
+
+    const add0 = () => {
+      scores[selectedId] = 0;
+      setScore(scores);
+      setSelAns(0);
+    };
+
+    const add1 = () => {
+      scores[selectedId] = 1;
+      setScore(scores);
+      setSelAns(1);
+    };
+
+    const add2 = () => {
+      scores[selectedId] = 2;
+      setScore(scores);
+      setSelAns(2);
+    };
+
+    const add3 = () => {
+      scores[selectedId] = 3;
+      setScore(scores);
+      setSelAns(3);
+    };
+
     const scrollForward = () => {
         if(selectedId < 8){
             setSelectedId(selectedId+1);
+            setSelAns(scores[selectedId+1]);
         }
-    }
+    };
     
     const scrollBack = () => {
         if(selectedId > 0){
             setSelectedId(selectedId-1);
         }
-    }
+        setSelAns(scores[selectedId-1]);
+    };
 
     useEffect(() => {
         if(questionRef){
@@ -61,6 +93,7 @@ function SurveyPage(props){
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
                     <FlatList data={questionData} 
+                    scores = {setScore}
                     ref={(ref)=>{setQuestionRef(ref)}}
                     renderItem={renderItem} 
                     keyExtractor={(item) => item.id}
@@ -72,7 +105,7 @@ function SurveyPage(props){
                     </TouchableHighlight>
                     {renderSubmitButton()}
                 </View>
-                <SurveyResult press={() => props.navigation.navigate('Learn')}/>
+                <SurveyResult scores={scores} press={() => props.navigation.navigate('Learn')}/>
             </ScrollView>
         </View>
     );
