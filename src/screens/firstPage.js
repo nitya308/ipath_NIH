@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-native';
 import LoginPage from './loginPage';
-
+import Logo from '../assets/icons/logo.svg';
 function FirstPage({ navigation }) {
   return (
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
           <View style={styles.flexContainer}>
-            <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image>
+            <Logo />
+            {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
             <Text style={styles.title}>iPath</Text>
             <Text style={styles.italicSubheading}>Insert 1-2 sentence blurb here</Text>
             <Text style={styles.italicSubheading}>Click anywhere to continue</Text>

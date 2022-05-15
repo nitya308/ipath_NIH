@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
 import Chart from '../assets/icons/chart.svg';
-import {getUserDoc, updateFavTreatment, deleteFavTreatment, getUserSurveyRes, addSurveyRes, getTreatments, addClick} from '../services/datastore';
-
+import { connect } from 'react-redux';
+import { fetchTreatments, fetchSavedTreatments } from '../actions/index';
 
 function HomePage(props){
+    useEffect(() => {
+        const fetch1 = async () => {props.fetchTreatments(); }
+        const fetch2 = async() => {props.fetchSavedTreatments('test-username'); }
+        fetch1();
+        fetch2();
+    }, [])
     const navigateTo = (name) => {
         props.navigation.navigate(name);
     }
@@ -139,4 +145,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomePage;
+export default connect(null, { fetchTreatments, fetchSavedTreatments })(HomePage);

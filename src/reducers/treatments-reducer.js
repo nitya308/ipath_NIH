@@ -1,20 +1,20 @@
 import { ActionTypes } from '../actions/index';
-
 const initialState = {
-    treatments: []
+    allTreatments: [],
+    savedTreatments: []
 }
 const TreatmentsReducer = (state = initialState,  action = {}) => {
   switch (action.type) {
     case ActionTypes.SAVE_TREATMENT:
-        const tempSet = new Set(state.treatments)
-        let newTreatments = [...state.treatments];
-        if(tempSet.has(action.payload)){
-            tempSet.delete(action.payload);
-            newTreatments = Array.from(tempSet);
-        } else {
-            newTreatments.push(action.payload);
-        }
-      return { ...state, treatments: newTreatments };
+      return { ...state, savedTreatments: [...state.savedTreatments, action.payload ] };
+    case ActionTypes.DELETE_SAVED_TREATMENT:
+      let temp = [...state.savedTreatments];
+      temp.splice(temp.indexOf(action.payload), 1);
+      return { ...state, savedTreatments: temp}
+    case ActionTypes.FETCH_SAVED_TREATMENTS:
+      return { ...state, savedTreatments: action.payload };
+    case ActionTypes.FETCH_TREATMENTS:
+      return { ...state, allTreatments: action.payload };
     default:
       return state;
   }

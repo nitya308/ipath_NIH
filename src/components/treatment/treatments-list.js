@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView, Pressable, Modal} from 'react-native';
-import { useSelector } from 'react-redux';
-import Filter from '../../assets/icons/filter.svg';
+import { useSelector, connect } from 'react-redux';
+import Filter from '../../assets/icons/filter';
 import Bookmark from '../../assets/icons/bookmark';
-import BookmarkSvg from '../../assets/icons/bookmark.svg';
+import Close from '../../assets/icons/close.svg';
 import Checkbox from '../checkbox';
 import TreatmentInfo from './treatment-info';
 import TreatmentItem from './treatment-item';
+import { fetchTreatments } from '../../actions/index';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentsList(props){
-    const savedTreatments = useSelector((state) => state.savedTreatments.treatments);
+
+    const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
+    const allTreatments = useSelector((state) => state.treatments.allTreatments);
     const [therapyFilter, setTherapyFilter] = useState(false);
     const [medFilter, setMedFilter] = useState(false);
     const [comboFilter, setComboFilter] = useState(false);
@@ -25,13 +28,13 @@ function TreatmentsList(props){
     const[selectedTreatment, setSelectedTreatment] = useState(null);
 
     const checkFilters = (treatment) => {
-        if(therapyFilter && treatment.category === "Talk Therapy"){
+        if(therapyFilter && treatment.data.type === "Therapy"){
             return true;
         }
-        if(medFilter && treatment.category === "Medication"){
+        if(medFilter && treatment.data.type === "Medication"){
             return true;
         }
-        if(waitFilter && treatment.category === "Watchful Waiting"){
+        if(waitFilter && treatment.data.type === "Watchful Waiting"){
             return true;
         }
         if(!waitFilter && !medFilter && !comboFilter && !therapyFilter){
@@ -46,28 +49,28 @@ function TreatmentsList(props){
                 <View style={styles.filtersContainer}>
                     <Pressable onPress={() => setFilterModal(true)} style={styles.filterContainer}>
                         <Text style={styles.filterText}>Filter</Text>
-                        <Filter />
+                        <Filter width="24" height="24" fill={(therapyFilter || medFilter || waitFilter || comboFilter) ? "white" : "none"} strokeColor="white" />
                     </Pressable>
                     <Pressable onPress={() => setSavedFilter(!savedFilter)} style={styles.filterContainer}>
                         <Text style={styles.filterText}>Saved</Text>
-                        <Bookmark width="24" height="24" fill="none" strokeColor="white"/>
+                        <Bookmark width="24" height="24" fill={savedFilter? "white" : "none"} strokeColor="white"/>
                     </Pressable>
                 </View>
                 <View style={styles.list}>
                     {
-                        savedFilter ? 
-                        savedTreatments.filter((treat) => checkFilters(treat)).map((treatment) => {
+                        savedFilter && allTreatments ? 
+                        allTreatments.filter((treat) => savedTreatments.includes(treat.id)).filter((treat) => checkFilters(treat)).map((treatment) => {
                             return (
-                                <TreatmentItem press={() => {
+                                <TreatmentItem key={treatment.id} press={() => {
                                     setSelectedTreatment(treatment);
                                     scrollRef.scrollToEnd();
                                 }} treatment={treatment}/>
                             )
                         })
                         :
-                        treatmentData.filter((treat) => checkFilters(treat)).map((treatment) => {
+                        allTreatments?.filter((treat) => checkFilters(treat)).map((treatment) => {
                             return (
-                                <TreatmentItem press={() => {
+                                <TreatmentItem key={treatment.id} press={() => {
                                     setSelectedTreatment(treatment);
                                     scrollRef.scrollToEnd();
                                 }} treatment={treatment}/>
@@ -77,7 +80,7 @@ function TreatmentsList(props){
                 </View>
             </ScrollView>
             <TreatmentInfo treatment={selectedTreatment}/>
-            <Modal visible={filterModal} transparent={true} onRequestClose={() => setFilterModal(!filterModal)}>
+            <Modal animationType="slide" visible={filterModal} transparent={true} onRequestClose={() => setFilterModal(!filterModal)}>
                 <View style={styles.modalViewContainer}>
                     <Text style={styles.modalHeader}>Filter Treatments</Text>
                     <Text style={styles.modalSubHeader}>I'm interested in...</Text>
@@ -88,7 +91,8 @@ function TreatmentsList(props){
                         <Checkbox title="Watchful Waiting" isChecked={waitFilter} onPress={() => setWaitFilter(!waitFilter)}/>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setFilterModal(!filterModal)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                        {/* <Text style={styles.closeModalIcon}>X</Text> */}
+                        <Close />
                     </Pressable>
                 </View>
             </Modal>
@@ -121,6 +125,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#469C97',
         height: 32,
         borderRadius: 15,   
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     filterText:{
         fontSize: 16,
@@ -167,7 +178,8 @@ const styles = StyleSheet.create({
     modalSubHeader:{
         fontSize: 20,
         fontWeight: 'bold',
-        marginTop: 30
+        marginTop: 30,
+        paddingLeft: 10,
     },  
     checkboxContainerOne:{
         flexDirection: 'row',
@@ -250,4 +262,4 @@ const treatmentData = [
         category: "Medication"
     },
 ]
-export default TreatmentsList
+export default connect(null, { fetchTreatments })(TreatmentsList);

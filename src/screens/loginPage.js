@@ -3,12 +3,13 @@ import { StyleSheet, Text, Image, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import LoginInput from '../components/login-input';
 import MainTabBar from '../navigation/main_tab_bar';
-
+import Logo from '../assets/icons/logo.svg';
 function LoginPage() {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require('../images/fake-logo.png')}></Image>
+      <Logo style={styles.logo} />
+      {/* <Image style={styles.logo} source={require('../images/fake-logo.png')}></Image> */}
       <LoginInput placeholder="Username"></LoginInput>
       <LoginInput placeholder="Password"></LoginInput>
       <View style={styles.flexContainer}>

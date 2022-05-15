@@ -9,32 +9,31 @@ import Bookmark from '../../assets/icons/bookmark.js';
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentInfo(props){
-    const savedTreatments = useSelector((state) => state.savedTreatments);
-    var tempSet = new Set(savedTreatments.treatments);
+    const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
+    var tempSet = new Set(savedTreatments);
     if(props.treatment){
         return(
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.headerName}>{props.treatment.name}</Text>
+                    <Text style={styles.headerName}>{props.treatment.id}</Text>
                     <Bookmark width="30" height="30" color={tempSet.has(props.treatment)? "black" : "none"}/>
                 </View>
                 <View style={styles.traits}>
                     <View style={styles.overview}>
-                        <Text style={styles.typeTrait}>Talk Therapy</Text>
+                        <Text style={styles.typeTrait}>{props.treatment.data.type}</Text>
                         <Text style={styles.typeTrait}>Medication</Text>
                     </View>
-                    <Text style={styles.cost}>Cost: {"$".repeat(props.treatment.cost)}</Text>
+                    <Text style={styles.cost}>Cost: {"$".repeat(props.treatment.data.cost)}</Text>
                     <View style={styles.trait}>
                         <MapPin />
-                        <Text style={styles.traitText}>{props.treatment.type}</Text>
                     </View>
                     <View style={styles.trait}>
                         <CheckMark />
-                        <Text style={styles.traitText}>{props.treatment.takesInsurance ? "Takes Insurance" : "No Insurance"}</Text>
+                        <Text style={styles.traitText}>{props.treatment.data.insurance}</Text>
                     </View>
                     <View style={styles.trait}>
                         <CheckMark />
-                        <Text style={styles.traitText}>{props.treatment.quickAccess ? "Quick Access" : "Not Quick Access"}</Text>
+                        <Text style={styles.traitText}>{props.treatment.data.time}</Text>
                     </View>
                 </View>
 

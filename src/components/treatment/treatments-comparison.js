@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable } from 'react-native';
 import RightArrow from '../../assets/icons/right.svg';
+import Close from '../../assets/icons/close.svg';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
@@ -56,7 +57,8 @@ function TreatmentsComparison(props){
                         <Text style={styles.modalDescription}>Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.</Text>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setModalOne(!modalOne)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                        {/* <Text style={styles.closeModalIcon}>X</Text> */}
+                        <Close />
                     </Pressable>
                 </View>
             </Modal>
@@ -76,7 +78,8 @@ function TreatmentsComparison(props){
                         <Text style={styles.modalDescription}>Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.</Text>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setModalTwo(!modalTwo)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                        {/* <Text style={styles.closeModalIcon}>X</Text> */}
+                        <Close />
                     </Pressable>
                 </View>
             </Modal>
@@ -96,7 +99,8 @@ function TreatmentsComparison(props){
                         <Text style={styles.modalDescription}>Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.</Text>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setModalThree(!modalThree)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                        {/* <Text style={styles.closeModalIcon}>X</Text> */}
+                        <Close />
                     </Pressable>
                 </View>
             </Modal>
@@ -116,7 +120,8 @@ function TreatmentsComparison(props){
                         <Text style={styles.modalDescription}>Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.</Text>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setModalFour(!modalFour)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                        {/* <Text style={styles.closeModalIcon}>X</Text> */}
+                        <Close />
                     </Pressable>
                 </View>
             </Modal>

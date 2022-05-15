@@ -17,29 +17,25 @@ const clicks = firestore.collection('clicks');
 
 // Get all info about a user
 export const getUserDoc = (userID) => {
-  return users.doc(userID)
-    .get()
-    .then((doc) => {
-      console.log(doc.id);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return users.doc(userID).get();
 };
 
+export function getTreatmentById(treatID){
+  return treatments.doc(treatID).get();
+}
 // Favourite a treatment
-export const updateFavTreatment = (userID, treatID) => {
-  users.doc(userID).update({ 'bookmarked-treatments': firebase.firestore.FieldValue.arrayUnion(treatID) })
-    .then(() => {
-      console.log(`Added ${treatID} to user ${userID}'s list of fav treatments`);
-    })
-    .catch((error) => {
-      console.log('Error updating goal: ', error);
-    });
+export function updateFavTreatment(userID, treatID){
+  return users.doc(userID).update({ 'bookmarked-treatments': firebase.firestore.FieldValue.arrayUnion(treatID) });
+    // .then(() => {
+    //   console.log(`Added ${treatID} to user ${userID}'s list of fav treatments`);
+    // })
+    // .catch((error) => {
+    //   console.log('Error updating goal: ', error);
+    // });
 };
 
 // Unfavourite a treatment
-export const deleteFavTreatment = (userID, treatID) => {
+export function deleteFavTreatment(userID, treatID){
   users.doc(userID).update({ 'bookmarked-treatments': firebase.firestore.FieldValue.arrayRemove(treatID) })
     .then(() => {
       console.log(`Removed ${treatID} from user ${userID}'s list of fav treatments`);
@@ -87,17 +83,20 @@ export const addSurveyRes = (userID, scores, date) => {
 // ================ TREATMENT FUNCTIONS =================
 
 // Get all treatments
-export const getTreatments = () => {
+export function getTreatments(){
+  // alert('called get treatments')
   return treatments.get()
-  .then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id);
-    });
-  })
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
+  // .then((querySnapshot) => {
+  //   console.log(querySnapshot);
+  //   // return(querySnapshot);
+  //   querySnapshot.forEach((doc) => {
+  //     // doc.data() is never undefined for query doc snapshots
+  //     console.log(doc.id);
+  //   });
+  // })
+  // .catch((error) => {
+  //   console.log("Error getting documents: ", error);
+  // });
 };
 
 // ================ ANALYTICS FUNCTIONS =================

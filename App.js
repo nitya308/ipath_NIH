@@ -4,10 +4,11 @@ import Profile from './src/screens/profilePage';
 import { createStackNavigator} from '@react-navigation/stack';
 import { View, Text, Dimensions } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileButton from './src/components/profileButton';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import * as db from './src/services/datastore';
 
 import rootReducer from './src/reducers';
 
@@ -17,7 +18,10 @@ const store = configureStore({
 });
 
 export default function App() {
-
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch({ type: "FETCH_TREATMENTS", payload: db.getTreatments()})
+  // }, [])
   const [isSignedIn, setSignIn] = React.useState(true);
   
   const signIn = () => {
@@ -59,4 +63,3 @@ const headerStyling = {
     </Provider>
   );
 }
-

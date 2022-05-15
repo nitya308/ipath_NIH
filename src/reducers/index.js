@@ -5,7 +5,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import TreatmentsReducer from './treatments-reducer';
 
 const rootReducer = combineReducers({
-  savedTreatments: TreatmentsReducer,
+  treatments: TreatmentsReducer,
 });
 
 export default rootReducer;

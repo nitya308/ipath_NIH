@@ -7,15 +7,16 @@ import TreatmentInfo from '../treatment/treatment-info';
 function SavedTreatments(props){
     const [scrollRef, setScrollRef] = useState(null);
     const [selectedTreatment, setSelectedTreatment] = useState(null)
-    const savedTreatments = useSelector((state) => state.savedTreatments);
+    const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
+    const allTreatments = useSelector((state) => state.treatments.allTreatments);
     return(
         <ScrollView horizontal={true} pagingEnabled={true} ref={(ref) => {setScrollRef(ref)}}>
             <ScrollView contentContainerStyle={styles.container}>
                 <Text style={styles.title}>Saved Treatments</Text>
                 <View style={styles.list}>
-                    {Array.from(savedTreatments.treatments)?.map((treatment) => {
+                    {allTreatments.filter((treat) => savedTreatments.includes(treat.id)).map((treatment) => {
                         return (
-                            <TreatmentItem treatment={treatment} press={() => {
+                            <TreatmentItem key={treatment.id} treatment={treatment} press={() => {
                                 setSelectedTreatment(treatment);
                                 scrollRef.scrollToEnd();
                             }}/>
