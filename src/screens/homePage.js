@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
-import Chart from '../assets/icons/chart.svg'
+import Chart from '../assets/icons/chart.svg';
+import {getUserDoc, updateFavTreatment, deleteFavTreatment, getUserSurveyRes, addSurveyRes, getTreatments, addClick} from '../services/datastore';
 
 
 function HomePage(props){
