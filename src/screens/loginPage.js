@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Image, View } from 'react-native';
+import { StyleSheet, Text, Image, View, Modal } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import LoginInput from '../components/login-input';
 import MainTabBar from '../navigation/main_tab_bar';
 
 function LoginPage() {
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -13,9 +16,26 @@ function LoginPage() {
       <LoginInput placeholder="Password"></LoginInput>
       <View style={styles.flexContainer}>
         <Text style={styles.option}>Stay logged in?</Text>
-        <Text style={[styles.option, styles.link]}>Forgot Password</Text>
+        <Text style={[styles.option, styles.link]} onPress={() => setModalVisible(true)}>Forgot Password</Text>
       </View>
-      <TouchableHighlight style={styles.signbutton} onPress={()=>"add sign in logic"}> 
+      <Modal transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible); }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Pressable onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={{ textAlign: 'right' }}>X</Text>
+            </Pressable>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Forgot Password?</Text>
+              <Text style={styles.modalText}>Input your email, and we’ll send you a temporary password to use to log in.</Text>
+              <LoginInput placeholder="Email"></LoginInput>
+              <TouchableHighlight style={styles.signbutton} onPress={() => "add forgot pw logic"}>
+                <Text style={styles.buttontext}>Submit</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <TouchableHighlight style={styles.signbutton} onPress={() => "add sign in logic"}>
         <Text style={styles.buttontext}>Sign in</Text>
       </TouchableHighlight>
       <Text style={styles.link}>Or Create Account</Text>
@@ -23,11 +43,11 @@ function LoginPage() {
   );
 }
 const styles = StyleSheet.create({
-  link:{
-   textDecorationLine: 'underline',
-   textAlign: 'center'
+  link: {
+    textDecorationLine: 'underline',
+    textAlign: 'center'
   },
-  option:{
+  option: {
     flex: 1,
     textAlign: 'center'
   },
@@ -54,20 +74,55 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   signbutton: {
+    backgroundColor: '#469C97',
     textAlign: 'center',
     fontSize: 20,
     lineHeight: 45,
-    borderRadius: 20,
+    borderRadius: 25,
     marginLeft: 30,
     marginRight: 30,
     height: 50,
     margin: 20,
-    borderWidth: 1,
+    shadowRadius: 2,
+    shadowOpacity: 0.3,
+    shadowColor: '#000000',
+    shadowOffset:  {width: 3,height: 3},
   },
   buttontext: {
+    color: '#FFFFFF',
     textAlign: 'center',
     fontSize: 20,
     lineHeight: 45,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowRadius: 2,
+    shadowOpacity: 0.1,
+    shadowColor: '#000000',
+    shadowOffset:  {width: 3,height: 3},
+  },
+  modalView: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    margin: 7,
+    padding: 10,
+    paddingBottom: 30,
+    shadowColor: "#000",
+  },
+  modalContent: {
+    padding: 20,
+  },
+  modalTitle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    paddingBottom: 10,
+  },
+  modalText: {
+    fontSize: 15,
+    padding: 25,
   },
 });
 

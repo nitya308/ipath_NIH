@@ -18,7 +18,7 @@ const store = configureStore({
 
 export default function App() {
 
-  const [isSignedIn, setSignIn] = React.useState(true);
+  const [isSignedIn, setSignIn] = React.useState(false);
   
   const signIn = () => {
     setSignIn(prev => ({ status: !prev.status }));
