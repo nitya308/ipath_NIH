@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, Image, View, Modal } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import LoginInput from '../components/login-input';
-import MainTabBar from '../navigation/main_tab_bar';
 
-function LoginPage() {
+
+function LoginPage({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -38,7 +37,7 @@ function LoginPage() {
       <TouchableHighlight style={styles.signbutton} onPress={() => "add sign in logic"}>
         <Text style={styles.buttontext}>Sign in</Text>
       </TouchableHighlight>
-      <Text style={styles.link}>Or Create Account</Text>
+      <Text style={styles.link}  onPress={() => navigation.navigate('Create')}>Or Create Account</Text>
     </View>
   );
 }

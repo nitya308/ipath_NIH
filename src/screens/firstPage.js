@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-native';
-import LoginPage from './loginPage';
 
 function FirstPage({ navigation }) {
   return (
