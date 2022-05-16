@@ -6,6 +6,7 @@ import SurveyPage from '../screens/surveyPage';
 import TreatmentPage from '../screens/treatmentPage';
 import TreatmentsList from '../components/treatment/treatments-list'
 import ProfileButton from '../components/profileButton';
+
 import Home from '../assets/icons/home';
 import Clipboard from '../assets/icons/clipboard';
 import Book from '../assets/icons/book';
