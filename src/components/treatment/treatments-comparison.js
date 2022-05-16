@@ -14,28 +14,28 @@ function TreatmentsComparison(props){
     return(
         <View style={styles.container}>
             <Text style={styles.header}>Compare Treatment Types</Text>
-            <TouchableHighlight style={styles.button} onPress={() => setModalOne(true)}>
+            <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalOne(true)}>
                 <View>
                     <Text style={styles.buttonText}>How much will this cost?</Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => setModalTwo(true)}>
+            <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalTwo(true)}>
                 <View>
                     <Text style={styles.buttonText}>Will this work?</Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => setModalThree(true)}>
+            <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalThree(true)}>
                 <View>
                     <Text style={styles.buttonText}>What are the side effects?</Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => setModalFour(true)}>
+            <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalFour(true)}>
                 <View>
                     <Text style={styles.buttonText}>How soon can I access this?</Text>
                 </View>
             </TouchableHighlight>
 
-            <TouchableHighlight style={styles.compareButton} onPress={() => props.navigation.navigate("Treatments")}>
+            <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={() => props.navigation.navigate("Treatments")}>
                 <View style={styles.compareButtonContainer}>
                     <Text style={styles.compareButtonText}>Explore Treatment Options</Text>
                     <RightArrow styles={styles.arrow} />
@@ -120,7 +120,6 @@ function TreatmentsComparison(props){
                         <Text style={styles.modalDescription}>Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.</Text>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setModalFour(!modalFour)}}>
-                        {/* <Text style={styles.closeModalIcon}>X</Text> */}
                         <Close />
                     </Pressable>
                 </View>
@@ -219,9 +218,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 20,
         right: 20,
-    },
-    closeModalIcon:{
-        fontSize: 25
     },
     compareButton: {
         position: 'absolute',

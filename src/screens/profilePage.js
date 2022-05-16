@@ -18,20 +18,20 @@ function ProfilePage(props){
             <View style={styles.container}>
                 <Text style={styles.name}>Name</Text>
                 <Text style={styles.email}>name@gmail.com</Text>
-                <TouchableHighlight onPress={() => {setNextPage(1); scroll()}}>
+                <TouchableHighlight underlayColor="gray" style={styles.touchable} onPress={() => {setNextPage(1); scroll()}}>
                     <View style={styles.button}>
                         <Bookmark style={styles.icon}/>
                         <Text style={styles.buttonText}>Saved Treatments</Text>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.touchable} onPress={() => {setNextPage(2); scroll();}}>
+                </TouchableHighlight >
+                <TouchableHighlight underlayColor="gray" style={styles.touchable} onPress={() => {setNextPage(2); scroll();}} >
                     <View style={styles.button}>
                         <Bookmark style={styles.icon}/>
                         <Text style={styles.buttonText}>Notifications</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight>
-                <View style={styles.button}>
+                <TouchableHighlight underlayColor="gray" style={styles.touchable}>
+                    <View style={styles.button}>
                         <Bookmark style={styles.icon}/>
                         <Text style={styles.buttonText}>Log Out</Text>
                     </View>
@@ -74,13 +74,18 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 15
     },
+    touchable: {
+        height: 48,
+        width: 311,
+        marginTop: 20,
+        borderRadius: 10
+    },
     button: {
         flex: 0,
         flexDirection: 'row',
         backgroundColor: '#E3EFF0',
         height: 48,
         width: 311,
-        marginTop: 20,
         alignItems: 'center',
         borderRadius: 10
     },

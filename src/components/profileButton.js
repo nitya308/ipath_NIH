@@ -5,7 +5,7 @@ import Profile from '../assets/icons/profile.svg';
 function ProfileButton(props){
     
     return(
-        <TouchableHighlight style={styles.container} onPress={props.navigate}>
+        <TouchableHighlight underlayColor="gray" style={styles.container} onPress={props.navigate}>
             <Profile />
         </TouchableHighlight>
     )
@@ -14,6 +14,7 @@ function ProfileButton(props){
 const styles = StyleSheet.create({
     container: {
         marginRight: 20,
+        borderRadius: 10,
     }
 })
 export default ProfileButton;

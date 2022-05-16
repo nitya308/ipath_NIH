@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
     questionContainer: {
         marginTop: 0,
         flex: 1,
-        alignItems: 'center',
-        width: windowWidth,
+        width: windowWidth * 2,
         backgroundColor: 'white',
     },
     questionText: {
@@ -42,12 +41,16 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
         marginBottom: 10,
+        width: "50%",
+        textAlign: 'center',
+        marginRight: windowWidth * .25,
     },
     touchContainer: {
         height: 60, 
-        width: 300,
+        width: windowWidth * .75,
         borderRadius: 30,
         margin: 8,
+        marginLeft: windowWidth * .125,
     }, 
     answer: {
         flex: 1,

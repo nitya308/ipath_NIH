@@ -9,7 +9,7 @@ function SurveyIntro(props){
                 <Text style={styles.subTitle}>Depression Screening Survey</Text>
                 <Text style={styles.infoText}>A 9-item depression scale of the patient health questionnaire. The questions are based directly on the diagnostic criteria for major depressive disorder in the DSM-IV.</Text>
             </View>
-            <TouchableHighlight style={styles.startButton} onPress={props.transition}>
+            <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
                 <Text style={styles.buttonText}>Begin Survey</Text>
             </TouchableHighlight>
         </View>
