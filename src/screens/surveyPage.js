@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react';
+import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
 import SurveyQuestion from '../components/survey/survey-question';
 import SurveyIntro from '../components/survey/survey-intro';
@@ -9,6 +10,7 @@ import { addSurveyRes } from '../services/datastore';
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
 
+    const user = useSelector((state) => state.user);
     const scoresArray = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
     const [selAns, setSelAns] = useState(-1);
     const [numAnswered, setNumAnswered] = useState(0);
@@ -20,7 +22,7 @@ function SurveyPage(props){
     const renderSubmitButton = () => {
         if(selectedId == 8 && numAnswered == 9){
             return (
-                <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes("users/test-username", scores, new Date()); introRef.scrollToEnd()}}>
+                <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.scrollToEnd()}}>
                     <Text style={styles.backText}>Submit</Text>
                 </TouchableHighlight>
             );
