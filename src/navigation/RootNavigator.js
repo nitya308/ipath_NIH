@@ -55,7 +55,6 @@ function RootNavigator(props) {
         headerTitle: "iPath",
         headerStyle: headerStyling,
         headerRight: () => <ProfileButton navigate={() => navigation.navigate("Profile")}/>,
-        // headerTitleStyle: headerTitleStyling,
         headerTitleContainerStyle: headerTitleContainerStyling,
         headerBackgroundContainerStyle: {
           margin:0,
@@ -75,7 +74,6 @@ function RootNavigator(props) {
       }
     return (
       <NavigationContainer>
-        {/* {user ? <MainTabBar /> : <Text style={styles.test}>Logged out</Text>} */}
         {user ? <Stack.Navigator initialRouteName='Home' >
           <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
           <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>

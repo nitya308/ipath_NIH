@@ -19,7 +19,6 @@ export function saveTreatment(userID, treatID) {
         db.updateFavTreatment(userID, treatID).then((response) => {
             dispatch({ type: ActionTypes.SAVE_TREATMENT, payload: treatID });
         }).catch((error) => {
-            console.log('failure');
             dispatch({ type: ActionTypes.ERROR_TREATMENTS, error });
         })
     }

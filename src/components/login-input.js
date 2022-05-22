@@ -7,10 +7,17 @@ const LoginInput = (props) => {
   return (
     <SafeAreaView>
       <TextInput
+        autoCapitalize='none'
+        autoCorrect={false}
         clearTextOnFocus={true}
         style={styles.input}
         placeholder={props.placeholder}
         onChangeText={props.onChangeText}
+        autoFocus={props.autoFocus}
+        secureTextEntry={props.secure}
+        onFocus={props.onFocus}
+        keyboardType={props.keyboardType}
+        textContentType={props.textContentType}
       />
     </SafeAreaView>
   );

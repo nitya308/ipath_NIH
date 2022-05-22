@@ -42,7 +42,11 @@ const clicks = firestore.collection('clicks');
 
 // Get all info about a user
 export const getUserDoc = (userID) => {
-  return users.doc(userID).get();
+  let doc = users.doc(userID).get()
+  .catch((error) => {
+    console.log(error);
+  });
+  return doc;
 };
 
 export function getTreatmentById(treatID){

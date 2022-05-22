@@ -13,7 +13,8 @@ function LoginPage({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
 
   const onLogin = async () => {
       try {
@@ -30,11 +31,11 @@ function LoginPage({ navigation }) {
     <View style={styles.container}>
       <Logo style={styles.logo} />
       {/* <Image style={styles.logo} source={require('../images/fake-logo.png')}></Image> */}
-      <LoginInput value={inputEmail} onChangeText={text => setInputEmail(text)} placeholder="Username"></LoginInput>
-      <LoginInput value={inputPassword} onChangeText={text => setInputPassword(text)}placeholder="Password"></LoginInput>
+      <LoginInput autoCapitalize='none' keyboardType='email-address' textContentType="emailAddress" value={inputEmail} onChangeText={text => setInputEmail(text)} placeholder="Username"></LoginInput>
+      <LoginInput autoCapitalize='none' textContentType="password" value={inputPassword} onChangeText={text => setInputPassword(text)} placeholder="Password" secure={passwordVisibility}></LoginInput>
       <View style={styles.flexContainer}>
-        <Text style={styles.option}>Stay logged in?</Text>
-        <Text style={[styles.option, styles.link]} onPress={() => setModalVisible(true)}>Forgot Password</Text>
+        {/* <Text style={styles.option}>Stay logged in?</Text> */}
+        <Text style={[styles.option, styles.link]} onPress={() => setModalVisible(true)}>Forgot Password?</Text>
       </View>
       <Modal transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible); }}>
         <View style={styles.centeredView}>
@@ -45,8 +46,8 @@ function LoginPage({ navigation }) {
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Forgot Password?</Text>
               <Text style={styles.modalText}>Input your email, and we’ll send you a temporary password to use to log in.</Text>
-              <LoginInput placeholder="Email"></LoginInput>
-              <TouchableHighlight style={styles.signbutton} onPress={() => "add forgot pw logic"}>
+              <LoginInput placeholder="Email" value={resetEmail} onChangeText={text => setResetEmail(text)}></LoginInput>
+              <TouchableHighlight style={styles.signbutton} onPress={() => auth.sendPasswordResetEmail(resetEmail).then(alert('email sent!'))}>
                 <Text style={styles.buttontext}>Submit</Text>
               </TouchableHighlight>
             </View>

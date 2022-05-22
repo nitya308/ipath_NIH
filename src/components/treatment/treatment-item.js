@@ -12,7 +12,6 @@ function TreatmentItem(props){
     const user = useSelector((state) => state.user)
     // const allTreatments = useSelector((state) => state.treatments.allTreatments);
     // const save = async () => { props.saveTreatment(user.userId, props.treatment.id) }
-    // console.log(props.treatment.data().desc);
     return(
         <TouchableHighlight underlayColor="gray" style={styles.treatmentContainer} onPress={props.press}>
             <View>
