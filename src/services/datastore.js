@@ -2,9 +2,20 @@ import 'expo-firestore-offline-persistence'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import apiKeys from '../services/keys.js';
+import Constants from 'expo-constants';
+// import apiKeys from '../services/keys.js';
 
-firebase.initializeApp(apiKeys.firebaseConfig);
+
+const firebaseConfig = {
+  apiKey: Constants.manifest.extra.apiKey,
+  authDomain: Constants.manifest.extra.authDomain,
+  projectId: Constants.manifest.extra.projectId,
+  storageBucket: Constants.manifest.extra.storageBucket,
+  messagingSenderId: Constants.manifest.extra.messagingSenderId,
+  appId: Constants.manifest.extra.appId
+};
+
+firebase.initializeApp(firebaseConfig);
 
 const firestore = firebase.firestore();
 
@@ -59,6 +70,14 @@ export function deleteFavTreatment(userID, treatID){
     });
 };
 
+export function createUser(uid, email){
+  users.doc(uid).set({
+    email: email,
+    "bookmarked-treatments": []
+  }).catch((error) => {
+    console.log('Error creating user', error);
+  });
+}
 // ================ SURVEY FUNCTIONS =================
 
 // Get all survey results for a user
@@ -129,3 +148,5 @@ export const addClick = (userID, elementID, timestamp) => {
       console.log('Error adding click to click schema: ', error);
     });
 };
+
+export default firebase;

@@ -10,13 +10,11 @@ const Stack = createNativeStackNavigator();
 
 const HomePages = (props) => {
   return (
-    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="iPath" component={FirstPage}/>
         <Stack.Screen name="Login" component={LoginPage} options={{headerBackVisible: false}}/>
         <Stack.Screen name="Create" component={CreateAccountPage} options={{headerBackVisible: false}}/>
       </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 

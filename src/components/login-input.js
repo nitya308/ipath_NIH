@@ -10,8 +10,7 @@ const LoginInput = (props) => {
         clearTextOnFocus={true}
         style={styles.input}
         placeholder={props.placeholder}
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={props.onChangeText}
       />
     </SafeAreaView>
   );

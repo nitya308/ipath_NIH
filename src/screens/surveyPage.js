@@ -33,7 +33,6 @@ function SurveyPage(props){
             );
         }
     }
-
     const add0 = () => {
       if(scores[selectedId] === -1){
           setNumAnswered(numAnswered+1);

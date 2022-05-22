@@ -10,6 +10,9 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import * as db from './src/services/datastore';
 
+
+import Routes from './src/navigation/index';
+
 import rootReducer from './src/reducers';
 
 const Stack = createStackNavigator();
@@ -49,17 +52,23 @@ const headerStyling = {
     padding: 0,
     margin: 0,
   }
-  return (
+  // return (
+  //   <Provider store={store}>
+  //     {isSignedIn?
+  //     <NavigationContainer>
+  //       <Stack.Navigator initialRouteName='Home' >
+  //         <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
+  //         <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+  //     :
+  //     <HomePages/>}
+  //   </Provider>
+  // );
+
+  return(
     <Provider store={store}>
-      {isSignedIn?
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home' >
-          <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
-          <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-      :
-      <HomePages/>}
+      <Routes />
     </Provider>
-  );
+  )
 }

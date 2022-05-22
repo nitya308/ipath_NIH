@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
 import Chart from '../assets/icons/chart.svg';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { fetchTreatments, fetchSavedTreatments } from '../actions/index';
 
 function HomePage(props){
+    const user = useSelector((state) => state.user)
     useEffect(() => {
         const fetch1 = async () => {props.fetchTreatments(); }
-        const fetch2 = async() => {props.fetchSavedTreatments('test-username'); }
+        const fetch2 = async() => {props.fetchSavedTreatments(user.userId); }
         fetch1();
         fetch2();
     }, [])

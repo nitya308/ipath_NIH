@@ -5,6 +5,8 @@ export const ActionTypes = {
     FETCH_SAVED_TREATMENTS: 'FETCH_SAVED_TREATMENTS',
     FETCH_TREATMENTS: 'FETCH_TREATMENTS',
     ERROR_TREATMENTS: 'ERROR_TREATMENTS',
+    LOGIN_USER: 'LOGIN_USER',
+    LOGOUT_USER: 'LOGOUT_USER',
 };
 
 
@@ -56,5 +58,17 @@ export function fetchSavedTreatments(userID) {
         }).catch((error) => {
             dispatch({ type: ActionTypes.ERROR_TREATMENTS, error });
         })
+    }
+}
+
+export function loginUser({ email, id } ) {
+    return (dispatch) => {
+        dispatch({ type: ActionTypes.LOGIN_USER, payload: {email : email, id: id} });
+    }
+}
+
+export function logoutUser() {
+    return (dispatch) => {
+        dispatch({ type: ActionTypes.LOGOUT_USER });
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import Bookmark from '../../assets/icons/bookmark';
 import CheckMark from '../../assets/icons/check.svg';
@@ -9,9 +9,9 @@ import { saveTreatment, deleteSavedTreatment } from '../../actions/index';
 function TreatmentItem(props){
     // const dispatch = useDispatch(); 
     const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
-    const allTreatments = useSelector((state) => state.treatments.allTreatments);
-    var tempSet = new Set(savedTreatments);
-    const save = async () => { props.saveTreatment("test-username", props.treatment.id) }
+    const user = useSelector((state) => state.user)
+    // const allTreatments = useSelector((state) => state.treatments.allTreatments);
+    // const save = async () => { props.saveTreatment(user.userId, props.treatment.id) }
     // console.log(props.treatment.data().desc);
     return(
         <TouchableHighlight underlayColor="gray" style={styles.treatmentContainer} onPress={props.press}>
@@ -30,7 +30,7 @@ function TreatmentItem(props){
                     {/* <Text style={styles.treatmentInfo}>{props.treatment.quickAccess ? "Quick Access" : "No Quick Access"}</Text> */}
                 </View>
                 <View style={styles.bookmarkContainer}>
-                    <Bookmark width="30" height="30" treatment={props.treatment} press={() => {savedTreatments.includes(props.treatment.id)? props.deleteSavedTreatment("test-username", props.treatment.id) : props.saveTreatment("test-username", props.treatment.id)}}
+                    <Bookmark width="30" height="30" treatment={props.treatment} press={() => {savedTreatments.includes(props.treatment.id)? props.deleteSavedTreatment(user.userId, props.treatment.id) : props.saveTreatment(user.userId, props.treatment.id)}}
                  fill={savedTreatments.includes(props.treatment.id)? "black" : "none"} strokeColor="black"/>
                 </View>
             </View>

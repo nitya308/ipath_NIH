@@ -1,12 +1,26 @@
 import React, { useState, useEffect }  from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
+import { connect, useSelector } from 'react-redux';
 import Bookmark from '../assets/icons/bookmark.svg';
 import Notifications from '../components/profile/notifications';
 import SavedTreatments from '../components/profile/saved-treatments';
-import VariablePage from '../navigation/variable-page';
+import { logoutUser } from '../actions/index';
+
+import firebase from '../services/datastore';
+const auth = firebase.auth();
 function ProfilePage(props){
+    const user = useSelector((state) => state.user)
     const [nextPage, setNextPage] = useState(0);
     const [scrollRef, setScrollRef] = useState(null);
+
+    const handleSignOut = async () => {
+        try {
+          await auth.signOut();
+          props.logoutUser();
+        } catch (error) {
+          alert.log(error);
+        }
+      };
 
     const scroll = () => {
         if(scrollRef){
@@ -16,8 +30,8 @@ function ProfilePage(props){
     return (
         <ScrollView horizontal={true} pagingEnabled={true} ref={(ref) => {setScrollRef(ref)}}>
             <View style={styles.container}>
-                <Text style={styles.name}>Name</Text>
-                <Text style={styles.email}>name@gmail.com</Text>
+                {/* <Text style={styles.name}>Name</Text> */}
+                <Text style={styles.email}>{user.userEmail}</Text>
                 <TouchableHighlight underlayColor="gray" style={styles.touchable} onPress={() => {setNextPage(1); scroll()}}>
                     <View style={styles.button}>
                         <Bookmark style={styles.icon}/>
@@ -30,7 +44,7 @@ function ProfilePage(props){
                         <Text style={styles.buttonText}>Notifications</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight underlayColor="gray" style={styles.touchable}>
+                <TouchableHighlight underlayColor="gray" style={styles.touchable} onPress={handleSignOut}>
                     <View style={styles.button}>
                         <Bookmark style={styles.icon}/>
                         <Text style={styles.buttonText}>Log Out</Text>
@@ -99,4 +113,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ProfilePage;
+export default connect(null, { logoutUser })(ProfilePage);

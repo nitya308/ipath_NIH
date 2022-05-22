@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext}  from 'react';
 import { Text, View, Dimensions, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
@@ -6,6 +6,11 @@ import SurveyPage from '../screens/surveyPage';
 import TreatmentPage from '../screens/treatmentPage';
 import TreatmentsList from '../components/treatment/treatments-list'
 import ProfileButton from '../components/profileButton';
+
+// TODO: AUTH
+import firebase from '../services/datastore';
+import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
+const auth = firebase.auth();
 
 import Home from '../assets/icons/home';
 import Clipboard from '../assets/icons/clipboard';
@@ -19,6 +24,8 @@ const AboutTab = (props) => {
 const Tab = createBottomTabNavigator();
 
 function MainTabBar(props){
+
+  const { user } = useContext(AuthenticatedUserContext);
   const headerOptions = () => ({
     headerTitle: "iPath",
     headerStyle: headerStyling,

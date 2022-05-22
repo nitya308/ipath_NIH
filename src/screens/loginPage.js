@@ -6,15 +6,32 @@ import LoginInput from '../components/login-input';
 import MainTabBar from '../navigation/main_tab_bar';
 import Logo from '../assets/icons/logo.svg';
 
+import firebase from '../services/datastore';
+const auth = firebase.auth(); 
+
 function LoginPage({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+
+  const onLogin = async () => {
+      try {
+        if (inputEmail !== '' && inputPassword !== '') {
+          await auth.signInWithEmailAndPassword(inputEmail, inputPassword);
+        }
+      } catch (error) {
+        // setLoginError(error.message);
+        alert(error.message);
+      }
+  }
 
   return (
     <View style={styles.container}>
       <Logo style={styles.logo} />
       {/* <Image style={styles.logo} source={require('../images/fake-logo.png')}></Image> */}
-      <LoginInput placeholder="Username"></LoginInput>
-      <LoginInput placeholder="Password"></LoginInput>
+      <LoginInput value={inputEmail} onChangeText={text => setInputEmail(text)} placeholder="Username"></LoginInput>
+      <LoginInput value={inputPassword} onChangeText={text => setInputPassword(text)}placeholder="Password"></LoginInput>
       <View style={styles.flexContainer}>
         <Text style={styles.option}>Stay logged in?</Text>
         <Text style={[styles.option, styles.link]} onPress={() => setModalVisible(true)}>Forgot Password</Text>
@@ -36,10 +53,10 @@ function LoginPage({ navigation }) {
           </View>
         </View>
       </Modal>
-      <TouchableHighlight style={styles.signbutton} onPress={() => "add sign in logic"}>
+      <TouchableHighlight style={styles.signbutton} onPress={onLogin}>
         <Text style={styles.buttontext}>Sign in</Text>
       </TouchableHighlight>
-      <Text style={styles.link}  onPress={() => navigation.navigate('Create')}>Or Create Account</Text>
+      <Text style={styles.link} onPress={() => navigation.navigate('Create')}>Or Create Account</Text>
     </View>
   );
 }
