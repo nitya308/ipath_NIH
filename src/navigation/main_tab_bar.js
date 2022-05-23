@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
 import SurveyPage from '../screens/surveyPage';
 import TreatmentPage from '../screens/treatmentPage';
-import TreatmentsList from '../components/treatment/treatments-list'
+import TreatmentFlowPage from '../screens/treatmentFlowPage';
 import ProfileButton from '../components/profileButton';
 
 // TODO: AUTH
@@ -65,7 +65,7 @@ function MainTabBar(props){
           tabBarIcon: ({color}) => (
             <Book width="30" height="30" strokeWidth="10" strokeColor={color}/>
          )}}/>
-        <Tab.Screen name="Treatments" component={TreatmentsList} options={{
+        <Tab.Screen name="Treatments" component={TreatmentFlowPage} options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
             <List width="35" height="35" fill={color} strokeWidth="10" strokeColor={color}/>
