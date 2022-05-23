@@ -3,8 +3,6 @@ import { View, Pressable, StyleSheet, Text } from 'react-native';
 import Unchecked from '../assets/icons/unchecked.svg';
 import Checked from '../assets/icons/checked.svg';
 function Checkbox(props){
-    const iconName = props.isChecked ? 
-        "checkbox-marked" : "checkbox-blank-outline";
     return(
         <View style={styles.container}>
             <Pressable onPress={props.onPress}>
@@ -21,8 +19,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         width: 150,
-        marginTop: 5,
-        marginHorizontal: 5,
     },
     title: {
         fontSize: 16,

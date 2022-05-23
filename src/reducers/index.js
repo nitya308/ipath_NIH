@@ -3,9 +3,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import TreatmentsReducer from './treatments-reducer';
+import UserReducer from './user-reducer';
 
 const rootReducer = combineReducers({
-  savedTreatments: TreatmentsReducer,
+  treatments: TreatmentsReducer,
+  user: UserReducer,
 });
 
 export default rootReducer;

@@ -9,7 +9,7 @@ function SurveyIntro(props){
                 <Text style={styles.subTitle}>Depression Screening Survey</Text>
                 <Text style={styles.infoText}>A 9-item depression scale of the patient health questionnaire. The questions are based directly on the diagnostic criteria for major depressive disorder in the DSM-IV.</Text>
             </View>
-            <TouchableHighlight style={styles.startButton} onPress={props.transition}>
+            <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
                 <Text style={styles.buttonText}>Begin Survey</Text>
             </TouchableHighlight>
         </View>
@@ -60,7 +60,14 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         alignSelf: 'center',
-        marginTop: 50
+        marginTop: 50,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     buttonText: {
         fontSize: 17,

@@ -5,6 +5,7 @@ import RightArrow from '../../assets/icons/right.svg';
 import Speech from '../../assets/icons/speech.svg';
 import Thermo from '../../assets/icons/thermo.svg';
 import Watch from '../../assets/icons/watch.svg';
+import Close from '../../assets/icons/close.svg';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
@@ -34,21 +35,21 @@ function TreatmentsOverview(props){
     return(
         <View style={styles.options}>
             <Text style={styles.header}>Treatment Options</Text>
-            <TouchableHighlight style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true)}}>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true)}}>
                 <View>
                     <Text style={styles.optionHeader}>Talk Therapy</Text>
                     <Text style={styles.optionText}>Weekly sessions working with a therapist. In person or remote format</Text>
                     <Speech style={styles.icon}/>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.option} onPress={() => {setSelectedType("Watchful Waiting"); setModalVisible(true)}}>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Watchful Waiting"); setModalVisible(true)}}>
                 <View>
                     <Text style={styles.optionHeader}>Watchful Waiting</Text>
                     <Text style={styles.optionText}>Monitor symptoms without direct action.</Text>
                     <Watch style={styles.icon}/>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.option} onPress={() => {setSelectedType("Medication"); setModalVisible(true)}}>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Medication"); setModalVisible(true)}}>
                 <View>
                     <Text style={styles.optionHeader}>Medication</Text>
                     <Text style={styles.optionText}>Specialist-prescribed anti-depressants.</Text>
@@ -73,11 +74,11 @@ function TreatmentsOverview(props){
                         <Text style={styles.modalDescription}>{treatmentData[selectedType].sideEffects}</Text>
                     </ScrollView>
                     <Pressable style={styles.closeModal} onPress={() => {setModalVisible(!modalVisible)}}>
-                        <Text style={styles.closeModalIcon}>x</Text>
+                        <Close />
                     </Pressable>
                 </View>
             </Modal>
-            <TouchableHighlight style={styles.compareButton} onPress={props.scroll}>
+            <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={props.scroll}>
                 <View style={styles.compareButtonContainer}>
                     <Text style={styles.compareButtonText}>Compare Treatment Types</Text>
                     <RightArrow styles={styles.arrow} />
@@ -199,6 +200,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: '#469C97',
         borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     compareButtonContainer: {
         width: '95%',

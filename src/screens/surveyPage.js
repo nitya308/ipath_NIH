@@ -1,28 +1,28 @@
 import React, { useState, useEffect }  from 'react';
+import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
 import SurveyQuestion from '../components/survey/survey-question';
 import SurveyIntro from '../components/survey/survey-intro';
 import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
+import { addSurveyRes } from '../services/datastore';
 
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
+
+    const user = useSelector((state) => state.user);
+    const scoresArray = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
+    const [selAns, setSelAns] = useState(-1);
+    const [numAnswered, setNumAnswered] = useState(0);
+    const [scores, setScore] = useState(scoresArray); // array of scores scores stored here
     const [selectedId, setSelectedId] = useState(0); //reference current question
     const [introRef, setIntroRef] = useState(null) 
     const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
 
-    const renderItem = ({ item }) => {
-        return (
-            <View>
-                <SurveyQuestion questionTitle={item.title} press={scrollForward}/>
-            </View>
-        )
-    }
-
     const renderSubmitButton = () => {
-        if(selectedId == 8){
+        if(selectedId == 8 && numAnswered == 9){
             return (
-                <TouchableHighlight style={styles.submitButton} onPress={() => introRef.scrollToEnd()}>
+                <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.scrollToEnd()}}>
                     <Text style={styles.backText}>Submit</Text>
                 </TouchableHighlight>
             );
@@ -35,44 +35,86 @@ function SurveyPage(props){
             );
         }
     }
+    const add0 = () => {
+      if(scores[selectedId] === -1){
+          setNumAnswered(numAnswered+1);
+      }
+      scores[selectedId] = 0;
+      setScore([...scores])
+    };
+
+    const add1 = () => {
+      if(scores[selectedId] === -1){
+          setNumAnswered(numAnswered+1);
+      }  
+      scores[selectedId] = 1;
+      setScore([...scores]);
+    };
+
+    const add2 = () => {
+      if(scores[selectedId] === -1){
+          setNumAnswered(numAnswered+1);
+      }  
+      scores[selectedId] = 2;
+      setScore([...scores]);
+    };
+
+    const add3 = () => {
+      if(scores[selectedId] === -1){
+        setNumAnswered(numAnswered+1);
+      }
+      scores[selectedId] = 3;
+      setScore([...scores]);
+    };
+
     const scrollForward = () => {
+        setSelAns(scores[selectedId]);
         if(selectedId < 8){
             setSelectedId(selectedId+1);
+            setTimeout(() => setSelAns(scores[selectedId + 1]), 150);
         }
-    }
+    };
     
     const scrollBack = () => {
         if(selectedId > 0){
             setSelectedId(selectedId-1);
         }
-    }
+        setTimeout(() => setSelAns(scores[selectedId-1]), 150);
+    };
 
     useEffect(() => {
         if(questionRef){
-            questionRef.scrollToIndex({index: selectedId})
+            questionRef.scrollTo({x: selectedId * windowWidth * 2})
         }
     }, [selectedId])
+    useEffect(() => {
+        if(questionRef){
+            questionRef.scrollTo({x: selectedId * windowWidth * 2})
+        }
+    }, [questionRef])
 
     return (
         <View style={styles.container}>
-            <ScrollView scrollEnabled={false} pagingEnabled={true} ref={(ref)=>{setIntroRef(ref)}}>
+            <ScrollView scrollEnabled={false} ref={(ref)=>{setIntroRef(ref)}}>
                 <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight * .8})} />
                 <View style={styles.survey}>
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
-                    <FlatList data={questionData} 
-                    ref={(ref)=>{setQuestionRef(ref)}}
-                    renderItem={renderItem} 
-                    keyExtractor={(item) => item.id}
-                    horizontal={true}
-                    pagingEnabled={true}
-                    scrollEnabled={true}/>
-                    <TouchableHighlight style={styles.backButton} onPress={scrollBack}>
+                    <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => {setQuestionRef(ref)}}>
+                        {questionData.map((item) => {
+                            return(
+                                <View key={item.title}>
+                                    <SurveyQuestion questionTitle={item.title} press={scrollForward} set0={add0} set1={add1} set2={add2} set3={add3} selAns={selAns}/>
+                                </View>
+                            )
+                        })}
+                    </ScrollView>
+                    <TouchableHighlight underlayColor="gray" style={styles.backButton} onPress={scrollBack}>
                         <Text style={styles.backText}>Previous Question</Text>
                     </TouchableHighlight>
                     {renderSubmitButton()}
                 </View>
-                <SurveyResult press={() => props.navigation.navigate('Learn')}/>
+                <SurveyResult scores={scores} press={() => props.navigation.navigate('Learn')}/>
             </ScrollView>
         </View>
     );
@@ -171,7 +213,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 25
+        borderRadius: 25,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     backText: {
         textAlign: 'center',
@@ -187,7 +236,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#72CCD4',
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 25
+        borderRadius: 25,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     progressContainer:{
         flex: 0,

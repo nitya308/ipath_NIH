@@ -1,40 +1,44 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
+import { useSelector } from 'react-redux';
 import CheckMark from '../../assets/icons/check.svg';
 import MapPin from '../../assets/icons/mapPin.svg';
-import Bookmark from '../../assets/icons/bookmark.js';
-
+import Bookmark from '../../assets/icons/bookmark';
+import Left from '../../assets/icons/left.svg';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentInfo(props){
+    const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
+    var tempSet = new Set(savedTreatments);
     if(props.treatment){
         return(
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.headerName}>{props.treatment.name}</Text>
-                    <Bookmark width="30" height="30"/>
+                    <Pressable style={styles.backButton} onPress={props.press}>
+                        <Left />
+                    </Pressable>
+                    <Text style={styles.headerName}>{props.treatment.id}</Text>
+                    <Bookmark width="30" height="30" strokeColor="black" fill={savedTreatments.includes(props.treatment.id)? "black" : "none"}/>
                 </View>
                 <View style={styles.traits}>
                     <View style={styles.overview}>
-                        <Text style={styles.typeTrait}>Talk Therapy</Text>
+                        <Text style={styles.typeTrait}>{props.treatment.data.type}</Text>
                         <Text style={styles.typeTrait}>Medication</Text>
                     </View>
-                    <Text style={styles.cost}>Cost: {"$".repeat(props.treatment.cost)}</Text>
+                    <Text style={styles.cost}>Cost: {"$".repeat(props.treatment.data.cost)}</Text>
                     <View style={styles.trait}>
                         <MapPin />
-                        <Text style={styles.traitText}>{props.treatment.type}</Text>
                     </View>
                     <View style={styles.trait}>
                         <CheckMark />
-                        <Text style={styles.traitText}>{props.treatment.takesInsurance ? "Takes Insurance" : "No Insurance"}</Text>
+                        <Text style={styles.traitText}>{props.treatment.data.insurance}</Text>
                     </View>
                     <View style={styles.trait}>
                         <CheckMark />
-                        <Text style={styles.traitText}>{props.treatment.quickAccess ? "Quick Access" : "Not Quick Access"}</Text>
+                        <Text style={styles.traitText}>{props.treatment.data.time}</Text>
                     </View>
                 </View>
-
             </View>
         );
     } else {
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         paddingTop: 30,
-        width: '100%',
+        width: '90%',
     },
     headerName: {
         fontSize: 30,
@@ -90,6 +94,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 10,
         textAlign: 'center'
+    },
+    backButton:{
     }
 })
 export default TreatmentInfo

@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView, Pressable, Modal} from 'react-native';
-import Filter from '../../assets/icons/filter.svg';
+import { useSelector, connect } from 'react-redux';
+import Filter from '../../assets/icons/filter';
+import Bookmark from '../../assets/icons/bookmark';
+import Close from '../../assets/icons/close.svg';
 import Checkbox from '../checkbox';
 import TreatmentInfo from './treatment-info';
 import TreatmentItem from './treatment-item';
-// import { connect } from 'react-redux';
+import { fetchTreatments } from '../../actions/index';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 function TreatmentsList(props){
-    const savedTreatments = useSelector((state) => state.savedTreatments)
-
+    const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
+    const allTreatments = useSelector((state) => state.treatments.allTreatments);
+    
+    const [tempTherapyFilter, setTempTherapyFilter] = useState(false);
+    const [tempMedFilter, setTempMedFilter] = useState(false); // to display in modal, not applied unless user clicks 'apply'
+    const [tempWaitFilter, setTempWaitFilter] = useState(false);
+    
     const [therapyFilter, setTherapyFilter] = useState(false);
     const [medFilter, setMedFilter] = useState(false);
-    const [comboFilter, setComboFilter] = useState(false);
     const [waitFilter, setWaitFilter] = useState(false);
 
+    const [savedFilter, setSavedFilter] = useState(false);
+    
     const [filterModal, setFilterModal] = useState(false);
 
     const [scrollRef, setScrollRef] = useState(null);
@@ -24,58 +32,94 @@ function TreatmentsList(props){
     const[selectedTreatment, setSelectedTreatment] = useState(null);
 
     const checkFilters = (treatment) => {
-        if(therapyFilter && treatment.category === "Talk Therapy"){
+        if(therapyFilter && treatment.data.type === "Therapy"){
             return true;
         }
-        if(medFilter && treatment.category === "Medication"){
+        if(medFilter && treatment.data.type === "Medication"){
             return true;
         }
-        if(waitFilter && treatment.category === "Watchful Waiting"){
+        if(waitFilter && treatment.data.type === "Watchful Waiting"){
             return true;
         }
-        if(!waitFilter && !medFilter && !comboFilter && !therapyFilter){
+        if(!waitFilter && !medFilter && !therapyFilter){
             return true;
         }
         return false;
     }
+
+    const applyFilters = () => {
+        setMedFilter(tempMedFilter);
+        setTherapyFilter(tempTherapyFilter);
+        setWaitFilter(tempWaitFilter);
+        setFilterModal(!filterModal);
+    }
+
+    useEffect(() => {
+        if(filterModal){
+            setTempMedFilter(medFilter);
+            setTempTherapyFilter(therapyFilter);
+            setTempWaitFilter(waitFilter);
+        }
+    }, [filterModal])
     return(
-        <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={true} ref={(ref) => {setScrollRef(ref)}}>
+        <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => {setScrollRef(ref)}}>
             <ScrollView style={styles.container}>
-                <Text style={styles.header}>Connect to Treatments</Text>
-                <Pressable onPress={() => setFilterModal(true)}style={styles.filterContainer}>
-                    <Filter />
-                    <Text style={styles.filterText}>Filter</Text>
-                </Pressable>
+                <Text style={styles.header}>Treatment Options</Text>
+                <View style={styles.filtersContainer}>
+                    <Pressable onPress={() => setFilterModal(true)} style={[styles.filterContainer, (therapyFilter || medFilter || waitFilter) ? {borderWidth: "1", borderColor: "white"} : null]}>
+                        <Text style={styles.filterText}>Filter</Text>
+                        <Filter width="24" height="24" strokeColor="white" />
+                    </Pressable>
+                    <Pressable onPress={() => setSavedFilter(!savedFilter)} style={[styles.filterContainer, savedFilter ? {borderWidth: "1", borderColor: "white"} : null]}>
+                        <Text style={styles.filterText}>Saved</Text>
+                        <Bookmark width="24" height="24" fill={savedFilter? "white" : "none"} strokeColor="white"/>
+                    </Pressable>
+                </View>
                 <View style={styles.list}>
-                    {treatmentData.filter((treat) => checkFilters(treat)).map((treatment) => {
-                        return (
-                            <TreatmentItem press={() => {
-                                setSelectedTreatment(treatment);
-                                scrollRef.scrollToEnd();
-                            }} treatment={treatment}/>
-                        )
-                    })}
-                    {Array.from(savedTreatments.treatments)?.map((treatment) => {
-                        return (
-                            <Text>{treatment.name}</Text>
-                        )
-                    })}
+                    {
+                        savedFilter && allTreatments ? 
+                        allTreatments.filter((treat) => savedTreatments.includes(treat.id)).filter((treat) => checkFilters(treat)).map((treatment) => {
+                            return (
+                                <TreatmentItem key={treatment.id} press={() => {
+                                    setSelectedTreatment(treatment);
+                                    scrollRef.scrollToEnd();
+                                }} treatment={treatment}/>
+                            )
+                        })
+                        :
+                        allTreatments?.filter((treat) => checkFilters(treat)).map((treatment) => {
+                            return (
+                                <TreatmentItem key={treatment.id} press={() => {
+                                    setSelectedTreatment(treatment);
+                                    scrollRef.scrollToEnd();
+                                }} treatment={treatment}/>
+                            )
+                        }) 
+                    }
                 </View>
             </ScrollView>
-            <TreatmentInfo treatment={selectedTreatment}/>
-            <Modal visible={filterModal} transparent={true} onRequestClose={() => setFilterModal(!filterModal)}>
+            <TreatmentInfo press={() => scrollRef.scrollTo({x: 0})} treatment={selectedTreatment}/>
+            <Modal animationType="slide" visible={filterModal} transparent={true} onRequestClose={() => setFilterModal(!filterModal)}>
                 <View style={styles.modalViewContainer}>
                     <Text style={styles.modalHeader}>Filter Treatments</Text>
-                    <Text style={styles.modalSubHeader}>I'm interested in...</Text>
+                    <Text style={styles.modalSubHeader}>Show me treatments that are...</Text>
                     <View style={styles.checkboxContainerOne}>
-                        <Checkbox title="Talk Therapy" isChecked={therapyFilter} onPress={() => setTherapyFilter(!therapyFilter)} />
-                        <Checkbox title="Medication" isChecked={medFilter} onPress={() => setMedFilter(!medFilter)}/>
-                        <Checkbox title="Therapy & Medication" isChecked={comboFilter} onPress={() => setComboFilter(!comboFilter)}/>
-                        <Checkbox title="Watchful Waiting" isChecked={waitFilter} onPress={() => setWaitFilter(!waitFilter)}/>
+                        <View style={styles.modalFilter}>
+                            <Checkbox title="Talk Therapy" isChecked={tempTherapyFilter} onPress={() => setTempTherapyFilter(!tempTherapyFilter)} />
+                        </View>
+                        <View style={styles.modalFilter}>
+                            <Checkbox style={styles.modalFilter} title="Medication" isChecked={tempMedFilter} onPress={() => setTempMedFilter(!tempMedFilter)}/>
+                        </View>
+                        <View style={styles.modalFilter}>
+                            <Checkbox style={styles.modalFilter} title="Watchful Waiting" isChecked={tempWaitFilter} onPress={() => setTempWaitFilter(!tempWaitFilter)}/>
+                        </View>
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => {setFilterModal(!filterModal)}}>
-                        <Text style={styles.closeModalIcon}>X</Text>
+                        <Close />
                     </Pressable>
+                    <TouchableHighlight style={styles.applyButton}>
+                        <Text style={styles.applyButtonText} onPress={applyFilters}>Apply</Text>
+                    </TouchableHighlight>
                 </View>
             </Modal>
         </ScrollView>
@@ -93,19 +137,36 @@ const styles = StyleSheet.create({
         padding: 0,
         paddingTop: '1%',
     },
-    filterContainer:{
+    filtersContainer:{
         flexDirection: 'row',
         alignSelf: 'center',
-        margin: 15
+    },
+    filterContainer:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        alignSelf: 'center',
+        margin: 15,
+        width: 100,
+        backgroundColor: '#469C97',
+        height: 32,
+        borderRadius: 15,   
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     filterText:{
-        fontSize: 20,
-        marginLeft: 10
+        fontSize: 16,
+        color: 'white'
     },
     list: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 200,
+        paddingBottom: 50,
     },
     modalViewContainer:{
         flex: 1,
@@ -142,14 +203,19 @@ const styles = StyleSheet.create({
     },
     modalSubHeader:{
         fontSize: 20,
-        fontWeight: 'bold',
-        marginTop: 30
+        fontStyle: 'italic',
+        marginTop: 30,
+        paddingLeft: 10,
     },  
     checkboxContainerOne:{
-        flexDirection: 'row',
+        flexDirection: 'column',
         flexWrap: 'wrap',
         margin: 10,
     },
+    modalFilter: {
+        marginTop: 20,
+        marginLeft: 10
+    },  
     closeModal: {
         position: 'absolute',
         top: 20,
@@ -158,6 +224,20 @@ const styles = StyleSheet.create({
     closeModalIcon:{
         fontSize: 25
     },
+    applyButton:{
+        alignSelf: 'center',
+        width: 150,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: '#469C97',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 30
+    },
+    applyButtonText:{
+        color: 'white',
+        fontSize: 15
+    }
 })
 
 const treatmentData = [
@@ -226,4 +306,4 @@ const treatmentData = [
         category: "Medication"
     },
 ]
-export default TreatmentsList
+export default connect(null, { fetchTreatments })(TreatmentsList);

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
-import Chart from '../assets/icons/chart.svg'
-
+import Chart from '../assets/icons/chart.svg';
+import { connect, useSelector } from 'react-redux';
+import { fetchTreatments, fetchSavedTreatments } from '../actions/index';
 
 function HomePage(props){
+    const user = useSelector((state) => state.user)
+    useEffect(() => {
+        const fetch1 = async () => {props.fetchTreatments(); }
+        const fetch2 = async() => {props.fetchSavedTreatments(user.userId); }
+        fetch1();
+        fetch2();
+    }, [])
     const navigateTo = (name) => {
         props.navigation.navigate(name);
     }
@@ -72,19 +80,40 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       marginTop: 20,
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     surveyTouchContainer:{
         width: '100%',
         backgroundColor: '#469C97',
         height: 130,
-        borderRadius: 10
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     mediumTouchContainer:{
         width: 145.06,
         backgroundColor: '#469C97',
         height: 130,
         borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     additionalTouchContainer:{
         flex: 0,
@@ -93,7 +122,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#469C97',
         height: 65,
         borderRadius: 10,
-        marginTop: 20
+        marginTop: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     buttonContainer:{
       width: '95%'
@@ -110,4 +146,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomePage;
+export default connect(null, { fetchTreatments, fetchSavedTreatments })(HomePage);

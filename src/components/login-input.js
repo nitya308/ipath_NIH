@@ -7,10 +7,17 @@ const LoginInput = (props) => {
   return (
     <SafeAreaView>
       <TextInput
+        autoCapitalize='none'
+        autoCorrect={false}
+        clearTextOnFocus={true}
         style={styles.input}
         placeholder={props.placeholder}
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={props.onChangeText}
+        autoFocus={props.autoFocus}
+        secureTextEntry={props.secure}
+        onFocus={props.onFocus}
+        keyboardType={props.keyboardType}
+        textContentType={props.textContentType}
       />
     </SafeAreaView>
   );
@@ -18,7 +25,7 @@ const LoginInput = (props) => {
 
 const styles = StyleSheet.create({
   input: {
-    borderRadius: 20,
+    borderRadius: 25,
     marginLeft: 30,
     marginRight: 30,
     height: 50,
