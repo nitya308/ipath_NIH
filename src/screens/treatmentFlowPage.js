@@ -22,6 +22,8 @@ function TreatmentFlowPage(props){
     const [personFilter, setPersonFilter] = useState(false);
     const [remoteFilter, setRemoteFilter] = useState(false);
 
+    const [renderList, setRenderList] = useState(false);
+
     // Treatment sort options
     const [accessFilter, setAccessFilter] = useState(false);
     const [costFilter, setCostFilter] = useState(false);
@@ -33,36 +35,6 @@ function TreatmentFlowPage(props){
             scrollRef.scrollTo({x: windowWidth * pageNumber})
         }
     }, [pageNumber])
-
-    const renderBackButton = () => {
-        if(pageNumber > 0 && pageNumber < 3){
-            return( <TouchableHighlight style={styles.backButton} onPress={() => setPageNumber(pageNumber - 1)}>
-                <Text>Back</Text>
-            </TouchableHighlight> )
-        }
-    }
-    const renderNextButton = () => {
-        if(pageNumber < 2){
-            return(
-                <TouchableHighlight style={styles.nextButton} onPress={() => setPageNumber(pageNumber + 1)}>
-                    <Text>Next</Text>
-                </TouchableHighlight> 
-            )
-        } else {
-            return <View />
-        }
-    }
-    const renderApplyButton = () => {
-        if(pageNumber === 2){
-            return(
-                <TouchableHighlight style={styles.nextButton} onPress={() => setPageNumber(pageNumber + 1)}>
-                    <Text>Apply Filters</Text>
-                </TouchableHighlight>
-            )
-        } else {
-            return <View />
-        }
-    }
 
     return (
         <View style={styles.container}>
@@ -81,9 +53,9 @@ function TreatmentFlowPage(props){
                             <Checkbox style={styles.checkbox} isChecked={waitingFilter} onPress={() => setWaitingFilter(!waitingFilter)} title="Watchful Waiting" />
                         </View>
                     </View>
-                    {renderBackButton()}
-                    {renderNextButton()}
-                    {renderApplyButton()}
+                    <TouchableHighlight underlayColor='gray' style={styles.nextButton} onPress={() => setPageNumber(pageNumber + 1)}>
+                        <Right />
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.page}>
                     <Text style={styles.pageHeader}>Which locations option(s) are you interested in?</Text>
@@ -96,9 +68,12 @@ function TreatmentFlowPage(props){
                             <Checkbox style={styles.checkbox} isChecked={remoteFilter} onPress={() => setRemoteFilter(!remoteFilter)} title="Telehealth/Remote" />
                         </View>
                     </View>
-                    {renderBackButton()}
-                    {renderNextButton()}
-                    {renderApplyButton()}
+                    <TouchableHighlight underlayColor='gray' style={styles.backButton} onPress={() => setPageNumber(pageNumber - 1)}>
+                        <Left />
+                    </TouchableHighlight>
+                    <TouchableHighlight underlayColor='gray' style={styles.nextButton} onPress={() => setPageNumber(pageNumber + 1)}>
+                        <Right />
+                    </TouchableHighlight> 
                 </View>
                 <View style={styles.page}>
                     <Text style={styles.pageHeader}>How would you like to sort these treatment provider options?</Text>
@@ -111,11 +86,14 @@ function TreatmentFlowPage(props){
                             <Checkbox style={styles.checkbox} isChecked={costFilter} onPress={() => {setCostFilter(!costFilter); setAccessFilter(false)}} title="Lowest Cost" />
                         </View>
                     </View>
-                    {renderBackButton()}
-                    {renderNextButton()}
-                    {renderApplyButton()}
+                    <TouchableHighlight underlayColor='gray' style={styles.backButton} onPress={() => setPageNumber(pageNumber - 1)}>
+                        <Left />
+                    </TouchableHighlight>
+                    <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => {setPageNumber(pageNumber + 1); setRenderList(true)}}>
+                        <Text style={{color: 'white'}}>Apply Filters</Text>
+                    </TouchableHighlight>
                 </View>
-                <TreatmentsList press={() => {scrollRef.scrollToEnd()}} pickTreatment={setSelectedTreatment}
+                {renderList ? <TreatmentsList press={() => {scrollRef.scrollToEnd()}} pickTreatment={setSelectedTreatment}
                 therapy={therapyFilter}
                 med={medFilter}
                 waiting={waitingFilter}
@@ -123,6 +101,9 @@ function TreatmentFlowPage(props){
                 remote={remoteFilter}
                 access={accessFilter}
                 cost={costFilter} />
+                : 
+                null
+                }
                 <TreatmentInfo treatment={selectedTreatment} press={() => scrollRef.scrollTo({x: windowWidth * 3})} />
             </ScrollView>      
         </View>
@@ -182,6 +163,8 @@ const styles = StyleSheet.create({
         bottom: 50,
         left: 30,
         borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     nextButton: {
         position: 'absolute',
@@ -191,6 +174,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#469C97",
         bottom: 50,
         right: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    applyButton: {
+        position: 'absolute',
+        width: 120,
+        height: 50,
+        borderRadius: 15,
+        backgroundColor: "#469C97",
+        bottom: 50,
+        right: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
 

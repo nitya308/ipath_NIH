@@ -17,24 +17,12 @@ import Clipboard from '../assets/icons/clipboard';
 import Book from '../assets/icons/book';
 import List from '../assets/icons/list'; 
 
-const AboutTab = (props) => {
-  return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
-};
-
 const Tab = createBottomTabNavigator();
 
 function MainTabBar(props){
 
-  const { user } = useContext(AuthenticatedUserContext);
-  const headerOptions = () => ({
-    headerTitle: "iPath",
-    headerStyle: headerStyling,
-    headerRight: () => <ProfileButton navigate={() => props.navigation.navigate("Profile")}/>,
-    headerTitleContainerStyle: headerTitleContainerStyling,
-    headerBackgroundContainerStyle: {
-      margin:0,
-      padding: 0
-    }
+  const tabBarListeners = ({ navigation, route }) => ({
+    tabPress: () => navigation.navigate(route.name),
   });
 
   return (
@@ -59,32 +47,22 @@ function MainTabBar(props){
         headerShown: false,
         tabBarIcon: ({color}) => (
           <Clipboard width="30" height="30" strokeWidth="10" strokeColor={color}/>
-       )}}/>
+       )}}
+        listeners={tabBarListeners}/>
         <Tab.Screen name="Learn" component={TreatmentPage} options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
             <Book width="30" height="30" strokeWidth="10" strokeColor={color}/>
-         )}}/>
+         )}}
+         listeners={tabBarListeners}/>
         <Tab.Screen name="Treatments" component={TreatmentFlowPage} options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
             <List width="35" height="35" fill={color} strokeWidth="10" strokeColor={color}/>
-        )}} />
+        )}} 
+        listeners={tabBarListeners}/>
       </Tab.Navigator>
   );
 };
-const windowHeight= Dimensions.get('window').height;
-
-const headerStyling = {
-  backgroundColor: '#F9FBFB',
-  height: windowHeight * .12,
-};
-
-const headerTitleContainerStyling = {
-  padding: 0,
-  margin: 0,
-}
-
-
 
 export default MainTabBar;

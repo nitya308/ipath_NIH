@@ -5,7 +5,6 @@ import Filter from '../../assets/icons/filter';
 import Bookmark from '../../assets/icons/bookmark';
 import Close from '../../assets/icons/close.svg';
 import Checkbox from '../checkbox';
-import TreatmentInfo from './treatment-info';
 import TreatmentItem from './treatment-item';
 import { fetchTreatments } from '../../actions/index';
 
@@ -18,6 +17,7 @@ function TreatmentsList(props){
     const [tempTherapyFilter, setTempTherapyFilter] = useState(props.therapy);
     const [tempMedFilter, setTempMedFilter] = useState(props.med); // to display in modal, not applied unless user clicks 'apply'
     const [tempWaitFilter, setTempWaitFilter] = useState(props.waiting);
+
     const [tempPersonFilter, setTempPersonFilter] = useState(props.person);
     const [tempRemoteFilter, setTempRemoteFilter] = useState(props.remote);
 
@@ -41,7 +41,7 @@ function TreatmentsList(props){
     const [filterModal, setFilterModal] = useState(false);
 
     const checkTypeFilters = (treatment) => {
-        if(therapyFilter && (treatment.data.type === "Therapy" || treatment.data.type === "Medicatin/Therapy")){
+        if(therapyFilter && (treatment.data.type === "Therapy" || treatment.data.type === "Medication/Therapy")){
             return true;
         }
         if(medFilter && (treatment.data.type === "Medication" || treatment.data.type === "Medication/Therapy")){
@@ -102,12 +102,15 @@ function TreatmentsList(props){
                     </Pressable>
                     <Pressable onPress={() => setSavedFilter(!savedFilter)} style={[styles.filterContainer, savedFilter ? {borderWidth: "1", borderColor: "white"} : null]}>
                         <Text style={styles.filterText}>Saved</Text>
-                        <Bookmark width="24" height="24" fill={savedFilter? "white" : "none"} strokeColor="white"/>
+                        <Bookmark press={() => setSavedFilter(!savedFilter)} width="24" height="24" fill={savedFilter? "white" : "none"} strokeColor="white" />
                     </Pressable>
                 </View>
                 <View style={styles.list}>
                     {
                         savedFilter && allTreatments ? 
+                        allTreatments.filter((treat) => savedTreatments.includes(treat.id)).filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).length === 0 ?
+                        <Text>No treatments meet these criteria</Text>
+                        :
                         allTreatments.filter((treat) => savedTreatments.includes(treat.id)).filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).sort(compare).map((treatment) => {
                             return (
                                 <TreatmentItem key={treatment.id} press={() => {
@@ -116,6 +119,9 @@ function TreatmentsList(props){
                                 }} treatment={treatment}/>
                             )
                         })
+                        :
+                        allTreatments?.filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).length === 0 ? 
+                        <Text>No treatments meet these criteria</Text>
                         :
                         allTreatments?.filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).sort(compare).map((treatment) => {
                             return (

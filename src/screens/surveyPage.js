@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
 import SurveyQuestion from '../components/survey/survey-question';
@@ -6,23 +6,38 @@ import SurveyIntro from '../components/survey/survey-intro';
 import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
 import { addSurveyRes } from '../services/datastore';
+import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
+    const introRef = useRef(null);
+    const questionRef = useRef(null);
 
+    const isFocused = useIsFocused();
     const user = useSelector((state) => state.user);
     const scoresArray = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
     const [selAns, setSelAns] = useState(-1);
     const [numAnswered, setNumAnswered] = useState(0);
     const [scores, setScore] = useState(scoresArray); // array of scores scores stored here
     const [selectedId, setSelectedId] = useState(0); //reference current question
-    const [introRef, setIntroRef] = useState(null) 
-    const [questionRef, setQuestionRef] = useState(null) //used to reference flatlist position
+    useEffect(() => {
+        setScore(scoresArray);
+        setSelectedId(0);
+        setNumAnswered(0);
+        setSelAns(-1);
+    }, [isFocused]);
+
+    useScrollToTop(useRef({
+        scrollToTop: () => {
+            introRef.current?.scrollTo({y:0, animated: false }); 
+            questionRef.current?.scrollTo({x:0, x: 0, animated: false});
+        },
+      }));
 
     const renderSubmitButton = () => {
         if(selectedId == 8 && numAnswered == 9){
             return (
-                <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.scrollToEnd()}}>
+                <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd()}}>
                     <Text style={styles.backText}>Submit</Text>
                 </TouchableHighlight>
             );
@@ -84,23 +99,23 @@ function SurveyPage(props){
 
     useEffect(() => {
         if(questionRef){
-            questionRef.scrollTo({x: selectedId * windowWidth * 2})
+            questionRef.current.scrollTo({x: selectedId * windowWidth * 2})
         }
     }, [selectedId])
-    useEffect(() => {
-        if(questionRef){
-            questionRef.scrollTo({x: selectedId * windowWidth * 2})
-        }
-    }, [questionRef])
+    // useEffect(() => {
+    //     if(questionRef){
+    //         questionRef.current.scrollTo({x: selectedId * windowWidth * 2})
+    //     }
+    // }, [questionRef])
 
     return (
         <View style={styles.container}>
-            <ScrollView scrollEnabled={false} ref={(ref)=>{setIntroRef(ref)}}>
-                <SurveyIntro transition={() => introRef.scrollTo({y: windowHeight * .8})} />
+            <ScrollView scrollEnabled={false} ref={introRef}>
+                <SurveyIntro transition={() => introRef.current.scrollTo({y: windowHeight * .8})} />
                 <View style={styles.survey}>
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
-                    <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => {setQuestionRef(ref)}}>
+                    <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={questionRef}>
                         {questionData.map((item) => {
                             return(
                                 <View key={item.title}>
