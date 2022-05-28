@@ -30,8 +30,10 @@ function TreatmentItem(props) {
           {/* <Text style={styles.treatmentInfo}>{props.treatment.quickAccess ? "Quick Access" : "No Quick Access"}</Text> */}
         </View>
         <View style={styles.bookmarkContainer}>
-          <Bookmark width="30" height="30" treatment={props.treatment} press={() => { savedTreatments.includes(props.treatment.id) ? (props.deleteSavedTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "Unsaved " + props.treatment.id, new Date())) : (props.saveTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "saved " + props.treatment.id, new Date()))}}
-          fill={savedTreatments.includes(props.treatment.id) ? "black" : "none"} strokeColor="black"/>
+          <Bookmark width="30" height="30" treatment={props.treatment} press={() => {
+            savedTreatments.includes(props.treatment.id) ? (props.deleteSavedTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "Unsaved " + props.treatment.id, new Date())) : (props.saveTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "saved " + props.treatment.id, new Date()))
+          }}
+            fill={savedTreatments.includes(props.treatment.id) ? "black" : "none"} strokeColor="black" />
         </View>
       </View>
     </TouchableHighlight>

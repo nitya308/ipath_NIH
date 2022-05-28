@@ -67,6 +67,7 @@ function TreatmentsList(props) {
   }
 
   const applyFilters = () => {
+    console.log("here");
     if (tempMedFilter) addClick(`users/${user.userId}`, "filter-med", new Date());
     if (tempTherapyFilter) addClick(`users/${user.userId}`, "filter-therapy", new Date());
     if (tempWaitFilter) addClick(`users/${user.userId}`, "filter-wait", new Date());
