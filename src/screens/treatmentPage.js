@@ -1,33 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
 import TreatmentsOverview from '../components/treatment/treatments-overview';
 import TreatmentsComparison from '../components/treatment/treatments-comparison';
-import TreatmentsList from '../components/treatment/treatments-list';
-import TreatmentInfo from '../components/treatment/treatment-info';
-import TreatmentsFilter from '../components/treatment/treatments-filter';
+import { useScrollToTop, useIsFocused } from '@react-navigation/native';
+
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 
 function TreatmentPage(props){
-    const [scrollRef, setScrollRef] = useState(null);
+    // const [scrollRef, setScrollRef] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
+
+    const scrollRef = useRef(null);
+    const isFocused = useIsFocused();
+
+    useScrollToTop(useRef({
+        scrollToTop: () => scrollRef.current?.scrollTo({ x:0, y:0, animated:false }),
+    }));
+
+    useEffect(() => {
+        setPageNumber(0);
+    }, [isFocused])
+    
+    useEffect(() => {
+        if(scrollRef){
+            scrollRef.current.scrollTo({x: windowWidth * pageNumber})
+        }
+    }, [pageNumber])
 
     const setTreatment = (treatment) => {
         setSelectedTreatment(treatment)
     }
     const scrollRight = () => {
         setPageNumber(pageNumber + 1)
-        scrollRef.scrollTo({x: windowWidth * pageNumber})
+        scrollRef.current.scrollTo({x: windowWidth * pageNumber})
     }
-    useEffect(() => {
-        if(scrollRef){
-            scrollRef.scrollTo({x: windowWidth * pageNumber})
-        }
-    }, [pageNumber])
+
     return (
         <View style={styles.container}>
-            <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => {setScrollRef(ref)}}>
+            <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={scrollRef}>
                 <TreatmentsOverview scroll={scrollRight}/>
                 <TreatmentsComparison scroll={scrollRight} navigation={props.navigation}/>
             </ScrollView>

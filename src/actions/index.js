@@ -39,7 +39,7 @@ export function deleteSavedTreatment(userID, treatID){
 export function fetchTreatments() {
     return (dispatch) => {
         db.getTreatments().then((response) => {
-            const list = []
+            const list = [];
             response.forEach((doc) => {
                 list.push({id: doc.id, data: doc.data()});
             })
