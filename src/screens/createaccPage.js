@@ -36,16 +36,16 @@ function CreateAccountPage({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
       <View style={styles.flexContainer}>
-        <LoginInput style={styles.input} value={inputEmail} keyboardType='email-address' textContentType='emailAddress' autoFocus={true} onChangeText={(text) => setInputEmail(text)} placeholder="Email" />
-        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputPassword} textContentType='none' onChangeText={(text) => setInputPassword(text)} placeholder="Password" secure={true} />
-        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputConfirmPassword} textContentType='none' autoCapitalize='none' onChangeText={(text) => setInputConfirmPassword(text)} placeholder="Confirm Password" secure={true} />
+        <LoginInput style={styles.input} value={inputEmail} keyboardType='email-address' textContentType='emailAddress' autoFocus={true} onChangeText={(text) => setInputEmail(text)} placeholder="Email" backgroundColor="#E3EFF0" />
+        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputPassword} textContentType='none' onChangeText={(text) => setInputPassword(text)} placeholder="Password" secure={true} backgroundColor="#E3EFF0"/>
+        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputConfirmPassword} textContentType='none' autoCapitalize='none' onChangeText={(text) => setInputConfirmPassword(text)} placeholder="Confirm Password" secure={true} backgroundColor="#E3EFF0"/>
         {renderPasswordError ? <Text style={styles.errorMessage}>Passwords do not match</Text> : null }
         <TouchableHighlight style={styles.signbutton} onPress={onHandleSignup}>
-          <Text style={styles.buttontext}>Sign up</Text>
+          <Text style={styles.buttontext}>Create Account</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.signbutton} onPress={() => navigation.navigate('Login')}>
+        {/* <TouchableHighlight style={styles.signbutton} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.buttontext}>Go to login</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </View>
     </View>
   );
@@ -55,22 +55,22 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     margin: 0,
-    padding: 50,
-    marginTop: 10,
+    paddingTop: 100,
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#FCFFFF',
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 20,
   },
   flexContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    width: windowWidth * .8,
+    width: windowWidth,
     marginTop: 50,
+    alignItems: 'center',
   },
   place: {
     width: '100%',
@@ -89,11 +89,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowColor: '#000000',
     shadowOffset: { width: 3, height: 3 },
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
   },
   buttontext: {
     color: '#FFFFFF',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 17,
     lineHeight: 45,
   },
   input: {

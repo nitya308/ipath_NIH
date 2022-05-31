@@ -1,16 +1,14 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, Dimensions } from "react-native";
 
 const LoginInput = (props) => {
-  const [text, onChangeText] = React.useState(props.placeholder);
-
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{width: '100%'}}>
       <TextInput
         autoCapitalize='none'
         autoCorrect={false}
         clearTextOnFocus={true}
-        style={styles.input}
+        style={[styles.input, {backgroundColor: props.backgroundColor, color: props.textColor}]}
         placeholder={props.placeholder}
         onChangeText={props.onChangeText}
         autoFocus={props.autoFocus}
@@ -18,20 +16,23 @@ const LoginInput = (props) => {
         onFocus={props.onFocus}
         keyboardType={props.keyboardType}
         textContentType={props.textContentType}
+        placeholderTextColor={props.textColor}
       />
     </SafeAreaView>
   );
 };
 
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   input: {
     borderRadius: 25,
-    marginLeft: 30,
-    marginRight: 30,
     height: 50,
     margin: 10,
-    borderWidth: 1,
     padding: 10,
+    color: '#FCFFFF',
+    width: "90%",
+    alignSelf: 'center',
   },
 });
 

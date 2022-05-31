@@ -24,7 +24,7 @@ function SavedTreatments(props){
                     })}
                 </View>
             </ScrollView>
-            <TreatmentInfo treatment={selectedTreatment} />
+            <TreatmentInfo treatment={selectedTreatment} press={() => scrollRef.scrollTo({x: 0})}/>
         </ScrollView>
     )
 }
@@ -36,10 +36,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: windowWidth,
         marginTop: 5,
-        marginHorizontal: 5,
     },
     title: {
-        fontSize: 16,
+        fontSize: 30,
         color: "#000",
         marginLeft: 5,
         fontWeight: "600",

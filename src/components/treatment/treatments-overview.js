@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable, ScrollView } from 'react-native';
-import UnorderedList from 'react-native-unordered-list';
 import RightArrow from '../../assets/icons/right.svg';
-import Speech from '../../assets/icons/speech.svg';
-import Thermo from '../../assets/icons/thermo.svg';
-import Watch from '../../assets/icons/watch.svg';
+import Speech from '../../assets/icons/speech';
+import Pill from '../../assets/icons/pill';
+import Watch from '../../assets/icons/watch';
 import Close from '../../assets/icons/close.svg';
+import Chevron from '../../assets/icons/chevron.svg';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
@@ -34,28 +34,36 @@ function TreatmentsOverview(props){
     const [selectedType, setSelectedType] = useState("Watchful Waiting");
     return(
         <View style={styles.options}>
-            <Text style={styles.header}>Treatment Options</Text>
-            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true)}}>
-                <View>
-                    <Text style={styles.optionHeader}>Talk Therapy</Text>
-                    <Text style={styles.optionText}>Weekly sessions working with a therapist. In person or remote format</Text>
-                    <Speech style={styles.icon}/>
+            <Text style={styles.header}>Treatment Types</Text>
+            <Text style={{fontStyle: 'italic', alignSelf: 'flex-start', marginLeft: windowWidth * .1, fontSize: 15, marginTop: 20}}>Select the options below to learn more.</Text>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Watchful Waiting"); setModalVisible(true)}}>
+                <View style={styles.optionContainer}>
+                    <Watch width={35} height={35} style={styles.icon}/>
+                    <Text style={styles.optionHeader}>Watchful Waiting</Text>
+                    <View style={{position:'absolute', right: 10}}>
+                        <Chevron />
+                    </View>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Watchful Waiting"); setModalVisible(true)}}>
-                <View>
-                    <Text style={styles.optionHeader}>Watchful Waiting</Text>
-                    <Text style={styles.optionText}>Monitor symptoms without direct action.</Text>
-                    <Watch style={styles.icon}/>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true)}}>
+                <View style={styles.optionContainer}>
+                    <Speech width={35} height={35} style={styles.icon}/>
+                    <Text style={styles.optionHeader}>Talk Therapy</Text>
+                    <View style={{position:'absolute', right: 10}}>
+                        <Chevron />
+                    </View>
                 </View>
             </TouchableHighlight>
             <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Medication"); setModalVisible(true)}}>
-                <View>
+                <View style={styles.optionContainer}>
+                    <Pill width={35} height={35} style={styles.icon} />
                     <Text style={styles.optionHeader}>Medication</Text>
-                    <Text style={styles.optionText}>Specialist-prescribed anti-depressants.</Text>
-                    <Thermo style={styles.icon} />
+                    <View style={{position:'absolute', right: 10}}>
+                        <Chevron />
+                    </View>
                 </View>
             </TouchableHighlight>
+            <Text style={{fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight:'500'}}>A combination of Talk Therapy and Medication can also be an effective treatment method.</Text>
             <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
                 <View style={styles.modalViewContainer}>
                     <View style={styles.modalHeaderContainer}>
@@ -89,8 +97,8 @@ function TreatmentsOverview(props){
 }
 const styles = StyleSheet.create({
     header: {
-        marginBottom: '2%',
-        fontSize: 30,
+        paddingTop: 15,
+        fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -99,11 +107,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight * .8,
         width: windowWidth,
+        backgroundColor: '#FCFFFF',
     },
     option:{
-        height: '24%',
-        width: '95%',
-        margin: '2%',
+        height: windowHeight * .12,
+        width: windowWidth * .8,
         backgroundColor: '#E3EFF0',
         borderRadius: 10,
         shadowColor: "#000",
@@ -113,23 +121,28 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
+        marginTop: windowHeight * .03
+    },
+    optionContainer:{
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'flex-start',
+        paddingLeft: "7%"
     },
     optionHeader: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        paddingTop: 15,
-        paddingLeft: 15
+        fontSize: 22,
+        fontWeight: '500',
+        marginLeft: "10%",
     },
     optionText: {
         fontSize: 19,
         paddingLeft: 15,
-        marginTop: 50,
         fontStyle: 'italic',
     },
     icon: {
-        position: 'absolute',
-        right: 15,
-        top: 15,
+        marginLeft: 15
     },
     modalViewContainer:{
         flex: 1,
@@ -194,7 +207,9 @@ const styles = StyleSheet.create({
         fontSize: 25
     },
     compareButton: {
-        width: '95%',
+        position: 'absolute',
+        bottom: 30,
+        width: windowWidth * .9,
         height: '10%',
         paddingLeft: 10,
         marginTop: 10,
@@ -216,7 +231,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     compareButtonText: {
-        fontSize: 20,
+        fontSize: 17,
+        paddingLeft: 15,
         color: 'white',
         fontWeight: 'bold',
     },

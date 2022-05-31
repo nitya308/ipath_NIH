@@ -1,17 +1,11 @@
 import React, { useContext}  from 'react';
-import { Text, View, Dimensions, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
 import SurveyPage from '../screens/surveyPage';
 import TreatmentPage from '../screens/treatmentPage';
 import TreatmentFlowPage from '../screens/treatmentFlowPage';
-import ProfileButton from '../components/profileButton';
 
 // TODO: AUTH
-import firebase from '../services/datastore';
-import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
-const auth = firebase.auth();
-
 import Home from '../assets/icons/home';
 import Clipboard from '../assets/icons/clipboard';
 import Book from '../assets/icons/book';
@@ -20,7 +14,6 @@ import List from '../assets/icons/list';
 const Tab = createBottomTabNavigator();
 
 function MainTabBar(props){
-
   const tabBarListeners = ({ navigation, route }) => ({
     tabPress: () => navigation.navigate(route.name),
   });
@@ -28,10 +21,11 @@ function MainTabBar(props){
   return (
       <Tab.Navigator
       screenOptions={{
-        "tabBarActiveTintColor": "#469C97",
-        "tabBarStyle": [
+        tabBarActiveTintColor: "#469C97",
+        tabBarStyle: [
           {
-            "display": "flex"
+            "display": "flex",
+            "height": 90,
           },
           null
         ]

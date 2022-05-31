@@ -11,10 +11,6 @@ export const ActionTypes = {
 
 
 export function saveTreatment(userID, treatID) {
-    // return {
-    //     type: ActionTypes.SAVE_TREATMENT,
-    //     payload: treatment,
-    // }
     return (dispatch) => {
         db.updateFavTreatment(userID, treatID).then((response) => {
             dispatch({ type: ActionTypes.SAVE_TREATMENT, payload: treatID });
@@ -27,11 +23,6 @@ export function saveTreatment(userID, treatID) {
 export function deleteSavedTreatment(userID, treatID){
     return(dispatch) => {
         db.deleteFavTreatment(userID, treatID);
-        // .then((response) => {
-        //     dispatch({ type: ActionTypes.DELETE_SAVED_TREATMENT, payload: treatID })
-        // }).catch((error) => {
-        //     dispatch({ type: ActionTypes.ERROR_TREATMENTS, error})
-        // })
         dispatch({ type: ActionTypes.DELETE_SAVED_TREATMENT, payload: treatID })
 
     }

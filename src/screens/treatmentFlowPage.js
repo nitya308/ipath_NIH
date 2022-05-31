@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         width: '80%',
     },  
     checkbox:{
-        marginTop: 20,
+        marginTop: 30,
         alignSelf: 'flex-start',
     },  
     backButton:{

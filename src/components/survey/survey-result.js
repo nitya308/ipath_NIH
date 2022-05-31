@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     },
     treatmentButton: {
         position: 'absolute',
-        width: 350,
+        width: windowWidth * .9,
         height: 65,
         backgroundColor: '#469C97',
         borderRadius: 10,
@@ -144,18 +144,16 @@ const styles = StyleSheet.create({
         bottom: 20
     },
     buttonContainer: {
-        flex: 0,
+        width: "100%",
+        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '100%',
-        width: '90%',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
-    buttonText:{
-        textAlign: 'center',
+    buttonText: {
+        fontSize: 17,
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 20
     },
     modalViewContainer:{
         flex: 1,
