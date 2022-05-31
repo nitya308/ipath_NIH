@@ -13,20 +13,20 @@ const treatmentData = {
     "Talk Therapy": {
         description: "A weekly 30-60 minute session working with a therapist either in person or on a computer: using a program on your own or with support from your clinician by email or phone.",
         efficacy: "In addition to the 23 out of 100 people that recover without treatment, another 14 out of 100 will recover in 2 months using talk therapy. In addition to the 23 people who recover without treatment, another 26 in 100 people recover with a combination of SSRIs and talk therapy.",
-        cost: "cost",
-        sideEffects: "possible side effects",
+        cost: "Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.",
+        sideEffects: "Talk therapy can cause you to feel uncomfortable, anxious and/or stressed.",
     },
     "Medication": {
         description: "Selective Serotonin Reuptake Inhibitors (SSRIs) are medications that address symptoms by affecting your brain chemistry. These pills are usually taken once per day.",
-        efficacy: "this will work",
-        cost: "cost",
-        sideEffects: "possible side effects",
+        efficacy: "In addition to the 23 out of 100 people that experienced an increase in mood levels without treatment, another 17 out of 100 will experience an increase in mood levels in 1 month using antidepressant medication.",
+        cost: "Prices vary according to pharmacy and insurance plan. Without insurance, prices vary from $5 to $150+ for a 30-day supply of medication.",
+        sideEffects: "Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.",
     },
     "Watchful Waiting": {
-        description: "You may visit your clinician more frequently to monitor your symptoms and compare options to discuss your lifestyle, current support and coping strategies.",
-        efficacy: "this will work",
-        cost: "cost",
-        sideEffects: "possible side effects",
+        description: "You will monitor symptoms, but not actively receive treatment (such as medication or therapy). This will involve completing the depression survey every 2 weeks for 12 weeks. Many people monitor symptoms with their doctor. At any time you can decide to try a treatment.",
+        efficacy: "23 out of 100 people experienced an increase in mood levels in 3 months and 53 out of 100 experienced an increase in mood levels in a year by visiting a clincian without receiving active treatment.",
+        cost: "Prices vary depending on number and type of visits to clinician.",
+        sideEffects: "Your symptoms may continue to worsen. About 25 out of 100 people see their symptoms get worse.",
     }
 };
 function TreatmentsOverview(props){
