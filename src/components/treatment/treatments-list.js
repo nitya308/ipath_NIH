@@ -10,6 +10,7 @@ import { fetchTreatments } from '../../actions/index';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
+
 function TreatmentsList(props){
     const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
     const allTreatments = useSelector((state) => state.treatments.allTreatments);
@@ -170,8 +171,8 @@ function TreatmentsList(props){
                     <Pressable style={styles.closeModal} onPress={() => {setFilterModal(!filterModal)}}>
                         <Close />
                     </Pressable>
-                    <TouchableHighlight style={styles.applyButton}>
-                        <Text style={styles.applyButtonText} onPress={applyFilters}>Apply</Text>
+                    <TouchableHighlight underlayColor="gray" style={styles.applyButton} onPress={applyFilters}>
+                        <Text style={styles.applyButtonText}>Apply</Text>
                     </TouchableHighlight>
                 </View>
             </Modal>
@@ -200,10 +201,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignSelf: 'center',
         margin: 15,
-        width: 100,
+        width: 120,
         backgroundColor: '#469C97',
-        height: 32,
-        borderRadius: 15,   
+        height: 40,
+        borderRadius: 20,   
         shadowColor: "#000",
         shadowOffset: {
         width: 0,
@@ -279,9 +280,9 @@ const styles = StyleSheet.create({
     },
     applyButton:{
         alignSelf: 'center',
-        width: 150,
-        height: 36,
-        borderRadius: 18,
+        width: 200,
+        height: 50,
+        borderRadius: 25,
         backgroundColor: '#469C97',
         justifyContent: 'center',
         alignItems: 'center',
@@ -292,71 +293,4 @@ const styles = StyleSheet.create({
         fontSize: 15
     }
 })
-
-const treatmentData = [
-    {
-        name: "Treatment 1",
-        type: "In-Person",
-        takesInsurance: false,
-        quickAccess: true,
-        cost: 2,
-        category: "Medication"
-    },
-    {
-        name: "Treatment 2",
-        type: "In-Person",
-        takesInsurance: true,
-        quickAccess: true,
-        cost: 1,
-        category: "Watchful Waiting"
-    },
-    {
-        name: "Treatment 3",
-        type: "In-Person",
-        takesInsurance: false,
-        quickAccess: false,
-        cost: 3,
-        category: "Talk Therapy"
-    },
-    {
-        name: "Treatment 4",
-        type: "Telehealth",
-        takesInsurance: false,
-        quickAccess: true,
-        cost: 2,
-        category: "Medication"
-    },
-    {
-        name: "Treatment 5",
-        type: "In-Person",
-        takesInsurance: false,
-        quickAccess: true,
-        cost: 3,
-        category: "Talk Therapy"
-    },
-    {
-        name: "Treatment",
-        type: "In-Person",
-        takesInsurance: false,
-        quickAccess: true,
-        cost: 2,
-        category: "Medication"
-    },
-    {
-        name: "Treatment",
-        type: "In-Person",
-        takesInsurance: false,
-        quickAccess: true,
-        cost: 1,
-        category: "Medication"
-    },
-    {
-        name: "Treatment Woohoo",
-        type: "In-Person",
-        takesInsurance: false,
-        quickAccess: true,
-        cost: 1,
-        category: "Medication"
-    },
-]
 export default connect(null, { fetchTreatments })(TreatmentsList);

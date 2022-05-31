@@ -7,10 +7,10 @@ function SurveyIntro(props){
             <View style={styles.flexContainer}>
                 <Text style={styles.title}>PHQ-9</Text>
                 <Text style={styles.subTitle}>Depression Screening Survey</Text>
-                <Text style={styles.infoText}>A 9-item depression scale of the patient health questionnaire. The questions are based directly on the diagnostic criteria for major depressive disorder in the DSM-IV.</Text>
+                <Text style={styles.infoText}>This survey is 9 questions and is a reliable way to determine whether you are displaying symptoms of depression. There are lots of treatments and options to help. We will walk you through these after the survey.</Text>
             </View>
             <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
-                <Text style={styles.buttonText}>Begin Survey</Text>
+                <Text style={styles.buttonText}>Get Started</Text>
             </TouchableHighlight>
         </View>
     )
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
         width: windowWidth,
         height: windowHeight * .8,
-        // backgroundColor: '#373737',
+        backgroundColor: '#373737',
     }, 
     flexContainer:{
         flex: 0, 
@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
         marginTop: 50,
         padding: 10,
         fontWeight: 'bold',
-        color: 'black',
+        color: 'white',
     },
     subTitle:{
         fontSize: 30,
-        padding: 10,
-        color: 'black',
+        paddingLeft: 10,
+        color: 'white',
         width: 275,
         fontWeight: 'bold'
     },
@@ -49,18 +49,19 @@ const styles = StyleSheet.create({
         marginTop: 30,
         padding: 10,
         fontSize: 17,
-        color: 'black',
+        color: 'white',
         fontStyle: 'italic',
     },
     startButton: {
-        width: 300,
-        height: 50,
+        width: windowWidth * .85,
+        position: 'absolute',
+        bottom: 100,
+        height: 60,
         backgroundColor: '#51B5AF',
-        borderRadius: 25,
+        borderRadius: 30,
         flex: 0,
         justifyContent: 'center',
         alignSelf: 'center',
-        marginTop: 50,
         shadowColor: "#000",
         shadowOffset: {
         width: 0,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         padding: 10,
         textAlign: 'center',
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
     }
 });

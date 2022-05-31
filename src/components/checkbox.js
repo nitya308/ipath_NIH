@@ -4,12 +4,10 @@ import Unchecked from '../assets/icons/unchecked.svg';
 import Checked from '../assets/icons/checked.svg';
 function Checkbox(props){
     return(
-        <View style={styles.container}>
-            <Pressable onPress={props.onPress}>
-                {props.isChecked? <Checked /> : <Unchecked />}
-            </Pressable>
+        <Pressable style={styles.container} onPress={props.onPress}>
+            {props.isChecked? <Checked /> : <Unchecked />}
             <Text style={styles.title}>{props.title}</Text>
-        </View>
+        </Pressable>
     )
 }
 
@@ -21,9 +19,9 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     title: {
-        fontSize: 16,
+        fontSize: 20,
         color: "#000",
-        marginLeft: 5,
+        marginLeft: 10,
         fontWeight: "600",
     },
 })

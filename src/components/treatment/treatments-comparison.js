@@ -14,6 +14,11 @@ function TreatmentsComparison(props){
     return(
         <View style={styles.container}>
             <Text style={styles.header}>Compare Treatment Types</Text>
+            <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalFour(true)}>
+                <View>
+                    <Text style={styles.buttonText}>How does this work?</Text>
+                </View>
+            </TouchableHighlight>
             <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalOne(true)}>
                 <View>
                     <Text style={styles.buttonText}>How much will this cost?</Text>
@@ -31,9 +36,10 @@ function TreatmentsComparison(props){
             </TouchableHighlight>
             <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalFour(true)}>
                 <View>
-                    <Text style={styles.buttonText}>How soon can I access this?</Text>
+                    <Text style={styles.buttonText}>How quickly can I access this?</Text>
                 </View>
             </TouchableHighlight>
+    
 
             <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={() => props.navigation.navigate("Treatments")}>
                 <View style={styles.compareButtonContainer}>
@@ -41,6 +47,7 @@ function TreatmentsComparison(props){
                     <RightArrow styles={styles.arrow} />
                 </View>
             </TouchableHighlight>
+            
             <Modal animationType="slide" visible={modalOne} onRequestClose={() => {setModalOne(!modalOne)}}>
                 <View style={styles.modalViewContainer}>
                     <View style={styles.modalHeaderContainer}>
@@ -129,8 +136,8 @@ function TreatmentsComparison(props){
 }
 const styles = StyleSheet.create({
     header: {
-        paddingTop: 10,
-        fontSize: 30,
+        paddingTop: 15,
+        fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -139,16 +146,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight * .8,
         width: windowWidth,
+        backgroundColor: '#FCFFFF',
     },
     button:{
-        width: 311,
-        height: 50,
+        width: windowWidth * .9,
+        height: windowHeight * .07,
+        borderRadius: windowHeight * .035,
         backgroundColor: '#E3EFF0',
-        borderRadius: 25,
         flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 30,
         shadowColor: "#000",
         shadowOffset: {
         width: 0,
@@ -158,8 +166,8 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
     },
     buttonText:{
-        fontWeight: 'bold',
-        fontSize: 15,
+        fontWeight: '500',
+        fontSize: 18,
     },
     modalViewContainer:{
         flex: 1,
@@ -221,8 +229,8 @@ const styles = StyleSheet.create({
     },
     compareButton: {
         position: 'absolute',
-        bottom: '5%',
-        width: '95%',
+        bottom: 30,
+        width: windowWidth * .9,
         height: '10%',
         paddingLeft: 10,
         marginTop: 10,
@@ -237,14 +245,15 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
     },
     compareButtonContainer: {
-        width: '95%',
+        width: '90%',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     compareButtonText: {
-        fontSize: 20,
+        marginLeft: '5%',
+        fontSize: 17,
         color: 'white',
         fontWeight: 'bold',
     },

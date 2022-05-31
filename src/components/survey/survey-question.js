@@ -7,28 +7,30 @@ function surveyQuestion(props){
         <Text style={styles.questionText}>{props.questionTitle}</Text>
         <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set0();props.press(); }}>
             <View style={[styles.answer, props.selAns ==0 ? styles.selectedAnswer: null]}>
-                <Text style={styles.answerText}>Not at all</Text>
+                <Text style={[styles.answerText, props.selAns == 0 ? styles.selectedAnswerText: null]}>Not at all</Text>
             </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set1();props.press(); }}>
             <View style={[styles.answer, props.selAns ==1 ? styles.selectedAnswer: null]}>
-                <Text style={styles.answerText}>Several days</Text>
+                <Text style={[styles.answerText, props.selAns == 1 ? styles.selectedAnswerText: null]}>Several days</Text>
             </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set2();props.press(); }}>
             <View style={[styles.answer, props.selAns ==2 ? styles.selectedAnswer: null]}>
-                <Text style={styles.answerText}>More than half of days</Text>
+                <Text style={[styles.answerText, props.selAns == 2 ? styles.selectedAnswerText: null]}>More than half of days</Text>
             </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set3();props.press();}}>
             <View style={[styles.answer, props.selAns ==3 ? styles.selectedAnswer: null]}>
-                <Text style={styles.answerText}>Nearly every day</Text>
+                <Text style={[styles.answerText, props.selAns == 3 ? styles.selectedAnswerText: null]}>Nearly every day</Text>
             </View>
         </TouchableHighlight>
     </View>
     );
 }
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     questionContainer: {
         marginTop: 0,
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
         marginRight: windowWidth * .25,
     },
     touchContainer: {
-        height: 60, 
+        height: windowHeight * .08, 
         width: windowWidth * .75,
         borderRadius: 30,
         margin: 8,
@@ -74,6 +76,9 @@ const styles = StyleSheet.create({
         padding: 15,
         fontSize: 20
     },
+    selectedAnswerText:{
+        color: '#FFFFFF',
+    }
 });
 
 export default surveyQuestion;

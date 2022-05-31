@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-na
 import Chart from '../assets/icons/chart.svg';
 import { connect, useSelector } from 'react-redux';
 import { fetchTreatments, fetchSavedTreatments } from '../actions/index';
+import Clipboard from '../assets/icons/clipboard';
+import List from '../assets/icons/list';
 
 function HomePage(props){
     const user = useSelector((state) => state.user)
@@ -19,23 +21,29 @@ function HomePage(props){
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Welcome to iPath</Text>
-            <Text style={styles.description}>iPath is a decision aid tool funded by the NCI. iPath aims to support cancer patients displaying symptoms of depression by helping them find the best treatment option for them.</Text>
             <View style={styles.flexContainer}>
                 <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => navigateTo("Survey")}>
                     <View style={styles.buttonContainer}>
                         <Text style={styles.buttonTitle}>Take PHQ-9 Depression Screening Survey</Text>
+                        <Text style={styles.description}>We recommend taking this survey every 2 weeks</Text>
+                        <View style={{position:'absolute', bottom: 20, right: -40}}>
+                            <Clipboard strokeColor="white" width={45} height={45} />
+                        </View>
                     </View>
                 </TouchableHighlight>
                 <View style={styles.parallelButtons}>
-                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("History")}>
+                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("")}>
                         <View style={styles.buttonContainer}>
                             <Text style={styles.buttonTitle}>View My History</Text>
                             <Chart style={styles.chart}/>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("Learn")}>
-                        <View style={styles.buttonContainer}>
+                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("Treatments")}>
+                        <View>
                             <Text style={styles.buttonTitle}>Explore Treatments</Text>
+                            <View style={{position:'absolute', bottom: -40, right: 10}}>
+                                <List strokeColor="white" width={45} height={45} />
+                            </View>
                         </View>
                     </TouchableHighlight>
                 </View>
@@ -47,6 +55,7 @@ function HomePage(props){
     );
 }
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
@@ -64,8 +73,9 @@ const styles = StyleSheet.create({
     },
     description: {
         fontStyle: 'italic',
-        fontSize: 18,
-        padding: 15
+        fontSize: 16,
+        padding: 15,
+        color: 'white'
     },
     flexContainer: {
         flex: 1, 
@@ -92,7 +102,7 @@ const styles = StyleSheet.create({
     surveyTouchContainer:{
         width: '100%',
         backgroundColor: '#469C97',
-        height: 130,
+        height: windowHeight * .17,
         borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {
@@ -132,7 +142,8 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
     },
     buttonContainer:{
-      width: '95%'
+      width: '80%',
+      height: '100%'
     },
     chart:{
         position: 'absolute',

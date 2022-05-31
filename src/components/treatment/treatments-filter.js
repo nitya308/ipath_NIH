@@ -11,9 +11,6 @@ function TreatmentsFilter(props){
     return(
         <View style={styles.container}>
             <Text style={styles.header}>Filter Treatments</Text>
-            {/* <CheckBox />
-            <CheckBox />
-            <CheckBox /> */}
             <TouchableHighlight style={styles.compareButton} onPress={props.scroll}>
                 <View style={styles.compareButtonContainer}>
                     <Text style={styles.compareButtonText}>Compare Treatment Types</Text>

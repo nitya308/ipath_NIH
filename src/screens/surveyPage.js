@@ -8,6 +8,8 @@ import * as Progress from 'react-native-progress';
 import { addSurveyRes } from '../services/datastore';
 import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 
+import Left from '../assets/icons/left';
+
 function SurveyPage(props){
     const windowWidth = Dimensions.get('window').width;
     const introRef = useRef(null);
@@ -20,11 +22,13 @@ function SurveyPage(props){
     const [numAnswered, setNumAnswered] = useState(0);
     const [scores, setScore] = useState(scoresArray); // array of scores scores stored here
     const [selectedId, setSelectedId] = useState(0); //reference current question
+    const [controlsVisible, setControlsVisible] = useState(false)
     useEffect(() => {
         setScore(scoresArray);
         setSelectedId(0);
         setNumAnswered(0);
         setSelAns(-1);
+        setControlsVisible(false);
     }, [isFocused]);
 
     useScrollToTop(useRef({
@@ -35,19 +39,34 @@ function SurveyPage(props){
       }));
 
     const renderSubmitButton = () => {
-        if(selectedId == 8 && numAnswered == 9){
-            return (
-                <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd()}}>
-                    <Text style={styles.backText}>Submit</Text>
-                </TouchableHighlight>
-            );
-        } else {
+        if(controlsVisible){
+            if(selectedId == 8 && numAnswered == 9){
+                return (
+                    <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => {addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false)}}>
+                        <Text style={styles.backText}>Submit</Text>
+                    </TouchableHighlight>
+                );
+            } else {
+                return(
+                    <View style={styles.progressContainer}>
+                        <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={65} height={10} color='#469C97' unfilledColor="lightgray" borderRadius={5} borderWidth={0}/>
+                        <Text style={styles.progressNumber}>{selectedId}/9</Text>
+                    </View>
+                );
+            }
+        }
+    }
+
+    const renderBackButton = () => {
+        if(selectedId != 0 && controlsVisible){
             return(
-                <View style={styles.progressContainer}>
-                    <Progress.Bar style={styles.progressBar} progress={selectedId/questionData.length} width={65} height={10} color="rgb(26,177,147)" unfilledColor="lightgray" borderRadius={5} borderWidth={0}/>
-                    <Text style={styles.progressNumber}>{selectedId}/9</Text>
-                </View>
-            );
+                <TouchableHighlight underlayColor="gray" style={styles.backButton} onPress={scrollBack}>
+                    <View style={{alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '90%'}}>
+                        <Left width={20} height={20} strokeColor='white' /> 
+                        <Text style={styles.backText}>Previous Question</Text>
+                    </View>
+                </TouchableHighlight>
+            )
         }
     }
     const add0 = () => {
@@ -102,16 +121,11 @@ function SurveyPage(props){
             questionRef.current.scrollTo({x: selectedId * windowWidth * 2})
         }
     }, [selectedId])
-    // useEffect(() => {
-    //     if(questionRef){
-    //         questionRef.current.scrollTo({x: selectedId * windowWidth * 2})
-    //     }
-    // }, [questionRef])
 
     return (
         <View style={styles.container}>
             <ScrollView scrollEnabled={false} ref={introRef}>
-                <SurveyIntro transition={() => introRef.current.scrollTo({y: windowHeight * .8})} />
+                <SurveyIntro transition={() => {introRef.current.scrollTo({y: windowHeight * .8}); setControlsVisible(true)}} />
                 <View style={styles.survey}>
                     <Text style={styles.title}>PHQ-9 Survey</Text>
                     <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
@@ -124,13 +138,12 @@ function SurveyPage(props){
                             )
                         })}
                     </ScrollView>
-                    <TouchableHighlight underlayColor="gray" style={styles.backButton} onPress={scrollBack}>
-                        <Text style={styles.backText}>Previous Question</Text>
-                    </TouchableHighlight>
-                    {renderSubmitButton()}
+                    
                 </View>
                 <SurveyResult scores={scores} press={() => props.navigation.navigate('Learn')}/>
             </ScrollView>
+            {renderBackButton()}
+            {renderSubmitButton()}
         </View>
     );
 }
@@ -183,7 +196,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     }, 
     title: {
-        fontSize: 30,
+        fontSize: 27,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -194,8 +207,9 @@ const styles = StyleSheet.create({
     questionIntro: {
         marginTop: 15,
         padding: 10,
-        fontSize: 20,
+        fontSize: 17,
         alignSelf: 'center',
+        fontStyle: 'italic',
         width: '100%',
         textAlign: 'center',
     },
@@ -221,11 +235,11 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        bottom: 30,
+        bottom: 10,
         left: 15,
         width: 200,
         height: 50,
-        backgroundColor: '#72CCD4',
+        backgroundColor: '#469C97',
         flex: 1,
         justifyContent: 'center',
         borderRadius: 25,
@@ -244,11 +258,11 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         position: 'absolute',
-        bottom: 30,
+        bottom: 10,
         right: 15,
         width: 130,
         height: 50,
-        backgroundColor: '#72CCD4',
+        backgroundColor: '#469C97',
         flex: 1,
         justifyContent: 'center',
         borderRadius: 25,
@@ -266,7 +280,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        bottom: 40,
+        bottom: 20,
         right: 20,
     },
     progressBar: {

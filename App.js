@@ -8,64 +8,16 @@ import React, { useEffect } from "react";
 import ProfileButton from './src/components/profileButton';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import * as db from './src/services/datastore';
-
 
 import Routes from './src/navigation/index';
 
 import rootReducer from './src/reducers';
 
-const Stack = createStackNavigator();
 const store = configureStore({
   reducer: rootReducer,
 });
 
 export default function App() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch({ type: "FETCH_TREATMENTS", payload: db.getTreatments()})
-  // }, [])
-  const [isSignedIn, setSignIn] = React.useState(true);
-  
-  const signIn = () => {
-    setSignIn(prev => ({ status: !prev.status }));
-  };
-  const headerOptions = ({navigation, route}) => ({
-    headerTitle: "iPath",
-    headerStyle: headerStyling,
-    headerRight: () => <ProfileButton navigate={() => navigation.navigate("Profile")}/>,
-    // headerTitleStyle: headerTitleStyling,
-    headerTitleContainerStyle: headerTitleContainerStyling,
-    headerBackgroundContainerStyle: {
-      margin:0,
-      padding: 0
-    }
-  });
-  const windowHeight= Dimensions.get('window').height;
-
-const headerStyling = {
-  backgroundColor: '#F9FBFB',
-  height: windowHeight * .12,
-  };
-
-  const headerTitleContainerStyling = {
-    padding: 0,
-    margin: 0,
-  }
-  // return (
-  //   <Provider store={store}>
-  //     {isSignedIn?
-  //     <NavigationContainer>
-  //       <Stack.Navigator initialRouteName='Home' >
-  //         <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions}/>
-  //         <Stack.Screen name="Profile" component={Profile} options={headerOptions}/>
-  //       </Stack.Navigator>
-  //     </NavigationContainer>
-  //     :
-  //     <HomePages/>}
-  //   </Provider>
-  // );
-
   return(
     <Provider store={store}>
       <Routes />
