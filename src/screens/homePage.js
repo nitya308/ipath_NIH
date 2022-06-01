@@ -32,7 +32,7 @@ function HomePage(props){
                     </View>
                 </TouchableHighlight>
                 <View style={styles.parallelButtons}>
-                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("")}>
+                    <TouchableHighlight style={styles.mediumTouchContainer} underlayColor='gray' onPress={() => navigateTo("History")}>
                         <View style={styles.buttonContainer}>
                             <Text style={styles.buttonTitle}>View My History</Text>
                             <Chart style={styles.chart}/>

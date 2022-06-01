@@ -17,6 +17,8 @@ function SurveyPage(props){
 
     const isFocused = useIsFocused();
     const user = useSelector((state) => state.user);
+
+    const [hotline, setHotline] = useState(false);
     const scoresArray = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
     const [selAns, setSelAns] = useState(-1);
     const [numAnswered, setNumAnswered] = useState(0);
@@ -97,6 +99,10 @@ function SurveyPage(props){
       if(scores[selectedId] === -1){
         setNumAnswered(numAnswered+1);
       }
+      if (selectedId == 8) {
+        setHotline(true);
+        console.log("set to true");
+      }
       scores[selectedId] = 3;
       setScore([...scores]);
     };
@@ -140,7 +146,7 @@ function SurveyPage(props){
                     </ScrollView>
                     
                 </View>
-                <SurveyResult scores={scores} press={() => props.navigation.navigate('Learn')}/>
+                <SurveyResult hotline={hotline} scores={scores} press={() => props.navigation.navigate('Learn')}/>
             </ScrollView>
             {renderBackButton()}
             {renderSubmitButton()}

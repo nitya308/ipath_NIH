@@ -4,6 +4,7 @@ import RightArrow from '../../assets/icons/right.svg';
 import Close from '../../assets/icons/close.svg';
 import Infographic from '../../assets/icons/infographic';
 import QuestionMark from '../../assets/icons/questionMark.svg';
+import {openURL} from 'expo-linking';
 
 function SurveyResult(props){
     const [modalVisible, setModalVisible] = useState('false');
@@ -18,6 +19,19 @@ function SurveyResult(props){
     else if (totalScore <= 19) result = "moderate to severe depression";
     else if (totalScore <= 27) result = "severe depression";
 
+    const renderHotlinePopup = () => {
+      if (props.hotline) {
+        console.log("rendering");
+        return (
+          <View style={styles.hotlineContainer}>
+            <Text style={styles.hotlineText}>Your responses indicate that you may benefit from immediate assistance. Please call the National Suicide Prevention Hotline at</Text>
+            <Text style={styles.link} onPress={() => { openURL('tel:1-800-273-TALK') }}> 1-800-273-TALK </Text>
+          </View>
+        );
+      }
+      else { return null; }
+    };
+
     return(
         <View style={styles.container}>
             <Text style={styles.resultTitle}>Survey Results</Text>
@@ -28,6 +42,7 @@ function SurveyResult(props){
                     <QuestionMark />
                 </View>
             </TouchableHighlight>
+            {renderHotlinePopup()}
             <Infographic width={250} height={80}/>
             <Text style={styles.p}>Depression is more common than you might think. Around 20% of cancer patients display symptoms of depression</Text> 
             <TouchableHighlight underlayColor='gray' style={styles.treatmentButton} onPress={props.press}>
@@ -92,6 +107,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight * .8,
     },
+    hotlineContainer: {
+      borderColor: '#469C97',
+      borderWidth: 2,
+      borderRadius: 15,
+      padding: 15,
+      marginLeft: 20,
+      marginRight: 20,
+    },
+    hotlineText: {
+      fontSize: 17,
+      fontStyle: 'italic',
+      color: '#545454',
+    },
+    link: {
+      color: '#0000EE',
+      textAlign: 'center',
+      textDecorationLine: 'underline',
+      fontSize: 17,
+    },
     resultTitle: {
         paddingTop: 50,
         fontSize: 30,
@@ -121,10 +155,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     p: {
-        marginTop: 50,
+        marginTop: 0,
         padding: 20,
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     treatmentButton: {
         position: 'absolute',
