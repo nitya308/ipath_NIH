@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable } from 'react-native';
 import RightArrow from '../../assets/icons/right.svg';
 import Close from '../../assets/icons/close.svg';
+import { useSelector } from 'react-redux';
+import { addClick } from '../../services/datastore';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 function TreatmentsComparison(props) {
+  const user = useSelector((state) => state.user);
   const [modalOne, setModalOne] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
   const [modalThree, setModalThree] = useState(false);
@@ -15,32 +18,26 @@ function TreatmentsComparison(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Compare Treatment Types</Text>
-      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalFive(true)}>
+      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalOne(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
         <View>
-          <Text style={styles.buttonText}>How does this work?</Text>
+          <Text style={styles.buttonText}>How much will this cost?</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalOne(true)}>
-        <View>
-          <Text style={styles.buttonText}>How much does this cost?</Text>
-        </View>
-      </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalTwo(true)}>
+      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => {setModalTwo(true); addClick(`users/${user.userId}`, "compare-willwork", new Date());}}>
         <View>
           <Text style={styles.buttonText}>Will this work?</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalThree(true)}>
+      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => {setModalThree(true); addClick(`users/${user.userId}`, "compare-sideeffects", new Date());}}>
         <View>
           <Text style={styles.buttonText}>What are the side effects?</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => setModalFour(true)}>
+      <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => {setModalFour(true); addClick(`users/${user.userId}`, "compare-time", new Date());}}>
         <View>
-          <Text style={styles.buttonText}>How quickly can I access this?</Text>
+          <Text style={styles.buttonText}>How soon can I access this?</Text>
         </View>
       </TouchableHighlight>
-
 
       <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={() => props.navigation.navigate("Treatments")}>
         <View style={styles.compareButtonContainer}>

@@ -6,9 +6,7 @@ import Pill from '../../assets/icons/pill';
 import Watch from '../../assets/icons/watch';
 import Close from '../../assets/icons/close.svg';
 import Chevron from '../../assets/icons/chevron.svg';
-
-const windowHeight= Dimensions.get('window').height;
-const windowWidth= Dimensions.get('window').width;
+import { addClick } from '../../services/datastore';
 const treatmentData = {
     "Talk Therapy": {
         description: "A weekly 30-60 minute session working with a therapist either in person or on a computer: using a program on your own or with support from your clinician by email or phone.",
@@ -36,7 +34,7 @@ function TreatmentsOverview(props){
         <View style={styles.options}>
             <Text style={styles.header}>Treatment Types</Text>
             <Text style={{fontStyle: 'italic', alignSelf: 'flex-start', marginLeft: windowWidth * .1, fontSize: 15, marginTop: 20}}>Select the options below to learn more.</Text>
-            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Watchful Waiting"); setModalVisible(true)}}>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date());}}>
                 <View style={styles.optionContainer}>
                     <Watch width={35} height={35} style={styles.icon}/>
                     <Text style={styles.optionHeader}>Watchful Waiting</Text>
@@ -45,7 +43,7 @@ function TreatmentsOverview(props){
                     </View>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true)}}>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Talk Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
                 <View style={styles.optionContainer}>
                     <Speech width={35} height={35} style={styles.icon}/>
                     <Text style={styles.optionHeader}>Talk Therapy</Text>
@@ -54,7 +52,7 @@ function TreatmentsOverview(props){
                     </View>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Medication"); setModalVisible(true)}}>
+            <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => {setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date());}}>
                 <View style={styles.optionContainer}>
                     <Pill width={35} height={35} style={styles.icon} />
                     <Text style={styles.optionHeader}>Medication</Text>
@@ -92,9 +90,18 @@ function TreatmentsOverview(props){
                     <RightArrow styles={styles.arrow} />
                 </View>
             </TouchableHighlight>
+      <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={props.scroll}>
+        <View style={styles.compareButtonContainer}>
+          <Text style={styles.compareButtonText}>Compare Treatment Types</Text>
+          <RightArrow styles={styles.arrow} />
         </View>
-    );
+      </TouchableHighlight>
+    </View>
+  )
 }
+const windowHeight= Dimensions.get('window').height;
+const windowWidth= Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
     header: {
         paddingTop: 15,

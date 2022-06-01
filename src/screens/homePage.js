@@ -47,7 +47,7 @@ function HomePage(props){
                         </View>
                     </TouchableHighlight>
                 </View>
-                <TouchableHighlight style={styles.additionalTouchContainer} underlayColor='gray' onPress={() => navigateTo("")}>
+                <TouchableHighlight style={styles.additionalTouchContainer} underlayColor='gray' onPress={() => navigateTo("Additional Resources")}>
                     <Text style={styles.buttonTitle}>View Additional Resources</Text>
                 </TouchableHighlight>
             </View>
