@@ -8,6 +8,8 @@ import Pill from '../../assets/icons/pill';
 import Speech from '../../assets/icons/speech';
 import Watch from '../../assets/icons/watch';
 import { saveTreatment, deleteSavedTreatment } from '../../actions/index';
+import { addClick } from '../../services/datastore';
+
 import TreatmentItemTag from './treatment-item-tag';
 
 function TreatmentItem(props){
@@ -63,7 +65,7 @@ function TreatmentItem(props){
                     }
                 </View>
                 <View style={styles.bookmarkContainer}>
-                    <Bookmark width="30" height="30" treatment={props.treatment} press={() => {savedTreatments.includes(props.treatment.id)? props.deleteSavedTreatment(user.userId, props.treatment.id) : props.saveTreatment(user.userId, props.treatment.id)}}
+                    <Bookmark width="30" height="30" treatment={props.treatment} press={() => {savedTreatments.includes(props.treatment.id) ? (props.deleteSavedTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "Unsaved " + props.treatment.id, new Date())) : (props.saveTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "saved " + props.treatment.id, new Date()))}}
                  fill={savedTreatments.includes(props.treatment.id)? "black" : "none"} strokeColor="black"/>
                 </View>
                 {

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
 import Checkbox from '../components/checkbox';
+import { useSelector} from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
 import TreatmentInfo from '../components/treatment/treatment-info';
 import Left from '../assets/icons/left.svg';
 import Right from '../assets/icons/right.svg';
+import { addClick } from '../services/datastore';
 
 const windowHeight= Dimensions.get('window').height;
 const windowWidth= Dimensions.get('window').width;
 
 function TreatmentFlowPage(props){
+  const user = useSelector((state) => state.user);
     const [scrollRef, setScrollRef] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
 
@@ -29,6 +32,17 @@ function TreatmentFlowPage(props){
     const [costFilter, setCostFilter] = useState(false);
 
     const [selectedTreatment, setSelectedTreatment] = useState(null);
+
+    const trackClicks = () => {
+      console.log("here");
+      if (medFilter) addClick(`users/${user.userId}`, "filter-med", new Date());
+      if (therapyFilter) addClick(`users/${user.userId}`, "filter-therapy", new Date());
+      if (waitingFilter) addClick(`users/${user.userId}`, "filter-wait", new Date());
+      if (personFilter) addClick(`users/${user.userId}`, "filter-person", new Date());
+      if (remoteFilter) addClick(`users/${user.userId}`, "filter-remote", new Date());
+      if (accessFilter) addClick(`users/${user.userId}`, "filter-access", new Date());
+      if (costFilter) addClick(`users/${user.userId}`, "filter-cost", new Date());
+    }
 
     useEffect(() => {
         if(scrollRef){
@@ -89,7 +103,7 @@ function TreatmentFlowPage(props){
                     <TouchableHighlight underlayColor='gray' style={styles.backButton} onPress={() => setPageNumber(pageNumber - 1)}>
                         <Left />
                     </TouchableHighlight>
-                    <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => {setPageNumber(pageNumber + 1); setRenderList(true)}}>
+                    <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => {setPageNumber(pageNumber + 1); setRenderList(true); trackClicks();}}>
                         <Text style={{color: 'white'}}>Apply Filters</Text>
                     </TouchableHighlight>
                 </View>
