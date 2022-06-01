@@ -1,6 +1,7 @@
 import React, { useContext}  from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/homePage';
+import HomeStack from './HomeNavigation';
 import SurveyPage from '../screens/surveyPage';
 import TreatmentPage from '../screens/treatmentPage';
 import TreatmentFlowPage from '../screens/treatmentFlowPage';
@@ -30,7 +31,7 @@ function MainTabBar(props){
           null
         ]
       }}>
-        <Tab.Screen name="Home" component={HomePage} 
+        <Tab.Screen name="Home" component={HomeStack} 
         options={{
         headerShown: false,
         tabBarIcon: ({color}) => (
