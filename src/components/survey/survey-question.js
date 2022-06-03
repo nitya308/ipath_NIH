@@ -5,22 +5,22 @@ function surveyQuestion(props){
     return (
     <View style={styles.questionContainer}>
         <Text style={styles.questionText}>{props.questionTitle}</Text>
-        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set0();props.press(); }}>
+        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set(0);props.press(); }}>
             <View style={[styles.answer, props.selAns ==0 ? styles.selectedAnswer: null]}>
                 <Text style={[styles.answerText, props.selAns == 0 ? styles.selectedAnswerText: null]}>Not at all</Text>
             </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set1();props.press(); }}>
+        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set(1);props.press(); }}>
             <View style={[styles.answer, props.selAns ==1 ? styles.selectedAnswer: null]}>
                 <Text style={[styles.answerText, props.selAns == 1 ? styles.selectedAnswerText: null]}>Several days</Text>
             </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set2();props.press(); }}>
+        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set(2);props.press(); }}>
             <View style={[styles.answer, props.selAns ==2 ? styles.selectedAnswer: null]}>
                 <Text style={[styles.answerText, props.selAns == 2 ? styles.selectedAnswerText: null]}>More than half of days</Text>
             </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set3();props.press();}}>
+        <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={()=> {props.set(3);props.press();}}>
             <View style={[styles.answer, props.selAns ==3 ? styles.selectedAnswer: null]}>
                 <Text style={[styles.answerText, props.selAns == 3 ? styles.selectedAnswerText: null]}>Nearly every day</Text>
             </View>

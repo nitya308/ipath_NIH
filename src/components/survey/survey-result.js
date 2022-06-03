@@ -21,7 +21,6 @@ function SurveyResult(props){
 
     const renderHotlinePopup = () => {
       if (props.hotline) {
-        console.log("rendering");
         return (
           <View style={styles.hotlineContainer}>
             <Text style={styles.hotlineText}>Your responses indicate that you may benefit from immediate assistance. Please call the National Suicide Prevention Hotline at</Text>
