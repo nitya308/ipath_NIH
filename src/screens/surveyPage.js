@@ -7,7 +7,7 @@ import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
 import { addSurveyRes } from '../services/datastore';
 import { useScrollToTop, useIsFocused } from '@react-navigation/native';
-import { schedulePushNotification, registerForPushNotificationsAsync, cancelPushNotifications } from '../../notifications';
+import { schedulePushNotification, registerForPushNotificationsAsync, cancelPushNotifications, surveyFinishedReminder } from '../../notifications';
 import Left from '../assets/icons/left';
 
 function SurveyPage(props) {
@@ -44,7 +44,7 @@ function SurveyPage(props) {
     if (controlsVisible) {
       if (selectedId == 8 && numAnswered == 9) {
         return (
-          <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); registerForPushNotificationsAsync(); cancelPushNotifications(); schedulePushNotification(); }}>
+          <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
             <Text style={styles.backText}>Submit</Text>
           </TouchableHighlight>
         );
@@ -110,7 +110,7 @@ function SurveyPage(props) {
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={false} ref={introRef}>
-        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true) }} />
+        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); surveyFinishedReminder(); }} />
         <View style={styles.survey}>
           <Text style={styles.title}>PHQ-9 Survey</Text>
           <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
