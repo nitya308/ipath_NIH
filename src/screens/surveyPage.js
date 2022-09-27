@@ -38,7 +38,6 @@ function SurveyPage(props) {
   // CHANGE: NAVIGATE HOME
   const handleAppStateChange = () => {
     if (AppState.currentState.match(/inactive|background/)) {
-      console.log("in bg");
       props.navigation.navigate('Home');
     }
   }
@@ -125,7 +124,7 @@ function SurveyPage(props) {
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={false} ref={introRef}>
-        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: 0 }); introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); surveyFinishedReminder(); }} />
+        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: 0 }); introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); cancelPushNotifications(); surveyFinishedReminder(); }} />
         <View style={styles.survey}>
           <Text style={styles.title}>PHQ-9 Survey</Text>
           <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
