@@ -9,6 +9,8 @@ import { addSurveyRes } from '../services/datastore';
 import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 import { schedulePushNotification, registerForPushNotificationsAsync, cancelPushNotifications, surveyFinishedReminder } from '../../notifications';
 import Left from '../assets/icons/left';
+import AppState from 'react-native';
+import { addEventListener } from 'expo-linking';
 
 function SurveyPage(props) {
   const windowWidth = Dimensions.get('window').width;
@@ -32,6 +34,16 @@ function SurveyPage(props) {
     setSelAns(-1);
     setControlsVisible(false);
   }, [isFocused]);
+
+  // CHANGE: NAVIGATE HOME
+  const handleAppStateChange = () => {
+    props.navigation.navigate('Home')
+  }
+
+  // CHANGE: LISTEN FOR APP STATE CHANGE
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+  })
 
   useScrollToTop(useRef({
     scrollToTop: () => {
