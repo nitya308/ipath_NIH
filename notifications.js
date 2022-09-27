@@ -1,6 +1,7 @@
 import * as Notifications from "expo-notifications";
 import * as Device from 'expo-device';
 const identifier = null;
+const identifier2 = null;
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -23,9 +24,23 @@ export async function schedulePushNotification() {
   });
 }
 
+export async function surveyFinishedReminder() {
+  console.log("scheduling reminder");
+  identifier2 = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'You left mid-survey',
+      body: 'Finish the questions',
+    },
+    trigger: {
+      seconds: 300,
+    },
+  });
+}
+
 export async function cancelPushNotifications() {
   console.log("cancelling");
-  if(identifier != null) await Notifications.cancelScheduledNotificationAsync(identifier);
+  if (identifier != null) await Notifications.cancelScheduledNotificationAsync(identifier);
+  if (identifier2 != null) await Notifications.cancelScheduledNotificationAsync(identifier);
 }
 
 export async function registerForPushNotificationsAsync() {

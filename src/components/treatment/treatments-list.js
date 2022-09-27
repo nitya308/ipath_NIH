@@ -60,8 +60,8 @@ function TreatmentsList(props) {
   }
 
   const checkLocFilters = (treatment) => {
-    if (personFilter && treatment.data.place === "in-person") return true;
-    if (remoteFilter && treatment.data.place === "telehealth") return true;
+    if (personFilter && (treatment.data.place === "in-person" || treatment.data.place === "in-person/telehealth")) return true;
+    if (remoteFilter && (treatment.data.place === "telehealth" || treatment.data.place === "in-person/telehealth")) return true;
     if (!personFilter && !remoteFilter) return true;
     return false;
   }
