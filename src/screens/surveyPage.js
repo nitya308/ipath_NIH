@@ -9,7 +9,7 @@ import { addSurveyRes } from '../services/datastore';
 import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 import { schedulePushNotification, registerForPushNotificationsAsync, cancelPushNotifications, surveyFinishedReminder } from '../../notifications';
 import Left from '../assets/icons/left';
-import AppState from 'react-native';
+import { AppState } from 'react-native';
 import { addEventListener } from 'expo-linking';
 
 function SurveyPage(props) {
@@ -37,7 +37,10 @@ function SurveyPage(props) {
 
   // CHANGE: NAVIGATE HOME
   const handleAppStateChange = () => {
-    props.navigation.navigate('Home')
+    if (AppState.currentState.match(/inactive|background/)) {
+      console.log("in bg");
+      props.navigation.navigate('Home');
+    }
   }
 
   // CHANGE: LISTEN FOR APP STATE CHANGE
@@ -122,7 +125,7 @@ function SurveyPage(props) {
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={false} ref={introRef}>
-        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); surveyFinishedReminder(); }} />
+        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: 0 }); introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); surveyFinishedReminder(); }} />
         <View style={styles.survey}>
           <Text style={styles.title}>PHQ-9 Survey</Text>
           <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
