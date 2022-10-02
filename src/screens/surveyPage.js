@@ -9,6 +9,8 @@ import { addSurveyRes } from '../services/datastore';
 import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 import { schedulePushNotification, registerForPushNotificationsAsync, cancelPushNotifications, surveyFinishedReminder } from '../../notifications';
 import Left from '../assets/icons/left';
+import { AppState } from 'react-native';
+import { addEventListener } from 'expo-linking';
 
 function SurveyPage(props) {
   const windowWidth = Dimensions.get('window').width;
@@ -32,6 +34,18 @@ function SurveyPage(props) {
     setSelAns(-1);
     setControlsVisible(false);
   }, [isFocused]);
+
+  // CHANGE: NAVIGATE HOME
+  const handleAppStateChange = () => {
+    if (AppState.currentState.match(/inactive|background/)) {
+      props.navigation.navigate('Home');
+    }
+  }
+
+  // CHANGE: LISTEN FOR APP STATE CHANGE
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+  })
 
   useScrollToTop(useRef({
     scrollToTop: () => {
@@ -110,7 +124,7 @@ function SurveyPage(props) {
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={false} ref={introRef}>
-        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); surveyFinishedReminder(); }} />
+        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: 0 }); introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); cancelPushNotifications(); surveyFinishedReminder(); }} />
         <View style={styles.survey}>
           <Text style={styles.title}>PHQ-9 Survey</Text>
           <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
