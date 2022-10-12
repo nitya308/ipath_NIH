@@ -7,6 +7,8 @@ export const ActionTypes = {
     ERROR_TREATMENTS: 'ERROR_TREATMENTS',
     LOGIN_USER: 'LOGIN_USER',
     LOGOUT_USER: 'LOGOUT_USER',
+    SAVE_PAGEVIEW: 'SAVE_PAGEVIEW',
+    ERROR_PAGEVIEW: 'ERROR_PAGEVIEW',
 };
 
 
@@ -16,6 +18,16 @@ export function saveTreatment(userID, treatID) {
             dispatch({ type: ActionTypes.SAVE_TREATMENT, payload: treatID });
         }).catch((error) => {
             dispatch({ type: ActionTypes.ERROR_TREATMENTS, error });
+        })
+    }
+}
+
+export function savePageView(userID, pageID) {
+    return (dispatch) => {
+        db.updatePageView(userID, pageID).then((response) => {
+            dispatch({ type: ActionTypes.SAVE_PAGEVIEW, payload: treatID });
+        }).catch((error) => {
+            dispatch({ type: ActionTypes.ERROR_PAGEVIEW, error });
         })
     }
 }
