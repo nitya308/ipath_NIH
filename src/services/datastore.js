@@ -77,7 +77,8 @@ export function deleteFavTreatment(userID, treatID){
 export function createUser(uid, email){
   users.doc(uid).set({
     email: email,
-    "bookmarked-treatments": []
+    "bookmarked-treatments": [],
+    "lastSurveyed" : null,
   }).catch((error) => {
     console.log('Error creating user', error);
   });
@@ -112,6 +113,11 @@ export const addSurveyRes = (userID, scores, date) => {
     .then((docRef) => {
       console.log(`Added survey ${docRef.id}`);
     })
+    .catch((error) => {
+      console.log(`Error adding new survey result: ${error}`);
+    });
+
+  users.doc(userID).update({'lastSurveyed': date})
     .catch((error) => {
       console.log(`Error adding new survey result: ${error}`);
     });

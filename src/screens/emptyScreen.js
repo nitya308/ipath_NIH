@@ -1,10 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableWithoutFeedback, TextComponent } from 'react-native';
+import ProgressCircle from 'react-native-progress-circle';
 
 function EmptyScreen({ navigation }) {
   return (
       <View style={styles.flexContainer}>
-        <Text style={styles.italicSubheading}>This page is coming soon.</Text>
+        <Text style={styles.italicSubheading}>This page should have a progress circle on it.</Text>
+        <ProgressCircle
+          percent={50}
+          radius={50}
+          borderWidth={10}
+          color="#469C97"
+          bgcolor="fff"
+          shadowColor="#999">
+            <Text> Hi </Text>
+        </ProgressCircle>
       </View>
   );
 }
