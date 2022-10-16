@@ -58,7 +58,7 @@ function SurveyPage(props) {
     if (controlsVisible) {
       if (selectedId == 8 && numAnswered == 9) {
         return (
-          <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
+          <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`${user.userId}`, scores, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
             <Text style={styles.backText}>Submit</Text>
           </TouchableHighlight>
         );

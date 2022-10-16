@@ -43,28 +43,28 @@ const clicks = firestore.collection('clicks');
 // Get all info about a user
 export const getUserDoc = (userID) => {
   let doc = users.doc(userID).get()
-  .catch((error) => {
-    console.log(error);
-  });
+    .catch((error) => {
+      console.log(error);
+    });
   return doc;
 };
 
-export function getTreatmentById(treatID){
+export function getTreatmentById(treatID) {
   return treatments.doc(treatID).get();
 }
 // Favourite a treatment
-export function updateFavTreatment(userID, treatID){
+export function updateFavTreatment(userID, treatID) {
   return users.doc(userID).update({ 'bookmarked-treatments': firebase.firestore.FieldValue.arrayUnion(treatID) });
-    // .then(() => {
-    //   console.log(`Added ${treatID} to user ${userID}'s list of fav treatments`);
-    // })
-    // .catch((error) => {
-    //   console.log('Error updating goal: ', error);
-    // });
+  // .then(() => {
+  //   console.log(`Added ${treatID} to user ${userID}'s list of fav treatments`);
+  // })
+  // .catch((error) => {
+  //   console.log('Error updating goal: ', error);
+  // });
 };
 
 // Unfavourite a treatment
-export function deleteFavTreatment(userID, treatID){
+export function deleteFavTreatment(userID, treatID) {
   users.doc(userID).update({ 'bookmarked-treatments': firebase.firestore.FieldValue.arrayRemove(treatID) })
     .then(() => {
       console.log(`Removed ${treatID} from user ${userID}'s list of fav treatments`);
@@ -74,11 +74,11 @@ export function deleteFavTreatment(userID, treatID){
     });
 };
 
-export function createUser(uid, email){
+export function createUser(uid, email) {
   users.doc(uid).set({
     email: email,
     "bookmarked-treatments": [],
-    "lastSurveyed" : null,
+    "lastSurveyed": null,
   }).catch((error) => {
     console.log('Error creating user', error);
   });
@@ -104,7 +104,7 @@ export const getUserSurveyRes = (userID) => {
 export const addSurveyRes = (userID, scores, date) => {
   surveys.add(
     {
-      user: userID,
+      user: 'users/' + userID,
       scores: scores,
       totalScore: scores.reduce((sum, num) => sum + num, 0),
       date: date,
@@ -117,16 +117,19 @@ export const addSurveyRes = (userID, scores, date) => {
       console.log(`Error adding new survey result: ${error}`);
     });
 
-  users.doc(userID).update({'lastSurveyed': date})
+  users.doc(userID).update({ lastSurveyed: date })
+    .then(() => {
+      console.log("Document successfully updated!");
+    })
     .catch((error) => {
-      console.log(`Error adding new survey result: ${error}`);
+      console.log(error);
     });
 };
 
 // ================ TREATMENT FUNCTIONS =================
 
 // Get all treatments
-export function getTreatments(){
+export function getTreatments() {
   // alert('called get treatments')
   return treatments.get()
   // .then((querySnapshot) => {
