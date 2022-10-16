@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useSelector } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable, ScrollView } from 'react-native';
 import RightArrow from '../../assets/icons/right.svg';
 import Speech from '../../assets/icons/speech';
@@ -7,6 +7,8 @@ import Watch from '../../assets/icons/watch';
 import Close from '../../assets/icons/close.svg';
 import Chevron from '../../assets/icons/chevron.svg';
 import { addClick } from '../../services/datastore';
+
+
 const treatmentData = {
     "Talk Therapy": {
         description: "A weekly 30-60 minute session working with a therapist either in person or on a computer: using a program on your own or with support from your clinician by email or phone.",
@@ -30,6 +32,7 @@ const treatmentData = {
 function TreatmentsOverview(props){
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedType, setSelectedType] = useState("Watchful Waiting");
+    const user = useSelector((state) => state.user);
     return(
         <View style={styles.options}>
             <Text style={styles.header}>Treatment Types</Text>
