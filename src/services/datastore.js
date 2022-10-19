@@ -78,7 +78,7 @@ export function createUser(uid, email) {
   users.doc(uid).set({
     email: email,
     "bookmarked-treatments": [],
-    "lastSurveyed": null,
+    "lastSurveyed": "",
   }).catch((error) => {
     console.log('Error creating user', error);
   });
@@ -115,9 +115,9 @@ export const addSurveyRes = (userID, scores, date) => {
     })
     .catch((error) => {
       console.log(`Error adding new survey result: ${error}`);
-    });
+    })
 
-  users.doc(userID).update({ lastSurveyed: date })
+  users.doc(userID).update({ lastSurveyed: date.toISOString() })
     .then(() => {
       console.log("Document successfully updated!");
     })

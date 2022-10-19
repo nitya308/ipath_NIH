@@ -7,6 +7,9 @@ export const ActionTypes = {
     ERROR_TREATMENTS: 'ERROR_TREATMENTS',
     LOGIN_USER: 'LOGIN_USER',
     LOGOUT_USER: 'LOGOUT_USER',
+    FETCH_LAST_SURVEYED: 'FETCH_LAST_SURVEYED',
+    UPDATE_LAST_SURVEYED: 'UPDATE_LAST_SURVEYED',
+    ERROR_LAST_SURVEYED: 'ERROR_LAST_SURVEYED',
 };
 
 
@@ -51,6 +54,7 @@ export function fetchSavedTreatments(userID) {
     }
 }
 
+
 export function loginUser({ email, id } ) {
     return (dispatch) => {
         dispatch({ type: ActionTypes.LOGIN_USER, payload: {email : email, id: id} });
@@ -60,5 +64,18 @@ export function loginUser({ email, id } ) {
 export function logoutUser() {
     return (dispatch) => {
         dispatch({ type: ActionTypes.LOGOUT_USER });
+    }
+}
+
+
+// ACTIONS FOR FETCHING THE LAST-SURVEYED INFO FOR A USER
+
+export function fetchLastSurveyed(userID) {
+    return (dispatch) => {
+        db.getUserDoc(userID).then((response) => {
+            dispatch({ type: ActionTypes.FETCH_LAST_SURVEYED, payload: response.data()["lastSurveyed"] })
+        }).catch((error) => {
+            dispatch({ type: ActionTypes.ERROR_LAST_SURVEYED, error });
+        })
     }
 }

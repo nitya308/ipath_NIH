@@ -1,11 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View, TouchableWithoutFeedback, TextComponent } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
+import { fetchLastSurveyed } from '../actions';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-function EmptyScreen({ navigation }) {
+function EmptyScreen(props, { navigation }) {
+  const user = useSelector((state) => state.user);
+  useEffect (() => {
+    const lastDate = async () => {props.fetchLastSurveyed(user.userId);}
+    lastDate();
+  }, []);
+
+  const LSD = useSelector((user) => user.lastSurveyed)
+  console.log('LSD',  LSD)
+
   return (
       <View style={styles.flexContainer}>
         <Text style={styles.italicSubheading}>This page should have a progress circle on it.</Text>
+        <Text style={styles.italicSubheading}>{LSD}</Text>
         <ProgressCircle
           percent={50}
           radius={50}
@@ -35,4 +49,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EmptyScreen;
+export default connect(null, { fetchLastSurveyed })(EmptyScreen);
