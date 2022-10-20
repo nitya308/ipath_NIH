@@ -80,7 +80,7 @@ function TreatmentFlowPage(props) {
             </View>
           </View>
           <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => { setPageNumber(pageNumber + 1); setRenderList(true); trackClicks(); }}>
-            <Text style={{ color: 'white' }}>Apply Filters</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>Explore Treatment Options</Text>
           </TouchableHighlight>
         </View>
         {renderList ? <TreatmentsList press={() => { scrollRef.scrollToEnd() }} pickTreatment={setSelectedTreatment}
@@ -108,12 +108,13 @@ const styles = StyleSheet.create({
   columnsContainer: {
     flexDirection: 'row',
     padding: 5,
-    height: 150
+    height: 150,
   },
   rowsContainer: {
     width: '100%',
     flexDirection: 'column',
     paddingHorizontal: 20,
+    marginBottom: 20,
     alignItems: 'flex-start'
   },
   column: {
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     fontSize: 25,
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
     paddingHorizontal: 20,
     width: "100%"
@@ -174,8 +175,9 @@ const styles = StyleSheet.create({
   checkboxListContainer: {
     width: '100%',
     flexDirection: 'row',
-    padding: 10,
+    padding: 0,
     paddingHorizontal: 20,
+    marginBottom: 10
   },
   checkbox: {
     width: "100%",
@@ -203,13 +205,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   applyButton: {
-    position: 'absolute',
-    width: 120,
+    width: "90%",
     height: 50,
     borderRadius: 15,
     backgroundColor: "#469C97",
-    bottom: 50,
-    right: 30,
     alignItems: 'center',
     justifyContent: 'center',
   }
