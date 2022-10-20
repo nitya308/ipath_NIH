@@ -8,18 +8,25 @@ import { connect } from 'react-redux';
 
 function EmptyScreen(props, { navigation }) {
   const user = useSelector((state) => state.user);
+  console.log('PRINTING User OBJECT FROM EmptyScreen.js \n', user);
+  console.log('PRINTING props OBJECT FROM EmptyScreen.js \n', props);
+
   useEffect (() => {
-    const lastDate = async () => {props.fetchLastSurveyed(user.userId);}
+    const lastDate = async () => {fetchLastSurveyed(user.userId);}
     lastDate();
+    console.log('printing user in useefffect', user);
+    
   }, []);
 
-  const LSD = useSelector((user) => user.lastSurveyed)
-  console.log('LSD',  LSD)
+  const LSD = useSelector((state) => state.user.lastSurveyed)
+  console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', LSD);
+  const ctdn = new Date().toISOString - LSD
+
 
   return (
       <View style={styles.flexContainer}>
         <Text style={styles.italicSubheading}>This page should have a progress circle on it.</Text>
-        <Text style={styles.italicSubheading}>{LSD}</Text>
+        <Text style={styles.italicSubheading}>{ctdn}</Text>
         <ProgressCircle
           percent={50}
           radius={50}
@@ -27,7 +34,7 @@ function EmptyScreen(props, { navigation }) {
           color="#469C97"
           bgcolor="fff"
           shadowColor="#999">
-            <Text> Hi </Text>
+            <Text> {LSD} </Text>
         </ProgressCircle>
       </View>
   );

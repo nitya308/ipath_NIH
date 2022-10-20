@@ -117,6 +117,10 @@ export const addSurveyRes = (userID, scores, date) => {
       console.log(`Error adding new survey result: ${error}`);
     })
 
+  
+};
+
+export const updateLastSurveyed = (userID, date) => {
   users.doc(userID).update({ lastSurveyed: date.toISOString() })
     .then(() => {
       console.log("Document successfully updated!");

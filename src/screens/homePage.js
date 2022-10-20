@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
 import Chart from '../assets/icons/chart.svg';
 import { connect, useSelector } from 'react-redux';
-import { fetchTreatments, fetchSavedTreatments } from '../actions/index';
+import { fetchTreatments, fetchSavedTreatments, fetchLastSurveyed } from '../actions/index';
 import Clipboard from '../assets/icons/clipboard';
 import List from '../assets/icons/list';
 
