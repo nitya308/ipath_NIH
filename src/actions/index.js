@@ -73,7 +73,7 @@ export function logoutUser() {
 export function fetchLastSurveyed(userID) {
     return (dispatch) => {
         db.getUserDoc(userID).then((response) => {
-            console.log('PRINTING lastSurveyed from actions/index:\n', response.data()["lastSurveyed"])
+            // console.log('PRINTING lastSurveyed from actions/index:\n', response.data()["lastSurveyed"])
             dispatch({ type: ActionTypes.FETCH_LAST_SURVEYED, payload: response.data()["lastSurveyed"] })
         }).catch((error) => {
             dispatch({ type: ActionTypes.ERROR_LAST_SURVEYED, error });

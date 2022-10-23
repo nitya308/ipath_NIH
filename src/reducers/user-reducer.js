@@ -6,7 +6,7 @@ const initialState = {
     lastSurveyed: '',
 }
 const UserReducer = (state = initialState,  action = {}) => {
-  console.log('action', action);
+  // console.log('action', action);
   switch (action.type) {
     case ActionTypes.LOGIN_USER:
       return { ...state, userEmail: action.payload.email, userId: action.payload.id, firstName: action.payload.firstName, lastSurveyed: action.payload.lastSurveyed };

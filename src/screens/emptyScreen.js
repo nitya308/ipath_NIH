@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 
 function EmptyScreen(props, { navigation }) {
   const user = useSelector((state) => state.user);
-  console.log('PRINTING User OBJECT FROM EmptyScreen.js \n', user);
-  console.log('PRINTING props OBJECT FROM EmptyScreen.js \n', props);
+  // console.log('PRINTING User OBJECT FROM EmptyScreen.js \n', user);
+  // console.log('PRINTING props OBJECT FROM EmptyScreen.js \n', props);
 
   useEffect (() => {
     const lastDate = async () => {fetchLastSurveyed(user.userId);}
@@ -19,23 +19,34 @@ function EmptyScreen(props, { navigation }) {
   }, []);
 
   const lastSurveyedValue = useSelector((state) => state.user.lastSurveyed);
-  const lastSurveyedDate = new Date(lastSurveyedValue);
-  console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', lastSurveyedDate);
-  const ctdn = new Date().toISOString - lastSurveyedDate
+  // const lastSurveyedDate = new Date(lastSurveyedValue);
+  console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', lastSurveyedValue);
+  const date1 = new Date(lastSurveyedValue)
+  const date2 = new Date()
+  const diffTime = date2.getTime() - date1.getTime();
+  const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
+  const daysRemaining = 14 - diffDays;
+  const percentRemaining = 100 * (daysRemaining / 14);
+  console.log('date from LSD:\n', date1);
+  console.log('current date:\n', date2);
+  console.log('difference in time:\n', diffTime);
+  console.log('difference in days:\n', diffDays);
+
+  // const ctdn = new Date().toISOString - lastSurveyedDate
 
 
   return (
       <View style={styles.flexContainer}>
-        <Text style={styles.italicSubheading}>This page should have a progress circle on it.</Text>
-        <Text style={styles.italicSubheading}>{ctdn}</Text>
+        <Text style={styles.italicSubheading}>You last took the survey on: {lastSurveyedValue}</Text>
+        <Text style={styles.italicSubheading}>Days Remaining Until Next Survey:</Text>
         <ProgressCircle
-          percent={50}
+          percent={percentRemaining}
           radius={50}
           borderWidth={10}
           color="#469C97"
           bgcolor="fff"
           shadowColor="#999">
-            <Text> {LSD} </Text>
+            <Text> {daysRemaining} </Text>
         </ProgressCircle>
       </View>
   );
