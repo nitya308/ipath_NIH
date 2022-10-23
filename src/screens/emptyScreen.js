@@ -18,9 +18,10 @@ function EmptyScreen(props, { navigation }) {
     
   }, []);
 
-  const LSD = useSelector((state) => state.user.lastSurveyed)
-  console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', LSD);
-  const ctdn = new Date().toISOString - LSD
+  const lastSurveyedValue = useSelector((state) => state.user.lastSurveyed);
+  const lastSurveyedDate = new Date(lastSurveyedValue);
+  console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', lastSurveyedDate);
+  const ctdn = new Date().toISOString - lastSurveyedDate
 
 
   return (
