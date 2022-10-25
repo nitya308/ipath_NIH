@@ -7,6 +7,11 @@ import TreatmentInfo from '../components/treatment/treatment-info';
 import Left from '../assets/icons/left.svg';
 import Right from '../assets/icons/right.svg';
 import { addClick } from '../services/datastore';
+import Pill from '../assets/icons/pill.js';
+import Speech from '../assets/icons/speech';
+import Watch from '../assets/icons/watch';
+import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
+import FakeLoading from '../components/treatment/fake-loading';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -26,12 +31,17 @@ function TreatmentFlowPage(props) {
   const [remoteFilter, setRemoteFilter] = useState(false);
 
   const [renderList, setRenderList] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   // Treatment sort options
   const [accessFilter, setAccessFilter] = useState(false);
   const [costFilter, setCostFilter] = useState(false);
 
   const [selectedTreatment, setSelectedTreatment] = useState(null);
+
+  const fakeLoading = () => {
+    setTimeout(() => setRenderList(true), 6000);
+  }
 
   const trackClicks = () => {
     console.log("here");
@@ -55,11 +65,17 @@ function TreatmentFlowPage(props) {
       <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => { setScrollRef(ref) }}>
         <View style={styles.page}>
           <Text style={styles.pageSubheader}>Hi Patty,</Text>
-          <Text style={styles.pageHeader}>What type of treatment are you looking for?</Text>
+          <Text style={[styles.pageHeader, { fontSize: 25 }]}>What type of treatment are you looking for?</Text>
           <View style={styles.columnsContainer}>
-            <TouchableHighlight style={therapyFilter ? [styles.treatmentType, { backgroundColor: "#000000" }] : styles.treatmentType} onPress={() => setTherapyFilter(!therapyFilter)}><Text style={styles.treatmentTypetext}>Therapy Providers</Text></TouchableHighlight>
-            <TouchableHighlight style={medFilter ? [styles.treatmentType, { backgroundColor: "#000000" }] : styles.treatmentType} onPress={() => setMedFilter(!medFilter)}><Text style={styles.treatmentTypetext}>Medication Providers</Text></TouchableHighlight>
-            <TouchableHighlight style={waitingFilter ? [styles.treatmentType, { backgroundColor: "#000000" }] : styles.treatmentType} onPress={() => setWaitingFilter(!waitingFilter)}><Text style={styles.treatmentTypetext}>Watchful Waiting</Text></TouchableHighlight>
+            <TouchableHighlight style={medFilter ? [styles.treatmentType, { backgroundColor: "#51A8F8" }] : styles.treatmentType} onPress={() => setMedFilter(!medFilter)}>
+              <TreatmentFilterCard selected={medFilter} title="Medication" icon={<Pill height={40} color={medFilter ? "#FFFFFF" : null}></Pill>}></TreatmentFilterCard>
+            </TouchableHighlight>
+            <TouchableHighlight style={therapyFilter ? [styles.treatmentType, { backgroundColor: "#9B51F8" }] : styles.treatmentType} onPress={() => setTherapyFilter(!therapyFilter)}>
+              <TreatmentFilterCard selected={therapyFilter} title="Therapy" icon={<Speech height={40} color={therapyFilter ? "#FFFFFF" : null}></Speech>}></TreatmentFilterCard>
+            </TouchableHighlight>
+            <TouchableHighlight style={waitingFilter ? [styles.treatmentType, { backgroundColor: "#EF6068" }] : styles.treatmentType} onPress={() => setWaitingFilter(!waitingFilter)}>
+              <TreatmentFilterCard selected={waitingFilter} title="Watchful Waiting" icon={<Watch height={40} color={waitingFilter ? "#FFFFFF" : null}></Watch>}></TreatmentFilterCard>
+            </TouchableHighlight>
           </View>
           <Text style={styles.pageHeader}>How would you like to receive treatment?</Text>
           <View style={styles.checkboxListContainer}>
@@ -70,31 +86,48 @@ function TreatmentFlowPage(props) {
               <Checkbox style={styles.checkbox} isChecked={remoteFilter} onPress={() => setRemoteFilter(!remoteFilter)} title="Remote" />
             </View>
           </View>
-          <Text style={styles.pageHeader}>What is most important to you?</Text>
-          <View style={styles.rowsContainer}>
-            <View style={styles.column}>
-              <Checkbox style={styles.checkbox} isChecked={accessFilter} onPress={() => { setAccessFilter(!accessFilter); setCostFilter(false) }} title="Quick Access to Care" />
-            </View>
-            <View style={styles.column}>
-              <Checkbox style={styles.checkbox} isChecked={costFilter} onPress={() => { setCostFilter(!costFilter); setAccessFilter(false) }} title="Lowest Cost" />
-            </View>
-          </View>
-          <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => { setPageNumber(pageNumber + 1); setRenderList(true); trackClicks(); }}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Explore Treatment Options</Text>
-          </TouchableHighlight>
+          {loading ?
+            <>
+              <Text style={styles.pageHeader}>Treatment providers: dropdown TBA</Text>
+            </>
+            :
+            <>
+              <Text style={styles.pageHeader}>What is most important to you?</Text>
+              <View style={styles.rowsContainer}>
+                <View style={styles.column}>
+                  <Checkbox style={styles.checkbox} isChecked={accessFilter} onPress={() => { setAccessFilter(!accessFilter); setCostFilter(false) }} title="Quick Access to Care" />
+                </View>
+                <View style={styles.column}>
+                  <Checkbox style={styles.checkbox} isChecked={costFilter} onPress={() => { setCostFilter(!costFilter); setAccessFilter(false) }} title="Lowest Cost" />
+                </View>
+              </View>
+            </>
+          }
+
+          {loading ?
+            <>
+              {renderList ?
+                <>
+                  <TreatmentsList pickTreatment={setSelectedTreatment}
+                    therapy={therapyFilter}
+                    med={medFilter}
+                    waiting={waitingFilter}
+                    person={personFilter}
+                    remote={remoteFilter}
+                    access={accessFilter}
+                    cost={costFilter} />
+                  <TreatmentInfo treatment={selectedTreatment} press={() => scrollRef.scrollTo({ x: windowWidth * 3 })} />
+                </>
+                :
+                <FakeLoading></FakeLoading>
+              }
+            </> :
+            <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => { setLoading(true); fakeLoading(); trackClicks(); }}>
+              <Text style={{ color: 'white', fontSize: 20 }}>Explore Treatment Options →</Text>
+            </TouchableHighlight>
+          }
         </View>
-        {renderList ? <TreatmentsList press={() => { scrollRef.scrollToEnd() }} pickTreatment={setSelectedTreatment}
-          therapy={therapyFilter}
-          med={medFilter}
-          waiting={waitingFilter}
-          person={personFilter}
-          remote={remoteFilter}
-          access={accessFilter}
-          cost={costFilter} />
-          :
-          null
-        }
-        <TreatmentInfo treatment={selectedTreatment} press={() => scrollRef.scrollTo({ x: windowWidth * 3 })} />
+
       </ScrollView>
     </View>
   );
@@ -127,16 +160,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   treatmentType: {
-    backgroundColor: "#929292",
+    backgroundColor: "#ffffff",
     padding: 10,
+    paddingVertical: 20,
     margin: 5,
     width: '30%',
     height: 130,
     borderRadius: 10,
-  },
-  treatmentTypetext: {
-    textAlign: 'center',
-    fontSize: 20
+    shadowColor: '#171717',
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
   button: {
     height: 150,
@@ -159,8 +193,8 @@ const styles = StyleSheet.create({
   pageHeader: {
     fontWeight: 'bold',
     textAlign: 'left',
-    fontSize: 25,
-    marginTop: 20,
+    fontSize: 19,
+    marginTop: 10,
     marginBottom: 10,
     paddingHorizontal: 20,
     width: "100%"
@@ -206,8 +240,8 @@ const styles = StyleSheet.create({
   },
   applyButton: {
     width: "90%",
-    height: 50,
-    borderRadius: 15,
+    height: 70,
+    borderRadius: 10,
     backgroundColor: "#469C97",
     alignItems: 'center',
     justifyContent: 'center',

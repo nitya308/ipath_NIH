@@ -105,17 +105,6 @@ function TreatmentsList(props) {
     return(
         <View>
             <ScrollView style={styles.container}>
-                <Text style={styles.header}>Treatment Options</Text>
-                <View style={styles.filtersContainer}>
-                    <Pressable onPress={() => setFilterModal(true)} style={[styles.filterContainer, (therapyFilter || medFilter || waitFilter) ? {borderWidth: "1", borderColor: "white"} : null]}>
-                        <Text style={styles.filterText}>Filter</Text>
-                        <Filter width="24" height="24" strokeColor="white" />
-                    </Pressable>
-                    <Pressable onPress={() => setSavedFilter(!savedFilter)} style={[styles.filterContainer, savedFilter ? {borderWidth: "1", borderColor: "white"} : null]}>
-                        <Text style={styles.filterText}>Saved</Text>
-                        <Bookmark press={() => setSavedFilter(!savedFilter)} width="24" height="24" fill={savedFilter? "white" : "none"} strokeColor="white" />
-                    </Pressable>
-                </View>
                 <View style={styles.list}>
                     {
                         savedFilter && allTreatments ? 
