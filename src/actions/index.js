@@ -9,6 +9,9 @@ export const ActionTypes = {
     LOGOUT_USER: 'LOGOUT_USER',
     SAVE_PAGEVIEW: 'SAVE_PAGEVIEW',
     ERROR_PAGEVIEW: 'ERROR_PAGEVIEW',
+    FETCH_LAST_SURVEYED: 'FETCH_LAST_SURVEYED',
+    UPDATE_LAST_SURVEYED: 'UPDATE_LAST_SURVEYED',
+    ERROR_LAST_SURVEYED: 'ERROR_LAST_SURVEYED',
 };
 
 
@@ -32,8 +35,8 @@ export function savePageView(userID, pageID) {
     }
 }
 
-export function deleteSavedTreatment(userID, treatID){
-    return(dispatch) => {
+export function deleteSavedTreatment(userID, treatID) {
+    return (dispatch) => {
         db.deleteFavTreatment(userID, treatID);
         dispatch({ type: ActionTypes.DELETE_SAVED_TREATMENT, payload: treatID })
 
@@ -44,7 +47,7 @@ export function fetchTreatments() {
         db.getTreatments().then((response) => {
             const list = [];
             response.forEach((doc) => {
-                list.push({id: doc.id, data: doc.data()});
+                list.push({ id: doc.id, data: doc.data() });
             })
             dispatch({ type: ActionTypes.FETCH_TREATMENTS, payload: list });
         }).catch((error) => {
@@ -63,9 +66,10 @@ export function fetchSavedTreatments(userID) {
     }
 }
 
-export function loginUser({ email, id } ) {
+
+export function loginUser({ email, id }) {
     return (dispatch) => {
-        dispatch({ type: ActionTypes.LOGIN_USER, payload: {email : email, id: id} });
+        dispatch({ type: ActionTypes.LOGIN_USER, payload: { email: email, id: id } });
     }
 }
 
@@ -74,3 +78,29 @@ export function logoutUser() {
         dispatch({ type: ActionTypes.LOGOUT_USER });
     }
 }
+
+
+// ACTIONS FOR FETCHING THE LAST-SURVEYED INFO FOR A USER
+
+export function fetchLastSurveyed(userID) {
+    return (dispatch) => {
+        db.getUserDoc(userID).then((response) => {
+            // console.log('PRINTING lastSurveyed from actions/index:\n', response.data()["lastSurveyed"])
+            dispatch({ type: ActionTypes.FETCH_LAST_SURVEYED, payload: response.data()["lastSurveyed"] })
+        }).catch((error) => {
+            dispatch({ type: ActionTypes.ERROR_LAST_SURVEYED, error });
+        })
+    }
+}
+
+export function saveLastSurveyed(userID, date) {
+    return (dispatch) => {
+        db.updateLastSurveyed(userID, date).then((response) => {
+            console.log('response in save last surveyed', response);
+            dispatch({ type: ActionTypes.UPDATE_LAST_SURVEYED, payload: date });
+        }).catch((error) => {
+            dispatch({ type: ActionTypes.ERROR_LAST_SURVEYED, error });
+        })
+    }
+}
+

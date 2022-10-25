@@ -5,12 +5,13 @@ import SurveyQuestion from '../components/survey/survey-question';
 import SurveyIntro from '../components/survey/survey-intro';
 import SurveyResult from '../components/survey/survey-result';
 import * as Progress from 'react-native-progress';
-import { addSurveyRes } from '../services/datastore';
+import { addSurveyRes, updateLastSurveyed } from '../services/datastore';
 import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 import { schedulePushNotification, registerForPushNotificationsAsync, cancelPushNotifications, surveyFinishedReminder } from '../../notifications';
 import Left from '../assets/icons/left';
 import { AppState } from 'react-native';
 import { addEventListener } from 'expo-linking';
+import { saveLastSurveyed } from '../actions';
 
 function SurveyPage(props) {
   const windowWidth = Dimensions.get('window').width;
@@ -58,7 +59,7 @@ function SurveyPage(props) {
     if (controlsVisible) {
       if (selectedId == 8 && numAnswered == 9) {
         return (
-          <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`users/${user.userId}`, scores, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
+          <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`${user.userId}`, scores, new Date()); updateLastSurveyed(`${user.userId}`, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
             <Text style={styles.backText}>Submit</Text>
           </TouchableHighlight>
         );
