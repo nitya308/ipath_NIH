@@ -10,6 +10,9 @@ export const ActionTypes = {
     FETCH_LAST_SURVEYED: 'FETCH_LAST_SURVEYED',
     UPDATE_LAST_SURVEYED: 'UPDATE_LAST_SURVEYED',
     ERROR_LAST_SURVEYED: 'ERROR_LAST_SURVEYED',
+    FETCH_FIRST_NAME: 'FETCH_FIRST_NAME',
+    UPDATE_FIRST_NAME: 'UPDATE_FIRST_NAME',
+    ERROR_FIRST_NAME: 'ERROR_FIRST_NAME',
 };
 
 
@@ -90,4 +93,26 @@ export function saveLastSurveyed(userID, date) {
             dispatch({ type: ActionTypes.ERROR_LAST_SURVEYED, error });
         })
     }
+}
+
+export function fetchFirstName(userID) {
+  return (dispatch) => {
+      db.getUserDoc(userID).then((response) => {
+          // console.log('PRINTING lastSurveyed from actions/index:\n', response.data()["lastSurveyed"])
+          dispatch({ type: ActionTypes.FETCH_FIRST_NAME, payload: response.data()["firstName"] })
+      }).catch((error) => {
+          dispatch({ type: ActionTypes.ERROR_FIRST_NAME, error });
+      })
+  }
+}
+
+export function saveFirstName(userID, firstName) {
+  return (dispatch) => {
+      db.updateLastSurveyed(userID, firstName).then((response) => {
+          console.log('response in save last surveyed', response);
+          dispatch({ type: ActionTypes.UPDATE_FIRST_NAME, payload: firstName });
+      }).catch((error) => {
+          dispatch({ type: ActionTypes.ERROR_FIRST_NAME, error });
+      })
+  }
 }
