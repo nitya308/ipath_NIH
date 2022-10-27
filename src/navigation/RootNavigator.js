@@ -25,6 +25,7 @@ function RootNavigator(props) {
             props.loginUser({email: user.email, id: user.uid});
             props.fetchSavedTreatments(user.uid);
             props.fetchLastSurveyed(user.uid);
+            props.fetchFirstName(user.uid);
         } else {
             props.logoutUser();
         }
