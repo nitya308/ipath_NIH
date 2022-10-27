@@ -5,6 +5,7 @@ import { connect, useSelector } from 'react-redux';
 import { fetchTreatments, fetchSavedTreatments, fetchLastSurveyed } from '../actions/index';
 import Clipboard from '../assets/icons/clipboard';
 import List from '../assets/icons/list';
+import { updatePageView } from '../services/datastore';
 
 function HomePage(props){
     const user = useSelector((state) => state.user)
@@ -22,7 +23,7 @@ function HomePage(props){
         <View style={styles.container}>
             <Text style={styles.title}>Welcome to iPath</Text>
             <View style={styles.flexContainer}>
-                <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => navigateTo("Survey")}>
+                <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => {navigateTo("Survey"); updatePageView(`${user.userId}`, "page_1");}}>
                     <View style={styles.buttonContainer}>
                         <Text style={styles.buttonTitle}>Take PHQ-9 Depression Screening Survey</Text>
                         <Text style={styles.description}>We recommend taking this survey every 2 weeks</Text>
