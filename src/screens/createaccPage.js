@@ -12,6 +12,7 @@ const auth = firebase.auth();
 function CreateAccountPage({ navigation }) {
 
   const [inputEmail, setInputEmail] = useState('');
+  const [inputFirstName, setInputFirstName] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [inputConfirmPassword, setInputConfirmPassword] = useState('');
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -24,7 +25,7 @@ function CreateAccountPage({ navigation }) {
           setRenderPasswordError(true);
         } else{
           const userCredential = await auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
-          createUser(userCredential.user.uid, userCredential.user.email)
+          createUser(userCredential.user.uid, userCredential.user.email, inputFirstName)
         }
       }
     } catch (error) {
@@ -37,6 +38,7 @@ function CreateAccountPage({ navigation }) {
       <Text style={styles.title}>Create Account</Text>
       <View style={styles.flexContainer}>
         <LoginInput style={styles.input} value={inputEmail} keyboardType='email-address' textContentType='emailAddress' autoFocus={true} onChangeText={(text) => setInputEmail(text)} placeholder="Email" backgroundColor="#E3EFF0" />
+        <LoginInput style={styles.input} value={inputFirstName} autoFocus={true} onChangeText={(text) => setInputFirstName(text)} placeholder="First Name" backgroundColor="#E3EFF0" />
         <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputPassword} textContentType='none' onChangeText={(text) => setInputPassword(text)} placeholder="Password" secure={true} backgroundColor="#E3EFF0"/>
         <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputConfirmPassword} textContentType='none' autoCapitalize='none' onChangeText={(text) => setInputConfirmPassword(text)} placeholder="Confirm Password" secure={true} backgroundColor="#E3EFF0"/>
         {renderPasswordError ? <Text style={styles.errorMessage}>Passwords do not match</Text> : null }
