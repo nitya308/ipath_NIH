@@ -88,10 +88,6 @@ export function createUser(uid, email) {
     email: email,
     "bookmarked-treatments": [],
     "tutorial_views": tutorial_views,
-
-  users.doc(uid).set({
-    email: email,
-    "bookmarked-treatments": [],
     "lastSurveyed": "",
 
   }).catch((error) => {
