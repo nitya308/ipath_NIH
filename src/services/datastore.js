@@ -75,10 +75,25 @@ export function deleteFavTreatment(userID, treatID) {
 };
 
 export function createUser(uid, email) {
+
+  const tutorial_views = {
+    "page_1": 0,
+    "page_2": 0,
+    "page_3": 0,
+    "page_4": 0,
+    "page_5": 0,
+    "page_6": 0
+  }
+  users.doc(uid).set({
+    email: email,
+    "bookmarked-treatments": [],
+    "tutorial_views": tutorial_views,
+
   users.doc(uid).set({
     email: email,
     "bookmarked-treatments": [],
     "lastSurveyed": "",
+
   }).catch((error) => {
     console.log('Error creating user', error);
   });
@@ -167,3 +182,19 @@ export const addClick = (userID, elementID, timestamp) => {
 };
 
 export default firebase;
+
+
+// ================ TUTORIALVIEW FUNCTIONS =================
+
+// Favourite a treatment
+export function updatePageView(userID, pageID) {
+  console.log(`attempting update of ${userID} \'s page views to add ${pageID}`);
+  console.log(userID);
+  return users.doc(userID).update({ 'tutorial_views': { pageID: 1 } })
+  .then(() => {
+    console.log(`Added ${pageID} to user ${userID}'s list of page views`);
+  })
+  .catch((error) => {
+    console.log('Error updating goal: ', error);
+  });
+};
