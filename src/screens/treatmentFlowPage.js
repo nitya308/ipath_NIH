@@ -12,12 +12,24 @@ import Speech from '../assets/icons/speech';
 import Watch from '../assets/icons/watch';
 import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
 import FakeLoading from '../components/treatment/fake-loading';
+import {fetchFirstName } from '../actions';
+import { connect } from 'react-redux';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
+
+
 function TreatmentFlowPage(props) {
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const firstName = async () => { fetchFirstName(user.userId); }
+    firstName();
+  }, []);
+
+  const firstNameValue = useSelector((state) => state.user.firstName);
+
   const [scrollRef, setScrollRef] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -64,7 +76,7 @@ function TreatmentFlowPage(props) {
     <View style={styles.container}>
       <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => { setScrollRef(ref) }}>
         <View style={styles.page}>
-          <Text style={styles.pageSubheader}>Hi Patty,</Text>
+          <Text style={styles.pageSubheader}>Hi {firstNameValue},</Text>
           <Text style={[styles.pageHeader, { fontSize: 25 }]}>What type of treatment are you looking for?</Text>
           <View style={styles.columnsContainer}>
             <TouchableHighlight style={medFilter ? [styles.treatmentType, { backgroundColor: "#51A8F8" }] : styles.treatmentType} onPress={() => setMedFilter(!medFilter)}>
@@ -248,4 +260,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TreatmentFlowPage;
+export default connect(null, { fetchFirstName })(TreatmentFlowPage);
