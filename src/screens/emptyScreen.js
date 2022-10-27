@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View, TouchableWithoutFeedback, TextComponent } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
-import { fetchLastSurveyed } from '../actions';
+import { fetchLastSurveyed, fetchFirstName } from '../actions';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -11,14 +11,16 @@ function EmptyScreen(props, { navigation }) {
   // console.log('PRINTING User OBJECT FROM EmptyScreen.js \n', user);
   // console.log('PRINTING props OBJECT FROM EmptyScreen.js \n', props);
 
-  useEffect (() => {
-    const lastDate = async () => {fetchLastSurveyed(user.userId);}
+  useEffect(() => {
+    const lastDate = async () => { fetchLastSurveyed(user.userId); }
     lastDate();
     console.log('printing user in useefffect', user);
-    
+    const firstName = async () => { fetchFirstName(user.userId); }
+    firstName();
   }, []);
 
   const lastSurveyedValue = useSelector((state) => state.user.lastSurveyed);
+  const firstNameValue = useSelector((state) => state.user.firstName);
   // const lastSurveyedDate = new Date(lastSurveyedValue);
   console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', lastSurveyedValue);
   const date1 = new Date(lastSurveyedValue)
@@ -36,19 +38,19 @@ function EmptyScreen(props, { navigation }) {
 
 
   return (
-      <View style={styles.flexContainer}>
-        <Text style={styles.italicSubheading}>You last took the survey on: {lastSurveyedValue}</Text>
-        <Text style={styles.italicSubheading}>Days Remaining Until Next Survey:</Text>
-        <ProgressCircle
-          percent={percentRemaining}
-          radius={50}
-          borderWidth={10}
-          color="#469C97"
-          bgcolor="fff"
-          shadowColor="#999">
-            <Text> {daysRemaining} </Text>
-        </ProgressCircle>
-      </View>
+    <View style={styles.flexContainer}>
+      <Text style={styles.italicSubheading}> {firstNameValue}, You last took the survey on: {lastSurveyedValue}</Text>
+      <Text style={styles.italicSubheading}>Days Remaining Until Next Survey: </Text>
+      <ProgressCircle
+        percent={percentRemaining}
+        radius={50}
+        borderWidth={10}
+        color="#469C97"
+        bgcolor="fff"
+        shadowColor="#999">
+        <Text> {daysRemaining} </Text>
+      </ProgressCircle>
+    </View>
   );
 }
 
@@ -68,4 +70,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, { fetchLastSurveyed })(EmptyScreen);
+export default connect(null, { fetchLastSurveyed, fetchFirstName })(EmptyScreen);

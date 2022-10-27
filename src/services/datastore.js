@@ -74,7 +74,7 @@ export function deleteFavTreatment(userID, treatID) {
     });
 };
 
-export function createUser(uid, email) {
+export function createUser(uid, email, firstName) {
 
   const tutorial_views = {
     "page_1": 0,
@@ -84,11 +84,13 @@ export function createUser(uid, email) {
     "page_5": 0,
     "page_6": 0
   }
+
   users.doc(uid).set({
     email: email,
     "bookmarked-treatments": [],
     "tutorial_views": tutorial_views,
     "lastSurveyed": "",
+    "firstName": firstName,
 
   }).catch((error) => {
     console.log('Error creating user', error);
@@ -133,6 +135,16 @@ export const addSurveyRes = (userID, scores, date) => {
 
 export const updateLastSurveyed = (userID, date) => {
   users.doc(userID).update({ lastSurveyed: date.toISOString() })
+    .then(() => {
+      console.log("Document successfully updated!");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const updateFirstName = (userID, firstName) => {
+  users.doc(userID).update({ firstName: firstName })
     .then(() => {
       console.log("Document successfully updated!");
     })

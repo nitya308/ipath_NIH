@@ -5,7 +5,7 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import Profile from '../screens/profilePage';
 import ProfileButton from '../components/profileButton';
 import { connect } from 'react-redux';
-import { loginUser, logoutUser, fetchSavedTreatments, fetchLastSurveyed } from '../actions/index';
+import { loginUser, logoutUser, fetchSavedTreatments, fetchLastSurveyed, fetchFirstName } from '../actions/index';
 
 
 import firebase from '../services/datastore';
@@ -25,6 +25,7 @@ function RootNavigator(props) {
             props.loginUser({email: user.email, id: user.uid});
             props.fetchSavedTreatments(user.uid);
             props.fetchLastSurveyed(user.uid);
+            props.fetchFirstName(user.uid);
         } else {
             props.logoutUser();
         }
@@ -84,4 +85,4 @@ function RootNavigator(props) {
   }
 
 
-export default connect(null, { loginUser, logoutUser, fetchSavedTreatments, fetchLastSurveyed } )(RootNavigator);
+export default connect(null, { loginUser, logoutUser, fetchSavedTreatments, fetchLastSurveyed, fetchFirstName } )(RootNavigator);
