@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   title: {
+    fontFamily: 'Poppins-Bold',
     fontSize: 27,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -205,6 +206,7 @@ const styles = StyleSheet.create({
     height: windowHeight * .8,
   },
   questionIntro: {
+    fontFamily: 'Poppins-Italic',
     marginTop: 15,
     padding: 10,
     fontSize: 17,
@@ -252,6 +254,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   backText: {
+    fontFamily: 'Poppins-Bold',
     textAlign: 'center',
     color: 'white',
     fontWeight: 'bold',
@@ -287,6 +290,7 @@ const styles = StyleSheet.create({
     height: 10
   },
   progressNumber: {
+    fontFamily: 'Poppins-Regular',
     color: 'black',
     padding: 10
   }

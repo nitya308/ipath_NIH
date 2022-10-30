@@ -48,7 +48,7 @@ function EmptyScreen(props, { navigation }) {
         color="#469C97"
         bgcolor="fff"
         shadowColor="#999">
-        <Text> {daysRemaining} </Text>
+        <Text style={{fontFamily: 'Poppins-Regular'}}> {daysRemaining} </Text>
       </ProgressCircle>
     </View>
   );
@@ -56,6 +56,7 @@ function EmptyScreen(props, { navigation }) {
 
 const styles = StyleSheet.create({
   italicSubheading: {
+    fontFamily: 'Poppins-Regular',
     fontStyle: 'italic',
     fontSize: 20,
     textAlign: 'center',
