@@ -39,7 +39,7 @@ function TreatmentPage(props){
 
     return (
         <View style={styles.container}>
-            <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={scrollRef}>
+            <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={true} ref={scrollRef}>
                 <TreatmentsOverview scroll={scrollRight}/>
                 <TreatmentsComparison scroll={scrollRight} navigation={props.navigation}/>
             </ScrollView>
