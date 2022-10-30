@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFFFF',
   },
   title: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   signbutton: {
+    fontFamily: 'Poppins-Regular',
     backgroundColor: '#469C97',
     textAlign: 'center',
     fontSize: 20,
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   buttontext: {
+    fontFamily: 'Poppins-Regular',
     color: '#FFFFFF',
     textAlign: 'center',
     fontSize: 17,

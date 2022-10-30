@@ -24,6 +24,7 @@
     "expo-constants": "~13.0.1",
     "expo-device": "~4.1.0",
     "expo-firestore-offline-persistence": "^0.1.0",
+    "expo-font": "~10.0.4",
     "expo-linking": "~3.0.0",
     "expo-notifications": "~0.14.0",
     "expo-radio-button": "^1.0.8",

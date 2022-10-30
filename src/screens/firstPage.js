@@ -17,6 +17,7 @@ function FirstPage({ navigation }) {
 
 const styles = StyleSheet.create({
   italicSubheading: {
+    fontFamily: 'Poppins-Regular',
     fontStyle: 'italic',
     fontSize: 17,
     paddingHorizontal: 20,
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     margin: 30
   },
   title: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 45,
     fontWeight: 'bold',
     textAlign: 'center',

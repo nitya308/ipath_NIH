@@ -67,12 +67,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }, 
     title: {
+        fontFamily: 'Poppins-Bold',
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 20,
     },
     description: {
+        fontFamily: 'Poppins-Italic',
         fontStyle: 'italic',
         fontSize: 16,
         padding: 15,
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
         left: -20,
     },
     buttonTitle: {
+        fontFamily: 'Poppins-Regular',
         fontSize: 20,
         color: 'white',
         padding: 15
