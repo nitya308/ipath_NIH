@@ -43,12 +43,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     padding: 10,
     color: 'white',
+    fontFamily: 'Poppins-Bold',
   },
   subTitle: {
     fontSize: 40,
     paddingLeft: 10,
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
   },
   infoText: {
     marginTop: 30,
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white',
     fontStyle: 'italic',
+    fontFamily: 'Poppins-Italic',
   },
   startButton: {
     width: windowWidth * .85,
@@ -80,6 +83,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
   }
 });
 
