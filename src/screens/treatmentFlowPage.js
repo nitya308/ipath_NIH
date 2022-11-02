@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, SafeAreaView, Dimensions } from 'react-native';
 import Checkbox from '../components/checkbox';
 import { useSelector } from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
@@ -12,7 +12,7 @@ import Speech from '../assets/icons/speech';
 import Watch from '../assets/icons/watch';
 import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
 import FakeLoading from '../components/treatment/fake-loading';
-import {fetchFirstName } from '../actions';
+import { fetchFirstName } from '../actions';
 import { connect } from 'react-redux';
 
 const windowHeight = Dimensions.get('window').height;
@@ -28,7 +28,6 @@ function TreatmentFlowPage(props) {
     firstName();
   }, []);
 
-  const firstNameValue = useSelector((state) => state.user.firstName);
 
   const [scrollRef, setScrollRef] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
@@ -73,11 +72,10 @@ function TreatmentFlowPage(props) {
   }, [pageNumber])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView>
       <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => { setScrollRef(ref) }}>
         <View style={styles.page}>
-          <Text style={styles.pageSubheader}>Hi {firstNameValue},</Text>
-          <Text style={[styles.pageHeader, { fontSize: 25 }]}>What type of treatment are you looking for?</Text>
+          <Text style={[styles.pageHeader, { fontSize: 25 }]}>Which treatment option(s) would you like to explore?</Text>
           <View style={styles.columnsContainer}>
             <TouchableHighlight style={medFilter ? [styles.treatmentType, { backgroundColor: "#51A8F8" }] : styles.treatmentType} onPress={() => setMedFilter(!medFilter)}>
               <TreatmentFilterCard selected={medFilter} title="Medication" icon={<Pill height={40} color={medFilter ? "#FFFFFF" : null}></Pill>}></TreatmentFilterCard>
@@ -120,15 +118,14 @@ function TreatmentFlowPage(props) {
             <>
               {renderList ?
                 <>
-                  <TreatmentsList press={() => {scrollRef.scrollToEnd()}} pickTreatment={setSelectedTreatment}
+                  <TreatmentsList
                     therapy={therapyFilter}
                     med={medFilter}
                     waiting={waitingFilter}
                     person={personFilter}
                     remote={remoteFilter}
                     access={accessFilter}
-                    cost={costFilter}/>
-                  <TreatmentInfo treatment={selectedTreatment} press={() => scrollRef.scrollTo({ x: windowWidth * 3 })} />
+                    cost={costFilter} />
                 </>
                 :
                 <FakeLoading></FakeLoading>
@@ -139,14 +136,13 @@ function TreatmentFlowPage(props) {
             </TouchableHighlight>
           }
         </View>
-
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    height: windowHeight,
     margin: 0,
     padding: 0,
   },
