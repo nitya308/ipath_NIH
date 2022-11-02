@@ -68,12 +68,6 @@ function TreatmentItem(props){
                     <Bookmark width="30" height="30" treatment={props.treatment} press={() => {savedTreatments.includes(props.treatment.id) ? (props.deleteSavedTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "Unsaved " + props.treatment.id, new Date())) : (props.saveTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "saved " + props.treatment.id, new Date()))}}
                  fill={savedTreatments.includes(props.treatment.id)? "black" : "none"} strokeColor="black"/>
                 </View>
-                {
-                    savedTreatments.includes(props.treatment.id) ? 
-                    <Text style={styles.savedText}>Saved</Text>
-                    :
-                    <Text style={styles.savedText}>Save</Text>
-                }
             </View>
         </TouchableHighlight>
     )
@@ -81,7 +75,7 @@ function TreatmentItem(props){
 const styles = StyleSheet.create({
     treatmentContainer:{
         width: '95%',
-        backgroundColor: '#E3EFF0',
+        backgroundColor: '#FFFFFF',
         borderRadius: 10,
         marginTop: '2%',
         shadowColor: "#000",
@@ -99,6 +93,7 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     treatmentName: {
+        fontFamily: 'Poppins-Bold',
         fontSize: 20,
         paddingTop: 10,
         paddingLeft: 10,
