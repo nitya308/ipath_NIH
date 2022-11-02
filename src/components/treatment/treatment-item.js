@@ -21,16 +21,16 @@ function TreatmentItem(props){
             case "Medication/Therapy": 
                 return (
                     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                        <TreatmentItemTag icon={<Pill width={20} height={20}/>} title="Medication"/>
-                        <TreatmentItemTag icon={<Speech width={18} height={18}/>} title="Talk Therapy"/>
+                        <TreatmentItemTag icon={<Pill width={20} height={20}/>}/>
+                        <TreatmentItemTag icon={<Speech width={18} height={18}/>} />
                     </View>
                 )         
             case "Watchful Waiting": 
-                return <TreatmentItemTag icon={<Watch width={20} height={20} />} title="Watchful Waiting"/>;
+                return <TreatmentItemTag icon={<Watch width={20} height={20} />} />;
             case "Medication":
-                return <TreatmentItemTag icon={<Pill width={20} height={20}/>} title="Medication"/>;
+                return <TreatmentItemTag icon={<Pill width={20} height={20}/>} />;
             case "Therapy":
-                return <TreatmentItemTag icon={<Speech width={18} height={18} />} title="Talk Therapy" />;
+                return <TreatmentItemTag icon={<Speech width={18} height={18} />} />;
             default:
                 return null;
         }
@@ -38,24 +38,19 @@ function TreatmentItem(props){
     return(
         <TouchableHighlight underlayColor="gray" style={styles.treatmentContainer} onPress={props.press}>
             <View>
+                <View style={styles.treatmentTraitContainer}>
+                {calcTypeTag(props.treatment.data.type)}
+                </View>
                 <View style={styles.treatmentHeaderContainer}>
                     <Text style={styles.treatmentName}>{props.treatment.id}</Text>
                     <Text style={styles.treatmentCost}>{props.treatment.data.costNumber === 0 ? "FREE" : "$".repeat(props.treatment.data.costNumber)}</Text>
                 </View>
-                <Text style={styles.treatmentBlurb}>{props.treatment.data.blurb}</Text>
                 <View style={styles.treatmentTraitContainer}>
-                    {calcTypeTag(props.treatment.data.type)}
                     {
                         props.treatment.data.place === "telehealth" ? 
                         <TreatmentItemTag icon={<MapPin width={24} height={24}/>} title="Telehealth" />
                         :
                         <TreatmentItemTag icon={<MapPin width={24} height={24}/>} title="In-Person" />
-                    }
-                    {
-                        props.treatment.data.insurance === true ? 
-                        <TreatmentItemTag icon={<CheckMark width={24} height={24} strokeColor="black"/>} title="Takes Insurance" />
-                        :
-                        null
                     }
                     {
                         props.treatment.data.quickAccess === true ? 
@@ -117,6 +112,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         marginBottom: 20,
         marginLeft: 10,
+        borderRadius: 0.5,
     },  
     treatmentTrait: {
         flex: 0,
@@ -124,7 +120,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         paddingTop: 5,
-        paddingBottom: 5
+        paddingBottom: 5,
     },
     treatmentInfo: {
         paddingLeft: 10

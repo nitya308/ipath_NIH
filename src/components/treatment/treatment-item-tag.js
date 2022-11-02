@@ -4,7 +4,7 @@ function TreatmentItemTag(props){
     return(
         <View style={styles.container}>
             {props.icon}
-            <Text style={styles.text}>{props.title}</Text>
+            {props.title ? <Text style={styles.text}>{props.title}</Text> : null}
         </View>
     )
 }
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     container:{
         flexDirection: 'row',
         height: 30,
-        borderRadius: 15,
+        borderRadius: 5,
         borderWidth: 1,
         justifyContent: 'space-between',
         paddingHorizontal: 10,
