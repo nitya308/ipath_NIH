@@ -42,7 +42,7 @@ function TreatmentsOverview(props) {
   return (
     <View style={styles.options}>
       <Text style={styles.subheader}>Select the options below to learn more.</Text>
-      <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => { setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#51A8F8"}]} onPress={() => { setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date()); }}>
         <View style={styles.optionContainer}>
           <Pill width={35} height={35} style={styles.icon} />
           <Text style={styles.optionHeader}>Medication</Text>
@@ -51,7 +51,7 @@ function TreatmentsOverview(props) {
           </View>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#EF6068"}]} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date()); }}>
         <View style={styles.optionContainer}>
           <Watch width={35} height={35} style={styles.icon} />
           <Text style={styles.optionHeader}>Watchful Waiting</Text>
@@ -60,7 +60,7 @@ function TreatmentsOverview(props) {
           </View>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={styles.option} onPress={() => { setSelectedType("Talk Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#9B51F8"}]} onPress={() => { setSelectedType("Talk Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
         <View style={styles.optionContainer}>
           <Speech width={35} height={35} style={styles.icon} />
           <Text style={styles.optionHeader}>Talk Therapy</Text>
