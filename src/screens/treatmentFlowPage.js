@@ -120,14 +120,14 @@ function TreatmentFlowPage(props) {
             <>
               {renderList ?
                 <>
-                  <TreatmentsList pickTreatment={setSelectedTreatment}
+                  <TreatmentsList press={() => {scrollRef.scrollToEnd()}} pickTreatment={setSelectedTreatment}
                     therapy={therapyFilter}
                     med={medFilter}
                     waiting={waitingFilter}
                     person={personFilter}
                     remote={remoteFilter}
                     access={accessFilter}
-                    cost={costFilter} />
+                    cost={costFilter}/>
                   <TreatmentInfo treatment={selectedTreatment} press={() => scrollRef.scrollTo({ x: windowWidth * 3 })} />
                 </>
                 :
