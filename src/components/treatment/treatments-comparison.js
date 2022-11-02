@@ -177,8 +177,9 @@ const styles = StyleSheet.create({
   button: {
     width: windowWidth * .9,
     height: windowHeight * .07,
-    borderRadius: windowHeight * .035,
-    backgroundColor: '#E3EFF0',
+    borderRadius: 10,
+    // borderRadius: windowHeight * .035,
+    backgroundColor: '#FFFFFF',
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
