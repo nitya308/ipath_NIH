@@ -104,20 +104,20 @@ const styles = StyleSheet.create({
     },
     surveyTouchContainer:{
         width: '100%',
-        backgroundColor: '#469C97',
-        height: windowHeight * .17,
+        backgroundColor: '#000000',
+        height: windowHeight * .25,
         borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {
         width: 0,
-        height: 2
+        height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
     },
     mediumTouchContainer:{
         width: 145.06,
-        backgroundColor: '#469C97',
+        backgroundColor: '#000000',
         height: 130,
         borderRadius: 10,
         shadowColor: "#000",
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         width: '100%',
-        backgroundColor: '#469C97',
+        backgroundColor: '#000000',
         height: 65,
         borderRadius: 10,
         marginTop: 20,
