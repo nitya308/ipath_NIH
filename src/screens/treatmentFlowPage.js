@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TouchableHighlight, ScrollView, SafeAreaView, D
 import Checkbox from '../components/checkbox';
 import { useSelector } from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
+import TreatmentItemTagText from '../components/treatment/treatment-tag-text';
+import TreatmentItemTag from '../components/treatment/treatment-item-tag';
 import TreatmentInfo from '../components/treatment/treatment-info';
 import Left from '../assets/icons/left.svg';
 import Right from '../assets/icons/right.svg';
@@ -10,6 +12,8 @@ import { addClick } from '../services/datastore';
 import Pill from '../assets/icons/pill.js';
 import Speech from '../assets/icons/speech.js';
 import Watch from '../assets/icons/watch.js';
+import PhoneLink from '../assets/icons/phonelink.js';
+import WebLink from '../assets/icons/weblink.js';
 import BackCircle from '../assets/icons/BackCircle.svg';
 import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
 import FakeLoading from '../components/treatment/fake-loading';
@@ -56,6 +60,47 @@ function TreatmentFlowPage(props) {
     setSelectedTreatment(treatment);
     console.log("finaly=", selectedTreatment);
   };
+
+  function calcTypeTag(type) {
+    switch (type) {
+      case "Medication/Therapy":
+        return (
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <TreatmentItemTagText icon={<Pill width={20} height={20} />} name="Medication" />
+            <TreatmentItemTagText icon={<Speech width={18} height={18} />} name="Therapy" />
+          </View>
+        )
+      case "Watchful Waiting":
+        return <TreatmentItemTagText icon={<Watch width={20} height={20} />} name="Watchful Waiting" />;
+      case "Medication":
+        return <TreatmentItemTagText icon={<Pill width={20} height={20} />} name="Medication" />;
+      case "Therapy":
+        return <TreatmentItemTagText icon={<Speech width={18} height={18} />} name="Therapy" />;
+      default:
+        return null;
+    }
+  }
+
+  function calcContact(contacttype, info) {
+    switch (contacttype) {
+      case "web":
+        return (
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding:10}}>
+            <WebLink width={30} height={30}></WebLink>
+            <Text style={{fontSize: 20, lineHeight: 30}}>{info}</Text>
+          </View>
+        )
+      case "phone":
+        return (
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <PhoneLink width={30} height={30}></PhoneLink>
+            <Text>{info}</Text>
+          </View>
+        )
+      default:
+        return null;
+    }
+  }
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -157,6 +202,8 @@ function TreatmentFlowPage(props) {
           </View>
           <View style={styles.treatmentsection1}>
             <Text style={styles.treatmentName}>{selectedTreatment && selectedTreatment.id}</Text>
+            {selectedTreatment && calcTypeTag(selectedTreatment.data.type)}
+            {selectedTreatment && calcContact("web", selectedTreatment.data.link)}
           </View>
           <ScrollView style={styles.modalContainer}>
             <Text style={styles.modalSubHeader}>About Us</Text>
@@ -216,7 +263,7 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     padding: 35,
-    marginBottom: 20,
+    marginBottom: 30,
     alignSelf: 'center',
     textAlign: 'center',
     fontWeight: 'bold',
@@ -234,6 +281,7 @@ const styles = StyleSheet.create({
   treatmentName: {
     color: "#5451F8",
     textAlign: 'center',
+    marginBottom: 10,
     fontSize: 25,
     fontFamily: 'Poppins-Bold',
   },
