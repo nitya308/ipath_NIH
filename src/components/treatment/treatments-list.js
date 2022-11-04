@@ -28,16 +28,12 @@ function TreatmentsList(props) {
     if (props.waiting && treatment.data.type === "Watchful Waiting") {
       return true;
     }
-    if (!props.waiting && !props.med && !props.therapy) {
-      return true;
-    }
     return false;
   }
 
   const checkLocFilters = (treatment) => {
     if (props.person && (treatment.data.place === "in-person" || treatment.data.place === "in-person/telehealth")) return true;
     if (props.remote && (treatment.data.place === "telehealth" || treatment.data.place === "in-person/telehealth")) return true;
-    if (!props.person && !props.remote) return true;
     return false;
   }
 
@@ -62,8 +58,10 @@ function TreatmentsList(props) {
               allTreatments?.filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).sort(compare).map((treatment) => {
                 return (
                   <TreatmentItem key={treatment.id} press={() => {
-                    props.pickTreatment(treatment)
-                    props.press();
+                    console.log('here');
+                    props.display(true);
+                    console.log('treatment=', treatment);
+                    props.treat(treatment);
                   }} treatment={treatment} />
                 )
               })

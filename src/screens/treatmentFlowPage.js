@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView, SafeAreaView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, SafeAreaView, Dimensions, Modal, Pressable } from 'react-native';
 import Checkbox from '../components/checkbox';
 import { useSelector } from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
@@ -8,8 +8,9 @@ import Left from '../assets/icons/left.svg';
 import Right from '../assets/icons/right.svg';
 import { addClick } from '../services/datastore';
 import Pill from '../assets/icons/pill.js';
-import Speech from '../assets/icons/speech';
-import Watch from '../assets/icons/watch';
+import Speech from '../assets/icons/speech.js';
+import Watch from '../assets/icons/watch.js';
+import BackCircle from '../assets/icons/BackCircle.svg';
 import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
 import FakeLoading from '../components/treatment/fake-loading';
 import { fetchFirstName } from '../actions';
@@ -19,13 +20,13 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 
-
 function TreatmentFlowPage(props) {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const firstName = async () => { fetchFirstName(user.userId); }
     firstName();
+    setModalVisible(false);
   }, []);
 
 
@@ -49,6 +50,14 @@ function TreatmentFlowPage(props) {
   const [costFilter, setCostFilter] = useState(false);
 
   const [selectedTreatment, setSelectedTreatment] = useState(null);
+
+  const selectingTreatments = (treatment) => {
+    console.log("in page=", treatment);
+    setSelectedTreatment(treatment);
+    console.log("finaly=", selectedTreatment);
+  };
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const fakeLoading = () => {
     setTimeout(() => setRenderList(true), 6000);
@@ -125,7 +134,10 @@ function TreatmentFlowPage(props) {
                     person={personFilter}
                     remote={remoteFilter}
                     access={accessFilter}
-                    cost={costFilter} />
+                    cost={costFilter}
+                    treat={selectingTreatments}
+                    display={setModalVisible}
+                  />
                 </>
                 :
                 <FakeLoading></FakeLoading>
@@ -137,6 +149,31 @@ function TreatmentFlowPage(props) {
           }
         </View>
       </ScrollView>
+
+      <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
+        <View style={styles.modalViewContainer}>
+          {/* here we need to add image */}
+          <View style={[styles.modalHeaderContainer, { backgroundColor: "#90EE90" }]}>
+          </View>
+          <View style={styles.treatmentsection1}>
+            <Text style={styles.treatmentName}>{selectedTreatment && selectedTreatment.id}</Text>
+          </View>
+          <ScrollView style={styles.modalContainer}>
+            <Text style={styles.modalSubHeader}>About Us</Text>
+            <Text style={styles.modalDescription}>{selectedTreatment && selectedTreatment.data.desc}</Text>
+            <View style={styles.line} />
+            <Text style={styles.modalSubHeader}>Process</Text>
+            <Text style={styles.modalDescription}>{selectedTreatment && selectedTreatment.data.process}</Text>
+            <View style={styles.line} />
+            <Text style={styles.modalSubHeader}>Wait time</Text>
+            <Text style={styles.modalDescription}>{selectedTreatment && selectedTreatment.data.time}</Text>
+            <View style={styles.line} />
+          </ScrollView>
+          <Pressable style={styles.closeModal} onPress={() => { setModalVisible(!modalVisible) }}>
+            <BackCircle width="50" height="50" />
+          </Pressable>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -150,6 +187,78 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 5,
     height: 150,
+  },
+  modalViewContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    backgroundColor: 'white',
+    width: windowWidth,
+    marginTop: windowHeight * .05,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  modalHeaderContainer: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+    width: '100%',
+  },
+  modalContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: 20
+  },
+  modalHeader: {
+    padding: 35,
+    marginBottom: 20,
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    width: "100%",
+  },
+  treatmentsection1: {
+    backgroundColor: "#E9E9FA",
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+  },
+  treatmentName: {
+    color: "#5451F8",
+    textAlign: 'center',
+    fontSize: 25,
+    fontFamily: 'Poppins-Bold',
+  },
+  line: {
+    height: 1,
+    width: '95%',
+    backgroundColor: '#5451F8',
+    marginTop: 20,
+    marginBottom: 20
+  },
+  modalSubHeader: {
+    fontSize: 20,
+    marginBottom: 15,
+    fontFamily: 'Poppins-Bold',
+  },
+  modalDescription: {
+    fontSize: 20,
+  },
+  closeModal: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
+  closeModalIcon: {
+    fontSize: 25
   },
   rowsContainer: {
     width: '100%',
