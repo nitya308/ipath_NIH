@@ -4,7 +4,6 @@ function TreatmentItemTag(props){
     return(
         <View style={styles.container}>
             {props.icon}
-            {props.title ? <Text style={styles.text}>{props.title}</Text> : null}
         </View>
     )
 }
@@ -17,13 +16,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 10,
         alignItems: 'center',
-        marginHorizontal: 5,
-        marginTop: 10
+        marginRight: 5,
+        // marginTop: 10
     },
-    text:{
-        marginLeft: 3,
-        fontWeight: "500"
-    }
 })
 
 export default TreatmentItemTag; 
