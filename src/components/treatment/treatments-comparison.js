@@ -18,9 +18,8 @@ function TreatmentsComparison(props) {
   const [modalFive, setModalFive] = useState(false);
 
   return (
-    <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.header}>Compare Treatment Types</Text>
+        <Text style={styles.subheader}>Tap on a question to learn more about each treatment type.</Text>
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalOne(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
           <View>
             <Text style={styles.buttonText}>How much will this cost?</Text>
@@ -157,7 +156,6 @@ function TreatmentsComparison(props) {
           </View>
         </Modal>
       </View>
-    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
@@ -167,12 +165,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  subheader: {
+    margin: 20,
+    fontSize: 20
+  },
   container: {
     flex: 1,
     alignItems: 'center',
-    height: windowHeight * .8,
     width: windowWidth,
-    backgroundColor: '#FCFFFF',
+    backgroundColor: "#FFFFFF"
   },
   button: {
     width: windowWidth * .9,

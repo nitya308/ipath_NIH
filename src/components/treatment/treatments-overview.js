@@ -13,8 +13,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 const treatmentData = {
-  "Talk Therapy": {
+  "Therapy": {
     description: "A weekly 30-60 minute session working with a therapist either in person or on a computer: using a program on your own or with support from your clinician by email or phone.",
+    subtitle: "Frequent in-person or remote sessions with a therapist",
     efficacy: "In addition to the 23 out of 100 people that recover without treatment, another 14 out of 100 will recover in 2 months using talk therapy. In addition to the 23 people who recover without treatment, another 26 in 100 people recover with a combination of SSRIs and talk therapy.",
     cost: "Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.",
     sideEffects: "Talk therapy can cause you to feel uncomfortable, anxious and/or stressed.",
@@ -44,28 +45,28 @@ function TreatmentsOverview(props) {
       <Text style={styles.subheader}>Select the options below to learn more.</Text>
       <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#51A8F8"}]} onPress={() => { setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Pill width={35} height={35} style={styles.icon} />
+          <Pill width={35} height={35} style={styles.icon} color="#FFFFFF"/>
           <Text style={styles.optionHeader}>Medication</Text>
           <View style={{ position: 'absolute', right: 10 }}>
-            <Chevron />
+            <Chevron color="#FFFFFF"/>
           </View>
         </View>
       </TouchableHighlight>
       <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#EF6068"}]} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Watch width={35} height={35} style={styles.icon} />
+          <Watch width={35} height={35} style={styles.icon} color="#FFFFFF"/>
           <Text style={styles.optionHeader}>Watchful Waiting</Text>
           <View style={{ position: 'absolute', right: 10 }}>
-            <Chevron />
+            <Chevron color="#FFFFFF"/>
           </View>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#9B51F8"}]} onPress={() => { setSelectedType("Talk Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#9B51F8"}]} onPress={() => { setSelectedType("Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Speech width={35} height={35} style={styles.icon} />
+          <Speech width={35} height={35} style={styles.icon} color="#FFFFFF"/>
           <Text style={styles.optionHeader}>Talk Therapy</Text>
           <View style={{ position: 'absolute', right: 10 }}>
-            <Chevron />
+            <Chevron color="#FFFFFF"/>
           </View>
         </View>
       </TouchableHighlight>
@@ -74,6 +75,7 @@ function TreatmentsOverview(props) {
         <View style={styles.modalViewContainer}>
           <View style={[styles.modalHeaderContainer, {backgroundColor: treatmentData[selectedType].color}]}>
             <Text style={styles.modalHeader}>{selectedType}</Text>
+            <Text style={styles.modalsubtitle}>{treatmentData[selectedType].subtitle}</Text>
           </View>
           <ScrollView style={styles.modalContainer}>
             <Text style={styles.modalDescription}>{treatmentData[selectedType].description}</Text>
@@ -147,6 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '500',
     marginLeft: "10%",
+    color: "#FFFFFF"
   },
   optionText: {
     fontSize: 19,
@@ -184,26 +187,29 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 100,
     width: '100%',
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
   },
   line: {
-    height: 2,
+    height: 1,
     width: '95%',
-    backgroundColor: '#469C97',
+    backgroundColor: '#000000',
     marginTop: 20,
     marginBottom: 20
   },
   modalHeader: {
-    padding: 35,
-    marginBottom: 20,
+    color: "#FFFFFF",
+    paddingTop: 30,
+    paddingLeft: 60,
     alignSelf: 'center',
-    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
     width: "100%",
+  },
+  modalsubtitle: {
+    fontSize: 15,
+    padding: 20,
+    color: "#FFFFFF",
+    fontFamily: "Poppins-Italic"
   },
   modalDescription: {
     fontSize: 20,
@@ -225,7 +231,7 @@ const styles = StyleSheet.create({
     height: '10%',
     paddingLeft: 10,
     marginTop: 30,
-    backgroundColor: '#469C97',
+    backgroundColor: '#5451F8',
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {

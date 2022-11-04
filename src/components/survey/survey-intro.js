@@ -7,15 +7,16 @@ function SurveyIntro(props) {
     <View style={styles.container}>
       <View style={styles.flexContainer}>
         <View style={styles.iconConatienr}>
-          <Clipboard width={80} height={80} strokeColor="#5451F8" />
+          <Clipboard width={80} height={80} stroke={1} strokeColor="#5451F8" />
         </View>
         <Text style={styles.title}>PHQ-9</Text>
         <Text style={styles.subTitle}>Depression Screening Survey</Text>
-        <Text style={styles.infoText}>This survey is 9 questions and is a reliable way to determine whether you are displaying symptoms of depression. There are lots of treatments and options to help. We will walk you through these after the survey.</Text>
+        <Text style={styles.infoText}>Before  all users take this 9-question survey as a reliable way to determine whether you are displaying symptoms of depression. </Text>
+        <Text style={styles.infoText}>There are many treatments and options to help, and we will walk you through these after the survey.</Text>
+        <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
+          <Text style={styles.buttonText}>Get Started</Text>
+        </TouchableHighlight>
       </View>
-      <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableHighlight>
     </View>
   )
 }
@@ -24,39 +25,33 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     margin: 0,
-    paddingTop: 50,
-    paddingBottom: 50,
+    paddingVertical: windowHeight * 0.05,
+    paddingHorizontal: windowWidth * 0.06,
     width: windowWidth,
-    height: windowHeight,
-    backgroundColor: '#373737',
+    height: windowHeight * 0.9,
+    flex: 0,
+    alignItems: 'flex-start',
   },
   iconConatienr: {
     alignSelf: 'flex-end',
-    margin: 50
-  },
-  flexContainer: {
-    flex: 0,
-    alignItems: 'flex-start',
-    paddingLeft: 30
+    marginVertical: 40
   },
   title: {
     fontSize: 30,
     padding: 10,
-    color: 'white',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
   subTitle: {
     fontSize: 40,
+    lineHeight: 45,
     paddingLeft: 10,
-    color: 'white',
     fontWeight: 'bold',
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Bold',
   },
   infoText: {
-    marginTop: 30,
     padding: 10,
+    lineHeight: 20,
     fontSize: 17,
-    color: 'white',
     fontStyle: 'italic',
     fontFamily: 'Poppins-Italic',
   },
@@ -64,7 +59,7 @@ const styles = StyleSheet.create({
     width: windowWidth * .85,
     marginTop: 100,
     height: 60,
-    backgroundColor: '#51B5AF',
+    backgroundColor: "#5451F8",
     borderRadius: 30,
     flex: 0,
     justifyContent: 'center',
