@@ -12,128 +12,204 @@ import { addClick } from '../../services/datastore';
 
 import TreatmentItemTag from './treatment-item-tag';
 
-function TreatmentItem(props){
+function TreatmentItem(props) {
     // const dispatch = useDispatch(); 
     const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
     const user = useSelector((state) => state.user)
-    function calcTypeTag(type){
-        switch (type){
-            case "Medication/Therapy": 
+    function calcTypeTag(type) {
+        switch (type) {
+            case "Medication/Therapy":
                 return (
-                    <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                        <TreatmentItemTag icon={<Pill width={20} height={20}/>}/>
-                        <TreatmentItemTag icon={<Speech width={18} height={18}/>} />
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <TreatmentItemTag icon={<Pill width={20} height={20} />} />
+                        <TreatmentItemTag icon={<Speech width={18} height={18} />} />
                     </View>
-                )         
-            case "Watchful Waiting": 
+                )
+            case "Watchful Waiting":
                 return <TreatmentItemTag icon={<Watch width={20} height={20} />} />;
             case "Medication":
-                return <TreatmentItemTag icon={<Pill width={20} height={20}/>} />;
+                return <TreatmentItemTag icon={<Pill width={20} height={20} />} />;
             case "Therapy":
                 return <TreatmentItemTag icon={<Speech width={18} height={18} />} />;
             default:
                 return null;
         }
     }
-    return(
+    return (
         <TouchableHighlight underlayColor="gray" style={styles.treatmentContainer} onPress={props.press}>
-            <View>
-                <View style={styles.treatmentTraitContainer}>
-                {calcTypeTag(props.treatment.data.type)}
+            <View style={styles.cardContainer}>
+                <View style={styles.leftHalfOfCard}>
+                    <View style={styles.typeAndSave}>
+                        <View style={styles.treatmentTraitContainer}>
+                            {calcTypeTag(props.treatment.data.type)}
+                        </View>
+                        <View style={styles.savedSection}>
+                            {savedTreatments.includes(props.treatment.id) ? <Text style={styles.savedText}>Saved</Text> : <Text style={styles.savedText}> Save </Text>}
+                            <View style={styles.bookmarkContainer}>
+                                <Bookmark width="24" height="24" treatment={props.treatment} press={() => { savedTreatments.includes(props.treatment.id) ? (props.deleteSavedTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "Unsaved " + props.treatment.id, new Date())) : (props.saveTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "saved " + props.treatment.id, new Date())) }}
+                                    fill={savedTreatments.includes(props.treatment.id) ? "black" : "none"} strokeColor="black" />
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.treatmentHeaderContainer}>
+                        <Text style={styles.treatmentName}>{props.treatment.id}</Text>
+                        <Text style={styles.treatmentCost}>{props.treatment.data.costNumber === 0 ? "FREE" : "$".repeat(props.treatment.data.costNumber)}</Text>
+                        <View style={styles.location}>
+                            <MapPin width={24} height={24} />
+                            <Text style={styles.treatmentSubText}>{props.treatment.data.place === "telehealth" ? "Remote" : "In-Clinic"}</Text>
+                        </View>
+                        <View style={styles.people}>
+                            <MapPin width={24} height={24} />
+                            <Text style={styles.treatmentSubText}>{props.treatment.data.solo === 1 ? "Self-guided" : "Consult with a Physician"}</Text>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.treatmentHeaderContainer}>
-                    <Text style={styles.treatmentName}>{props.treatment.id}</Text>
-                    <Text style={styles.treatmentCost}>{props.treatment.data.costNumber === 0 ? "FREE" : "$".repeat(props.treatment.data.costNumber)}</Text>
-                </View>
-                <View style={styles.treatmentTraitContainer}>
-                    {
-                        props.treatment.data.place === "telehealth" ? 
-                        <TreatmentItemTag icon={<MapPin width={24} height={24}/>} title="Telehealth" />
-                        :
-                        <TreatmentItemTag icon={<MapPin width={24} height={24}/>} title="In-Person" />
-                    }
-                    {
-                        props.treatment.data.quickAccess === true ? 
-                        <TreatmentItemTag icon={<CheckMark width={24} height={24} strokeColor="black"/>} title="Quick Access" />
-                        :
-                        null
-                    }
-                </View>
-                <View style={styles.bookmarkContainer}>
-                    <Bookmark width="30" height="30" treatment={props.treatment} press={() => {savedTreatments.includes(props.treatment.id) ? (props.deleteSavedTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "Unsaved " + props.treatment.id, new Date())) : (props.saveTreatment(user.userId, props.treatment.id), addClick(`users/${user.userId}`, "saved " + props.treatment.id, new Date()))}}
-                 fill={savedTreatments.includes(props.treatment.id)? "black" : "none"} strokeColor="black"/>
+                <View style={styles.rightHalfOfCard}>
+                    <View style={styles.placeholderRectangle}></View>
+                    <View style={styles.learnMore}>
+                        <Text style={styles.learnText}> LEARN MORE </Text>
+                    </View>
                 </View>
             </View>
         </TouchableHighlight>
     )
 }
 const styles = StyleSheet.create({
-    treatmentContainer:{
+    treatmentContainer: {
         width: '95%',
         backgroundColor: '#FFFFFF',
         borderRadius: 10,
         marginTop: '2%',
         shadowColor: "#000",
         shadowOffset: {
-        width: 0,
-        height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
     },
-    treatmentHeaderContainer:{
-        width: "70%",
-        flexDirection: 'row',
+    treatmentHeaderContainer: {
+        width: "90%",
+        flexDirection: 'column',
         justifyContent: 'flex-start',
-        marginLeft: 5
+        marginLeft: 2,
+        marginTop: 5,
+        // backgroundColor: 'orange',
     },
     treatmentName: {
         fontFamily: 'Poppins-Bold',
         fontSize: 20,
-        paddingTop: 10,
-        paddingLeft: 10,
-        marginBottom: 10,
-        fontWeight: 'bold'
+        // paddingTop: 10,
+        // paddingLeft: 10,
+        // marginBottom: 10,
+        // fontWeight: 'bold'
+    },
+    treatmentSubText: {
+        fontSize: 14,
+        // paddingTop: 10,
+        // paddingLeft: 10,
+        // marginBottom: 10,
     },
     treatmentCost: {
-        fontSize: 20,
-        paddingTop: 10,
-        paddingLeft: 10,
-        marginBottom: 10,
+        fontSize: 18,
+        marginTop: 4,
     },
-    treatmentBlurb:{
-        fontSize: 15,
-        fontStyle: 'italic',
-        marginLeft: 15,
-        marginTop: 10
-    },
-    treatmentTraitContainer:{
+    treatmentTraitContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginBottom: 20,
-        marginLeft: 10,
+        // marginBottom: 20,
+        // marginLeft: 10,
         borderRadius: 0.5,
-    },  
+        // backgroundColor: 'brown',
+    },
     treatmentTrait: {
         flex: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
+        // padding: 10,
+        // paddingTop: 5,
+        // paddingBottom: 5,
     },
     treatmentInfo: {
         paddingLeft: 10
     },
-    bookmarkContainer:{
-        position: 'absolute',
-        top: 10,
-        right: 15,
+    bookmarkContainer: {
+        // position: 'absolute',
+        // top: 10,
+        // right: 15,
+        // backgroundColor: 'blue'
     },
     savedText: {
-        position: 'absolute',
-        top: 15,
-        right: 50
+        fontFamily: 'Poppins-Regular',
+        // position: 'absolute',
+        // top: 15,
+        // right: 50,
+        // backgroundColor: 'aquamarine',
+    },
+    placeholderRectangle: {
+        backgroundColor: '#000000',
+        width: 108,
+        height: 106,
+    },
+    leftHalfOfCard: {
+        flexDirection: 'column',
+        width: "70%",
+        // backgroundColor: 'red',
+    },
+    rightHalfOfCard: {
+        flexDirection: 'column',
+        width: "30%",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        // backgroundColor: 'green',
+    },
+    typeAndSave: {
+        flexDirection: 'row',
+        // backgroundColor: 'yellow',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cardContainer: {
+        flexDirection: 'row',
+        margin: 15,
+        fontFamily: 'Poppins-Regular',
+    },
+    location: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        fontFamily: 'Poppins-Regular',
+        color: '#373737',
+        alignItems: 'center',
+        marginTop: 2,
+        // backgroundColor: 'purple',
+    },
+    people: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        fontFamily: 'Poppins-Regular',
+        color: '#373737',
+        alignItems: 'center',
+        marginTop: 2,
+        // backgroundColor: 'pink',
+    },
+    savedSection: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignSelf: 'flex-end',
+        marginRight: 15,
+        alignItems: 'center',
+    },
+    learnMore: {
+        backgroundColor: '#5451F8',
+        width: 108,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        padding: 5,
+        borderRadius: 3,
+    },
+    learnText: {
+        fontFamily: 'Poppins-Regular',
+        color: '#FFFFFF'
     }
 })
 
