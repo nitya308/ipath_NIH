@@ -50,14 +50,13 @@ function SurveyPage(props) {
 
   useScrollToTop(useRef({
     scrollToTop: () => {
-      introRef.current?.scrollTo({ y: 0, animated: false });
-      questionRef.current?.scrollTo({ x: 0, x: 0, animated: false });
+      introRef.current?.scrollTo({ x: 0, animated: false });
+      questionRef.current?.scrollTo({ y: 0, y: 0, animated: false });
     },
   }));
 
   const renderSubmitButton = () => {
-    if (controlsVisible) {
-      if (selectedId == 8 && numAnswered == 9) {
+      if (selectedId == 8) {
         return (
           <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`${user.userId}`, scores, new Date()); updateLastSurveyed(`${user.userId}`, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
             <Text style={styles.backText}>Submit</Text>
@@ -66,26 +65,14 @@ function SurveyPage(props) {
       } else {
         return (
           <View style={styles.progressContainer}>
-            <Progress.Bar style={styles.progressBar} progress={selectedId / questionData.length} width={65} height={10} color='#469C97' unfilledColor="lightgray" borderRadius={5} borderWidth={0} />
+            <Progress.Bar style={styles.progressBar} progress={selectedId / questionData.length} width={65} height={10} color='#5451F8' unfilledColor="lightgray" borderRadius={5} borderWidth={0} />
             <Text style={styles.progressNumber}>{selectedId}/9</Text>
           </View>
         );
       }
-    }
   }
 
-  const renderBackButton = () => {
-    if (selectedId != 0 && controlsVisible) {
-      return (
-        <TouchableHighlight underlayColor="gray" style={styles.backButton} onPress={scrollBack}>
-          <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '90%' }}>
-            <Left width={20} height={20} strokeColor='white' />
-            <Text style={styles.backText}>Previous Question</Text>
-          </View>
-        </TouchableHighlight>
-      )
-    }
-  }
+
 
   const add = (n) => {
     if (scores[selectedId] === -1) {
@@ -118,32 +105,29 @@ function SurveyPage(props) {
 
   useEffect(() => {
     if (questionRef) {
-      questionRef.current.scrollTo({ x: selectedId * windowWidth * 2 })
+      questionRef.current.scrollTo({ y: selectedId * (windowHeight * 0.65 + 35) })
     }
   }, [selectedId])
 
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={false} ref={introRef}>
-        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: 0 }); introRef.current.scrollTo({ y: windowHeight * .8 }); setControlsVisible(true); registerForPushNotificationsAsync(); cancelPushNotifications(); surveyFinishedReminder(); }} />
+        <SurveyIntro transition={() => { introRef.current.scrollTo({ y: 0 }); introRef.current.scrollTo({ y: windowHeight }); setControlsVisible(true); registerForPushNotificationsAsync(); cancelPushNotifications(); surveyFinishedReminder(); }} />
         <View style={styles.survey}>
           <Text style={styles.title}>PHQ-9 Survey</Text>
-          <Text style={styles.questionIntro} >How often have you been bothered by the following over the past 2 weeks?</Text>
-          <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={questionRef}>
+          <ScrollView vertical={true} pagingEnabled={true} scrollEnabled={false} ref={questionRef}>
             {questionData.map((item) => {
               return (
                 <View key={item.title}>
-                  <SurveyQuestion questionTitle={item.title} press={scrollForward} set={add} selAns={selAns} />
+                  <SurveyQuestion questionTitle={item.title} press={scrollForward} set={add} selAns={selAns} backpress = {scrollBack} nextbutton={renderSubmitButton()}/>
                 </View>
               )
             })}
+            <View style={{height: 400}}></View>
           </ScrollView>
-
         </View>
         <SurveyResult hotline={hotline} scores={scores} press={() => props.navigation.navigate('Learn')} />
       </ScrollView>
-      {renderBackButton()}
-      {renderSubmitButton()}
     </View>
   );
 }
@@ -151,39 +135,39 @@ function SurveyPage(props) {
 const questionData = [
   {
     id: 0,
-    title: "Little interest or pleasure in doing things?"
+    title: "1. How often have you had little interest or pleasure in doing things over the past two weeks?"
   },
   {
     id: 1,
-    title: "Feeling down, depressed, or hopeless?"
+    title: "2. How often have you felt down, depressed, or hopeless over the past two weeks?"
   },
   {
     id: 2,
-    title: "Trouble falling or staying asleep, or sleeping too much?"
+    title: "3. How often have you had trouble falling or staying asleep, or sleeping too much  over the past two weeks?"
   },
   {
     id: 3,
-    title: "Feeling tired or having little energy?"
+    title: "4. How often have you felt tired or lacking energy in the past two weeks?"
   },
   {
     id: 4,
-    title: "Poor appetite or overeating?"
+    title: "5. How often have you experienced a poor appetite or overeating in the past two weeks?"
   },
   {
     id: 5,
-    title: "Feeling bad about yourself — or that you are a failure or have let yourself or your family down?"
+    title: "6. How often have you felt bad about yourself or that you are a failure or have let yourself or your family down, in the past two weeks?"
   },
   {
     id: 6,
-    title: "Trouble concentrating on things, such as reading the newspaper or watching television?"
+    title: "7. How often have you had trouble concentrating on things, such as reading the newspaper or watching television in the past two weeks??"
   },
   {
     id: 7,
-    title: "Moving or speaking so slowly that other people could have noticed? Or so fidgety or restless that you have been moving a lot more than usual?"
+    title: "8. How often have you been moving or speaking so slowly that other people could have noticed? Or so fidgety or restless that you have been moving a lot more than usual in the past two weeks?"
   },
   {
     id: 8,
-    title: "Thoughts that you would be better off dead, or thoughts of hurting yourself in some way?"
+    title: "9. Have you had thoughts that you would be better off dead, or thoughts of hurting yourself or others in the past 2 weeks?"
   },
 
 ]
@@ -200,10 +184,11 @@ const styles = StyleSheet.create({
     fontSize: 27,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 20
   },
   survey: {
-    paddingTop: 20,
-    height: windowHeight * .8,
+    paddingTop: 50,
+    height: windowHeight,
   },
   questionIntro: {
     fontFamily: 'Poppins-Italic',
@@ -217,7 +202,7 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     flexWrap: 'wrap',
     marginTop: 20,
@@ -226,7 +211,7 @@ const styles = StyleSheet.create({
     // height: 150,
     // width: 150,
     borderRadius: 10,
-    backgroundColor: '#72CCD4',
+    backgroundColor: '#5451F8',
     margin: 8,
   },
   buttonContent: {
@@ -235,37 +220,13 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     fontSize: 20
   },
-  backButton: {
-    position: 'absolute',
-    bottom: 10,
-    left: 15,
-    width: 200,
-    height: 50,
-    backgroundColor: '#469C97',
-    flex: 1,
-    justifyContent: 'center',
-    borderRadius: 25,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-  },
-  backText: {
-    fontFamily: 'Poppins-Bold',
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bold',
-  },
   submitButton: {
     position: 'absolute',
     bottom: 10,
     right: 15,
     width: 130,
     height: 50,
-    backgroundColor: '#469C97',
+    backgroundColor: '#5451F8',
     flex: 1,
     justifyContent: 'center',
     borderRadius: 25,
