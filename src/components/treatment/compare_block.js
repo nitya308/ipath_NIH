@@ -8,14 +8,14 @@ const windowWidth = Dimensions.get('window').width;
 
 function CompareBlock(props) {
   return (
-    <ScrollView>
-      <View style={styles.modalViewContainer}>
-        <TouchableWithoutFeedback>
-          <View style={styles.modalHeaderContainer} onPress={() => props.close()}>
-            <Text style={styles.modalHeader}>{props.title}</Text>
+    <View style={[styles.modalViewContainer, { width: props.width }]}>
+      <TouchableWithoutFeedback onPress={() => props.close()} style={[styles.modalHeaderContainer, { width: props.width }]}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.modalHeader}>{props.title}</Text>
             <UpArrow style={styles.upicon}></UpArrow>
-          </View>
-        </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+      <ScrollView>
         <View style={styles.modalRestContainer}>
           <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
           <Text style={styles.modalDescription}>{props.waiting}</Text>
@@ -26,8 +26,9 @@ function CompareBlock(props) {
           <Text style={styles.modalSubHeader}>Therapy</Text>
           <Text style={styles.modalDescription}>{props.therapy}</Text>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
+
   )
 }
 
@@ -35,9 +36,8 @@ export default CompareBlock
 
 const styles = StyleSheet.create({
   modalViewContainer: {
-    flex: 1,
-    width: windowWidth * .9,
-    alignItems: 'flex-start',
+    marginTop: 30,
+    height: 300,
     backgroundColor: 'white',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
@@ -53,28 +53,23 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     borderRightWidth: 2,
     borderColor: "#5451F8",
-    flex: 1,
     padding: 20,
-    width: windowWidth * .9,
+    width: "100%"
   },
   modalHeaderContainer: {
-    flexDirection: 'row',
     backgroundColor: '#5451F8',
-    justifyContent: 'space-between',
-    width: '100%',
     borderRadius: 10,
     padding: 10,
     paddingHorizontal: 20,
   },
   modalHeader: {
-    textAlign: 'left',
     lineHeight: 30,
     fontSize: 20,
     fontFamily: 'Poppins-Bold',
     color: "#FFFFFF"
   },
   upicon: {
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   modalDescription: {
     fontSize: 20
