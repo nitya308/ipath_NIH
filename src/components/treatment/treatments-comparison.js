@@ -5,6 +5,8 @@ import Close from '../../assets/icons/close.svg';
 import { addClick } from '../../services/datastore';
 import { useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CompareBlock from './compare_block';
+import DownArrow from '../../assets/icons/DownArrow.svg'
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -17,145 +19,84 @@ function TreatmentsComparison(props) {
   const [modalFour, setModalFour] = useState(false);
   const [modalFive, setModalFive] = useState(false);
 
+  const compareData = {
+    1: {
+      waiting: 'You will monitor symptoms, but not actively receive treatment (such as medication or therapy). This will involve completing the depression survey every 2 weeks for 12 weeks. Many people monitor symptoms with their doctor. At any time you can decide to try a treatment.',
+      med: 'Selective Serotonin Reuptake Inhibitors (SSRIs) are antidepressant medications that address symptoms by affecting your brain chemistry. These pills are usually taken once per day.',
+      therapy: "Therapy helps you solve problems and clarify your thoughts. This is usually done in a series of regular in-person or phone visits talking with a therapist, or guided by a computer application."
+    },
+    2: {
+      waiting: "Prices vary depending on number and type of visits to clinician.",
+      med: "Prices vary according to pharmacy and insurance plan. Without insurance, prices vary from $5 to $150+ for a 30-day supply of medication.",
+      therapy: "Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.",
+    },
+    3: {
+      waiting: "23 out of 100 people experienced an increase in mood levels in 3 months and 53 out of 100 experienced an increase in mood levels in a year by visiting a clincian without receiving active treatment.",
+      med: "In addition to the 23 out of 100 people that experienced an increase in mood levels without treatment, another 17 out of 100 will experience an increase in mood levels in 1 month using antidepressant medication.",
+      therapy: "In addition to the 23 out of 100 people that experienced an increase in mood levels without treatment, another 14 out of 100 will experience an increase in mood levels in 2 months using therapy.",
+    },
+    4: {
+      waiting: "Your symptoms may continue to worsen. About 25 out of 100 people see their symptoms get worse.",
+      med: "Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.",
+      therapy: "Talk therapy can cause you to feel uncomfortable, anxious and/or stressed.",
+    },
+    5: {
+      waiting: "Watchful waiting is a self-monitoring process that can begin immediately.",
+      med: "There are therapy options that you can access immediately, as well as some that will take longer. If timing is important to you, you can sort by quick access when you filter for treatments.",
+      therapy: "There are medication options that you can access immediately, as well as some options that will take longer. If timing is important to you, you can sort by quick access when you filter for treatments.",
+    }
+  };
+
   return (
-      <View style={styles.container}>
-        <Text style={styles.subheader}>Tap on a question to learn more about each treatment type.</Text>
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalOne(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
-          <View>
-            <Text style={styles.buttonText}>How much will this cost?</Text>
+    <View style={styles.container}>
+      <Text style={styles.subheader}>Tap on a question to learn more about each treatment type.</Text>
+      {modalOne ? <CompareBlock close={() => { console.log("closing"); setModalOne(false); }} title="How does this work?" waiting={compareData[1].waiting} med={compareData[1].med} therapy={compareData[1].therapy} width={windowWidth * .9}></CompareBlock> :
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalOne(!modalOne); addClick(`users/${user.userId}`, "compare-howwork", new Date()); }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.buttonText}>How does this work?</Text>
+            <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalTwo(true); addClick(`users/${user.userId}`, "compare-willwork", new Date()); }}>
-          <View>
+      }
+      {modalTwo ? <CompareBlock close={() => { console.log("closing"); setModalTwo(false); }} title="How much does this cost?" waiting={compareData[2].waiting} med={compareData[2].med} therapy={compareData[2].therapy} width={windowWidth * .9}></CompareBlock> :
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalTwo(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.buttonText}>How much does this cost?</Text>
+            <DownArrow style={styles.downicon}></DownArrow>
+          </View>
+        </TouchableHighlight>
+      }
+      {modalThree ? <CompareBlock close={() => { console.log("closing"); setModalThree(false); }} title="Will this work?" waiting={compareData[3].waiting} med={compareData[3].med} therapy={compareData[3].therapy} width={windowWidth * .9}></CompareBlock> :
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalThree(true); addClick(`users/${user.userId}`, "compare-willwork", new Date()); }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.buttonText}>Will this work?</Text>
+            <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalThree(true); addClick(`users/${user.userId}`, "compare-sideeffects", new Date()); }}>
-          <View>
-            <Text style={styles.buttonText}>What are the side effects?</Text>
+      }
+      {modalFour ? <CompareBlock close={() => { console.log("closing"); setModalFour(false); }} title="What are possible side effects??" waiting={compareData[4].waiting} med={compareData[4].med} therapy={compareData[4].therapy} width={windowWidth * .9}></CompareBlock> :
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFour(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.buttonText}>What are possible side effects?</Text>
+            <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFour(true); addClick(`users/${user.userId}`, "compare-time", new Date()); }}>
-          <View>
-            <Text style={styles.buttonText}>How soon can I access this?</Text>
+      }
+      {modalFive ? <CompareBlock close={() => { console.log("closing"); setModalFive(false); }} title="How quickly can I access this?" waiting={compareData[5].waiting} med={compareData[5].med} therapy={compareData[5].therapy} width={windowWidth * .9}></CompareBlock> :
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFive(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.buttonText}>How quickly can I access this?</Text>
+            <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
-
-        <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={() => props.navigation.navigate("Treatments")}>
-          <View style={styles.compareButtonContainer}>
-            <Text style={styles.compareButtonText}>Explore Treatment Options</Text>
-            <RightArrow styles={styles.arrow} />
-          </View>
-        </TouchableHighlight>
-
-
-        <Modal animationType="slide" visible={modalFive} onRequestClose={() => { setModalFive(!modalFive) }}>
-          <View style={styles.modalViewContainer}>
-            <View style={styles.modalHeaderContainer}>
-              <Text style={styles.modalHeader}>How does this work?</Text>
-            </View>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
-              <Text style={styles.modalDescription}>You get no active treatment; you may visit your clinician more often to monitor symptoms, compare options, and discuss other ways to feel better.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Medication</Text>
-              <Text style={styles.modalDescription}>Antidepressant medications affect your brain chemistry. These pills are usually taken once or twice a day.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Therapy</Text>
-              <Text style={styles.modalDescription}>Talk therapy helps you solve problems and clarify your thoughts. This is usually done in a series of regular visits in person, by phone or using a computer program.</Text>
-            </View>
-            <Pressable style={styles.closeModal} onPress={() => { setModalOne(!modalFive) }}>
-              {/* <Text style={styles.closeModalIcon}>X</Text> */}
-              <Close />
-            </Pressable>
-          </View>
-        </Modal>
-
-        <Modal animationType="slide" visible={modalOne} onRequestClose={() => { setModalOne(!modalOne) }}>
-          <View style={styles.modalViewContainer}>
-            <View style={styles.modalHeaderContainer}>
-              <Text style={styles.modalHeader}>How much does this cost?</Text>
-            </View>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
-              <Text style={styles.modalDescription}>Prices vary depending on number and type of visits to clinician.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Medication</Text>
-              <Text style={styles.modalDescription}>Prices vary from $5 to $150+ for a 30 day supply of medication.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Therapy</Text>
-              <Text style={styles.modalDescription}>Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.</Text>
-
-            </View>
-            <Pressable style={styles.closeModal} onPress={() => { setModalOne(!modalOne) }}>
-              {/* <Text style={styles.closeModalIcon}>X</Text> */}
-              <Close />
-            </Pressable>
-          </View>
-        </Modal>
-        <Modal animationType="slide" visible={modalTwo} onRequestClose={() => { setModalTwo(!modalTwo) }}>
-          <View style={styles.modalViewContainer}>
-            <View style={styles.modalHeaderContainer}>
-              <Text style={styles.modalHeader}>Will this work?</Text>
-            </View>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
-              <Text style={styles.modalDescription}>23 out of 100 people get better in 3 months and 53 out of 100 experience an improvement in mood in a year by visiting a clinician without getting active treatment.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Medication</Text>
-              <Text style={styles.modalDescription}>In addition to the 23 out of 100 people that recover without treatment, another 17 out of 100 will experience an improvement in mood in 1 to 2 months by using antidepressant medication.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Therapy</Text>
-              <Text style={styles.modalDescription}>In addition to the 23 out of 100 people that get better without treatment, another 14 out of 100 will experience an improvement in mood in 2 months using talk therapy.</Text>
-            </View>
-            <Pressable style={styles.closeModal} onPress={() => { setModalTwo(!modalTwo) }}>
-              {/* <Text style={styles.closeModalIcon}>X</Text> */}
-              <Close />
-            </Pressable>
-          </View>
-        </Modal>
-        <Modal animationType="slide" visible={modalThree} onRequestClose={() => { setModalThree(!modalThree) }}>
-          <View style={styles.modalViewContainer}>
-            <View style={styles.modalHeaderContainer}>
-              <Text style={styles.modalHeader}>What are the side effects?</Text>
-            </View>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
-              <Text style={styles.modalDescription}>Your symptoms may continue or get worse. About 25 out of 100 people see their symptoms get worse.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Medication</Text>
-              <Text style={styles.modalDescription}>Nausea, diarrhea and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Therapy</Text>
-              <Text style={styles.modalDescription}>Talk therapy can cause you to be uncomfortable, anxious and/or stressed.</Text>
-            </View>
-            <Pressable style={styles.closeModal} onPress={() => { setModalThree(!modalThree) }}>
-              {/* <Text style={styles.closeModalIcon}>X</Text> */}
-              <Close />
-            </Pressable>
-          </View>
-        </Modal>
-        <Modal animationType="slide" visible={modalFour} onRequestClose={() => { setModalFour(!modalFour) }}>
-          <View style={styles.modalViewContainer}>
-            <View style={styles.modalHeaderContainer}>
-              <Text style={styles.modalHeader}>How soon can I access this?</Text>
-            </View>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
-              <Text style={styles.modalDescription}>N/A</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Medication</Text>
-              <Text style={styles.modalDescription}>How quickly you can get an appointment varies from same day (telehealth) to several weeks.</Text>
-              <View style={styles.divideLine}></View>
-              <Text style={styles.modalSubHeader}>Therapy</Text>
-              <Text style={styles.modalDescription}>How quickly you can get an appointment varies from same day (telehealth) to 3 months.</Text>
-            </View>
-            <Pressable style={styles.closeModal} onPress={() => { setModalFour(!modalFour) }}>
-              <Close />
-            </Pressable>
-          </View>
-        </Modal>
-      </View>
+      }
+      <TouchableHighlight underlayColor="gray" style={styles.compareButton} onPress={() => props.navigation.navigate("Treatments")}>
+        <View style={styles.compareButtonContainer}>
+          <Text style={styles.compareButtonText}>Explore Treatment Options</Text>
+          <RightArrow styles={styles.arrow} />
+        </View>
+      </TouchableHighlight>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -167,7 +108,9 @@ const styles = StyleSheet.create({
   },
   subheader: {
     margin: 20,
-    fontSize: 20
+    fontSize: 18,
+    fontFamily: "Poppins-Italic",
+    color: '#545454'
   },
   container: {
     flex: 1,
@@ -177,13 +120,8 @@ const styles = StyleSheet.create({
   },
   button: {
     width: windowWidth * .9,
-    height: windowHeight * .07,
     borderRadius: 10,
-    // borderRadius: windowHeight * .035,
     backgroundColor: '#FFFFFF',
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 30,
     shadowColor: "#000",
     shadowOffset: {
@@ -192,10 +130,17 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    padding: 10,
+    paddingHorizontal: 20,
   },
   buttonText: {
-    fontWeight: '500',
-    fontSize: 18,
+    fontFamily: 'Poppins-Bold',
+    textAlign: 'left',
+    lineHeight: 30,
+    fontSize: 20,
+  },
+  downicon: {
+    paddingVertical: 15,
   },
   modalViewContainer: {
     flex: 1,
@@ -256,13 +201,11 @@ const styles = StyleSheet.create({
     right: 20,
   },
   compareButton: {
-    position: 'absolute',
-    bottom: 30,
     width: windowWidth * .9,
     height: '10%',
     paddingLeft: 10,
-    marginTop: 10,
-    backgroundColor: '#469C97',
+    marginTop: 60,
+    backgroundColor: "#5451F8",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {

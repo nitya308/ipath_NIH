@@ -19,21 +19,26 @@ const treatmentData = {
     efficacy: "In addition to the 23 out of 100 people that recover without treatment, another 14 out of 100 will recover in 2 months using talk therapy. In addition to the 23 people who recover without treatment, another 26 in 100 people recover with a combination of SSRIs and talk therapy.",
     cost: "Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.",
     sideEffects: "Talk therapy can cause you to feel uncomfortable, anxious and/or stressed.",
-    color:"#9B51F8"
+    color: "#9B51F8",
+    iconReq: <Speech width={20} height={20} color="#FFFFFF"/>
   },
   "Medication": {
     description: "Selective Serotonin Reuptake Inhibitors (SSRIs) are medications that address symptoms by affecting your brain chemistry. These pills are usually taken once per day.",
+    subtitle: "Specialist-prescribed antidepressants",
     efficacy: "In addition to the 23 out of 100 people that experienced an increase in mood levels without treatment, another 17 out of 100 will experience an increase in mood levels in 1 month using antidepressant medication.",
     cost: "Prices vary according to pharmacy and insurance plan. Without insurance, prices vary from $5 to $150+ for a 30-day supply of medication.",
     sideEffects: "Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.",
-    color: "#51A8F8"
+    color: "#51A8F8",
+    iconReq: <Pill width={20} height={20} color="#FFFFFF"/>
   },
   "Watchful Waiting": {
     description: "You will monitor symptoms, but not actively receive treatment (such as medication or therapy). This will involve completing the depression survey every 2 weeks for 12 weeks. Many people monitor symptoms with their doctor. At any time you can decide to try a treatment.",
+    subtitle: "Monitor symptoms without direct action",
     efficacy: "23 out of 100 people experienced an increase in mood levels in 3 months and 53 out of 100 experienced an increase in mood levels in a year by visiting a clincian without receiving active treatment.",
     cost: "Prices vary depending on number and type of visits to clinician.",
     sideEffects: "Your symptoms may continue to worsen. About 25 out of 100 people see their symptoms get worse.",
-    color:"#EF6068"
+    color: "#EF6068",
+    iconReq: <Watch width={20} height={20} color="#FFFFFF"/>
   }
 };
 function TreatmentsOverview(props) {
@@ -43,38 +48,41 @@ function TreatmentsOverview(props) {
   return (
     <View style={styles.options}>
       <Text style={styles.subheader}>Select the options below to learn more.</Text>
-      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#51A8F8"}]} onPress={() => { setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#51A8F8" }]} onPress={() => { setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Pill width={35} height={35} style={styles.icon} color="#FFFFFF"/>
+          <Pill width={35} height={35} style={styles.icon} color="#FFFFFF" />
           <Text style={styles.optionHeader}>Medication</Text>
           <View style={{ position: 'absolute', right: 10 }}>
-            <Chevron color="#FFFFFF"/>
+            <Chevron color="#FFFFFF" />
           </View>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#EF6068"}]} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#EF6068" }]} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Watch width={35} height={35} style={styles.icon} color="#FFFFFF"/>
+          <Watch width={35} height={35} style={styles.icon} color="#FFFFFF" />
           <Text style={styles.optionHeader}>Watchful Waiting</Text>
           <View style={{ position: 'absolute', right: 10 }}>
-            <Chevron color="#FFFFFF"/>
+            <Chevron color="#FFFFFF" />
           </View>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight underlayColor="gray" style={[styles.option, {backgroundColor: "#9B51F8"}]} onPress={() => { setSelectedType("Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
+      <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#9B51F8" }]} onPress={() => { setSelectedType("Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Speech width={35} height={35} style={styles.icon} color="#FFFFFF"/>
+          <Speech width={35} height={35} style={styles.icon} color="#FFFFFF" />
           <Text style={styles.optionHeader}>Talk Therapy</Text>
           <View style={{ position: 'absolute', right: 10 }}>
-            <Chevron color="#FFFFFF"/>
+            <Chevron color="#FFFFFF" />
           </View>
         </View>
       </TouchableHighlight>
       <Text style={{ fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight: '500' }}>A combination of Medication and Talk Therapy can also be an effective treatment method.</Text>
       <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
-          <View style={[styles.modalHeaderContainer, {backgroundColor: treatmentData[selectedType].color}]}>
-            <Text style={styles.modalHeader}>{selectedType}</Text>
+          <View style={[styles.modalHeaderContainer, { backgroundColor: treatmentData[selectedType].color }]}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalHeaderText}>{selectedType}</Text>
+              {treatmentData[selectedType].iconReq}
+            </View>
             <Text style={styles.modalsubtitle}>{treatmentData[selectedType].subtitle}</Text>
           </View>
           <ScrollView style={styles.modalContainer}>
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 15
   },
-  arrow:{
+  arrow: {
     alignSelf: 'flex-start'
   },
   modalViewContainer: {
@@ -197,13 +205,17 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   modalHeader: {
-    color: "#FFFFFF",
     paddingTop: 30,
     paddingLeft: 60,
     alignSelf: 'center',
+    width: "100%",
+    flexDirection: 'row'
+  },
+  modalHeaderText: {
+    color: "#FFFFFF",
     fontWeight: 'bold',
     fontSize: 20,
-    width: "100%",
+    marginRight: 10,
   },
   modalsubtitle: {
     fontSize: 15,
