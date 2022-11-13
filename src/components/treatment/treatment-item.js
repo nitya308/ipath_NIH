@@ -11,6 +11,7 @@ import { saveTreatment, deleteSavedTreatment } from '../../actions/index';
 import { addClick } from '../../services/datastore';
 
 import TreatmentItemTag from './treatment-item-tag';
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 function TreatmentItem(props) {
     // const dispatch = useDispatch(); 
@@ -87,18 +88,19 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
+        // backgroundColor: 'magenta',
     },
     treatmentHeaderContainer: {
-        width: "90%",
+        // width: "90%",
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        marginLeft: 2,
         marginTop: 5,
         // backgroundColor: 'orange',
     },
     treatmentName: {
         fontFamily: 'Poppins-Bold',
         fontSize: 20,
+        // backgroundColor: 'yellow',
         // paddingTop: 10,
         // paddingLeft: 10,
         // marginBottom: 10,
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
         // marginLeft: 10,
         borderRadius: 0.5,
         // backgroundColor: 'brown',
+        // backgroundColor: 'pink',
     },
     treatmentTrait: {
         flex: 0,
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 5,
     },
     treatmentInfo: {
-        paddingLeft: 10
+        paddingLeft: 10,
     },
     bookmarkContainer: {
         // position: 'absolute',
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 15,
         fontFamily: 'Poppins-Regular',
+        // backgroundColor: 'cyan',
     },
     location: {
         flexDirection: 'row',
@@ -198,6 +202,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginRight: 15,
         alignItems: 'center',
+        // backgroundColor: 'forestgreen',
     },
     learnMore: {
         backgroundColor: '#5451F8',
