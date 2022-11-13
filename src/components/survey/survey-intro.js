@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     paddingVertical: windowHeight * 0.05,
     paddingHorizontal: windowWidth * 0.06,
     width: windowWidth,
-    height: windowHeight * 0.9,
+    height: windowHeight,
     flex: 0,
     alignItems: 'flex-start',
   },

@@ -76,7 +76,7 @@ function TreatmentsOverview(props) {
         </View>
       </TouchableHighlight>
       <Text style={{ fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight: '500' }}>A combination of Medication and Talk Therapy can also be an effective treatment method.</Text>
-      <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
+      <Modal animationType="none" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
           <View style={[styles.modalHeaderContainer, { backgroundColor: treatmentData[selectedType].color }]}>
             <View style={styles.modalHeader}>
