@@ -12,6 +12,7 @@ import ProfileButtonIcon from '../assets/icons/ProfileButton.svg'
 import PCircle from '../components/survey/p-circle.js';
 import {fetchFirstName } from '../actions';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import SwiperComponent from '../components/homepage/swiper';
 
 function HomePage(props) {
   const user = useSelector((state) => state.user)
@@ -33,15 +34,19 @@ function HomePage(props) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <TouchableHighlight style={styles.profilebutton} onPress={() => {console.log("pressed"); navigateTo("Profile")}}>
+        <TouchableHighlight style={styles.profilebutton} onPress={() => {navigateTo("Profile")}}>
           <ProfileButtonIcon ></ProfileButtonIcon>
         </TouchableHighlight>
         <Text style={styles.subtitle}>Good Morning,</Text>
         <Text style={styles.title}>{firstNameValue}!</Text>
+
+        <SwiperComponent></SwiperComponent>
+
         <View style={styles.rowContainer}>
           <Text style={styles.colText}>Welcome to iPath! Your decision aid tool</Text>
           <HomeIcon style={styles.homeicon}></HomeIcon>
         </View>
+
         <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => { navigateTo("Survey"); updatePageView(`${user.userId}`, "page_1"); }}>
           <View style={styles.rowContainer}>
             <Text style={styles.surveyButtonText}>We recommend taking the Depression Screening Survey (PHQ-9) again in</Text>
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: 30,
     fontWeight: 'bold',
+    marginBottom: windowHeight*0.02,
   },
   subtitle: {
     fontSize: 20,
@@ -83,13 +89,6 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     padding: 20,
   },
-  description: {
-    fontFamily: 'Poppins-Italic',
-    fontStyle: 'italic',
-    fontSize: 16,
-    padding: 15,
-    color: 'white'
-  },
   flexContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -98,23 +97,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: windowWidth * .8
   },
-  parallelButtons: {
-    flex: 0,
-    width: '100%',
-    flexDirection: 'row',
-    marginTop: 20,
-    justifyContent: 'space-between',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-  },
   surveyTouchContainer: {
     width: '100%',
-    marginTop: 20,
+    marginTop: windowHeight*0.09,
     backgroundColor: '#FFFFFF',
     height: 120,
     borderRadius: 10,
@@ -137,43 +122,9 @@ const styles = StyleSheet.create({
     top: 10,
     borderRadius: 20,
   },
-  mediumTouchContainer: {
-    width: 145.06,
-    backgroundColor: '#000000',
-    height: 130,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-  },
-  additionalTouchContainer: {
-    flex: 0,
-    justifyContent: 'center',
-    width: '100%',
-    backgroundColor: '#000000',
-    height: 65,
-    borderRadius: 10,
-    marginTop: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-  },
   buttonContainer: {
     width: '80%',
     height: '100%'
-  },
-  chart: {
-    position: 'absolute',
-    top: 70,
-    left: -20,
   },
   buttonTitle: {
     fontFamily: 'Poppins-Regular',
