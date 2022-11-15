@@ -10,13 +10,14 @@ const LoginInput = (props) => {
         clearTextOnFocus={true}
         style={[styles.input, {backgroundColor: props.backgroundColor, color: props.textColor}]}
         placeholder={props.placeholder}
+        placeholderTextColor={'#373737'}
         onChangeText={props.onChangeText}
         autoFocus={props.autoFocus}
         secureTextEntry={props.secure}
         onFocus={props.onFocus}
         keyboardType={props.keyboardType}
         textContentType={props.textContentType}
-        placeholderTextColor={props.textColor}
+        // placeholderTextColor={props.textColor}
       />
     </SafeAreaView>
   );

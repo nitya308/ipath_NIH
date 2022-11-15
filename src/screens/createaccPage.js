@@ -37,10 +37,10 @@ function CreateAccountPage({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
       <View style={styles.flexContainer}>
-        <LoginInput style={styles.input} value={inputEmail} keyboardType='email-address' textContentType='emailAddress' autoFocus={true} onChangeText={(text) => setInputEmail(text)} placeholder="Email" backgroundColor="#E3EFF0" />
-        <LoginInput style={styles.input} value={inputFirstName} autoFocus={true} onChangeText={(text) => setInputFirstName(text)} placeholder="First Name" backgroundColor="#E3EFF0" />
-        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputPassword} textContentType='none' onChangeText={(text) => setInputPassword(text)} placeholder="Password" secure={true} backgroundColor="#E3EFF0"/>
-        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputConfirmPassword} textContentType='none' autoCapitalize='none' onChangeText={(text) => setInputConfirmPassword(text)} placeholder="Confirm Password" secure={true} backgroundColor="#E3EFF0"/>
+        <LoginInput style={styles.input} value={inputEmail} keyboardType='email-address' textContentType='emailAddress' autoFocus={true} onChangeText={(text) => setInputEmail(text)} placeholder="Email" backgroundColor="#E9E9FA" />
+        <LoginInput style={styles.input} value={inputFirstName} autoFocus={true} onChangeText={(text) => setInputFirstName(text)} placeholder="First Name" backgroundColor="#E9E9FA" />
+        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputPassword} textContentType='none' onChangeText={(text) => setInputPassword(text)} placeholder="Password" secure={true} backgroundColor="#E9E9FA"/>
+        <LoginInput style={styles.input} onFocus={() => setRenderPasswordError(false)} value={inputConfirmPassword} textContentType='none' autoCapitalize='none' onChangeText={(text) => setInputConfirmPassword(text)} placeholder="Confirm Password" secure={true} backgroundColor="#E9E9FA"/>
         {renderPasswordError ? <Text style={styles.errorMessage}>Passwords do not match</Text> : null }
         <TouchableHighlight style={styles.signbutton} onPress={onHandleSignup}>
           <Text style={styles.buttontext}>Create Account</Text>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   signbutton: {
     fontFamily: 'Poppins-Regular',
-    backgroundColor: '#469C97',
+    backgroundColor: '#5451F8',
     textAlign: 'center',
     fontSize: 20,
     lineHeight: 45,
