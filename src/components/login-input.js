@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     color: '#FCFFFF',
     width: "90%",
     alignSelf: 'center',
+    fontFamily: 'Poppins-Regular',
   },
 });
 
