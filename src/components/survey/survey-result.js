@@ -4,37 +4,43 @@ import RightArrow from '../../assets/icons/right.svg';
 import Close from '../../assets/icons/close.svg';
 import Infographic from '../../assets/icons/infographic';
 import QuestionMark from '../../assets/icons/questionMark.svg';
-import {openURL} from 'expo-linking';
+import { openURL } from 'expo-linking';
+import { back } from 'react-native/Libraries/Animated/Easing';
 
-function SurveyResult(props){
+function SurveyResult(props) {
     const [modalVisible, setModalVisible] = useState('false');
     const sc = props.scores;
     const totalScore = sc.reduce((sum, num) => sum + num, 0);
 
     var result = "";
 
-    if (totalScore <=4) result = "no depression";
-    else if (totalScore <= 9) result = "mild depression";
-    else if (totalScore <= 14) result = "moderate depression";
-    else if (totalScore <= 19) result = "moderate to severe depression";
-    else if (totalScore <= 27) result = "severe depression";
+    if (totalScore <= 4) result = "No Depression";
+    else if (totalScore <= 9) result = "Mild Depression";
+    else if (totalScore <= 14) result = "Moderate Depression";
+    else if (totalScore <= 19) result = "Moderate to Severe Depression";
+    else if (totalScore <= 27) result = "Severe Depression";
 
     const renderHotlinePopup = () => {
-      if (props.hotline) {
-        return (
-          <View style={styles.hotlineContainer}>
-            <Text style={styles.hotlineText}>Your responses indicate that you may benefit from immediate assistance. Please call the National Suicide Prevention Hotline at</Text>
-            <Text style={styles.link} onPress={() => { openURL('tel:1-800-273-TALK') }}> 1-800-273-TALK </Text>
-          </View>
-        );
-      }
-      else { return null; }
+        if (props.hotline) {
+            return (
+                <View style={styles.hotlineContainer}>
+                    <Text style={styles.hotlineText}>Your responses indicate that you may benefit from immediate assistance. Please call the National Suicide Prevention Hotline at</Text>
+                    <Text style={styles.link} onPress={() => { openURL('tel:1-800-273-TALK') }}> 1-800-273-TALK </Text>
+                </View>
+            );
+        }
+        else { return null; }
     };
 
-    return(
+    return (
         <View style={styles.container}>
-            <Text style={styles.resultTitle}>Survey Results</Text>
-            <Text style={styles.h1}>Based on your survey results, you are displaying symptoms of <Text style={{fontWeight: 'bold'}}>{result}</Text></Text>
+            <View style={styles.resultHeaderContainer}>
+                <Text style={styles.resultTitle}>Survey Results</Text>
+            </View>
+            <View style={styles.resultContainer}>
+                <Text style={styles.h1}>Based on your survey results, you are displaying symptoms of </Text>
+                <Text style={styles.individualResult}>{result}</Text>
+            </View>
             <TouchableHighlight underlayColor="gray" style={styles.infoContainer} onPress={() => setModalVisible(true)}>
                 <View style={styles.infoContainerContent}>
                     <Text style={styles.h2}>What does this mean?</Text>
@@ -42,15 +48,15 @@ function SurveyResult(props){
                 </View>
             </TouchableHighlight>
             {renderHotlinePopup()}
-            <Infographic width={250} height={80}/>
-            <Text style={styles.p}>Depression is more common than you might think. Around 20% of cancer patients display symptoms of depression</Text> 
+            <Infographic width={250} height={80} />
+            <Text style={styles.p}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
             <TouchableHighlight underlayColor='gray' style={styles.treatmentButton} onPress={props.press}>
                 <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>Explore Treatments</Text> 
+                    <Text style={styles.buttonText}>Learn About Treatments</Text>
                     <RightArrow />
                 </View>
             </TouchableHighlight>
-            <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => {setModalVisible(!modalVisible)}}>
+            <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => { setModalVisible(!modalVisible) }}>
                 <View style={styles.modalViewContainer}>
                     <View style={styles.modalHeaderContainer}>
                         <Text style={styles.modalHeader}>What does this mean?</Text>
@@ -58,36 +64,36 @@ function SurveyResult(props){
                     </View>
                     <View style={styles.modalContainer}>
                         <View style={styles.scoreHeader}>
-                            <Text style={styles.scoreLevel}>Level</Text>
-                            <Text style={styles.scoreNumber}>Score</Text>
+                            <Text style={styles.scoreNumber}>Where am I?</Text>
+                            <Text style={styles.scoreLevel}>Severity Level</Text>
                         </View>
                         <View style={styles.thickLine} />
-                        <View style={[styles.scoreContainer, result==="no depression" ? styles.selectedRange : null]}>
+                        <View style={[styles.scoreContainer, result === "No Depression" ? styles.selectedRange : null]}>
                             <Text style={styles.scoreLevel}>Minimal Depression</Text>
                             <Text style={styles.scoreNumber}>0-4</Text>
                         </View>
                         <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result==="mild depression" ? styles.selectedRange : null]}>
+                        <View style={[styles.scoreContainer, result === "Mild Depression" ? styles.selectedRange : null]}>
                             <Text style={styles.scoreLevel}>Mild Depression</Text>
                             <Text style={styles.scoreNumber}>5-9</Text>
                         </View>
                         <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result==="moderate depression" ? styles.selectedRange : null]}>
+                        <View style={[styles.scoreContainer, result === "Moderate Depression" ? styles.selectedRange : null]}>
                             <Text style={styles.scoreLevel}>Moderate Depression</Text>
                             <Text style={styles.scoreNumber}>10-14</Text>
                         </View>
                         <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result==="moderate to severe depression" ? styles.selectedRange : null]}>
+                        <View style={[styles.scoreContainer, result === "Moderate to Severe Depression" ? styles.selectedRange : null]}>
                             <Text style={styles.scoreLevel}>Moderately Severe Depression</Text>
                             <Text style={styles.scoreNumber}>15-19</Text>
                         </View>
                         <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result==="severe depression" ? styles.selectedRange : null]}>
+                        <View style={[styles.scoreContainer, result === "Severe Depression" ? styles.selectedRange : null]}>
                             <Text style={styles.scoreLevel}>Severe Depression</Text>
                             <Text style={styles.scoreNumber}>20+</Text>
                         </View>
                     </View>
-                    <Pressable style={styles.closeModal} onPress={() => {setModalVisible(!modalVisible)}}>
+                    <Pressable style={styles.closeModal} onPress={() => { setModalVisible(!modalVisible) }}>
                         {/* <Text style={styles.closeModalIcon}>X</Text> */}
                         <Close />
                     </Pressable>
@@ -106,71 +112,109 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight * .8,
     },
+    resultHeaderContainer: {
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        alignSelf: 'flex-start',
+        paddingLeft: 20
+    },
     hotlineContainer: {
-      borderColor: '#469C97',
-      borderWidth: 2,
-      borderRadius: 15,
-      padding: 15,
-      marginLeft: 20,
-      marginRight: 20,
+        borderColor: '#5451F8',
+        borderWidth: 2,
+        borderRadius: 15,
+        padding: 15,
+        marginLeft: 20,
+        marginRight: 20,
     },
     hotlineText: {
-      fontSize: 17,
-      fontStyle: 'italic',
-      color: '#545454',
+        fontSize: 17,
+        fontStyle: 'italic',
+        color: '#545454',
     },
     link: {
-      color: '#0000EE',
-      textAlign: 'center',
-      textDecorationLine: 'underline',
-      fontSize: 17,
+        color: '#0000EE',
+        textAlign: 'center',
+        textDecorationLine: 'underline',
+        fontSize: 17,
     },
     resultTitle: {
-        paddingTop: 50,
+        paddingTop: 0,
+        marginLeft: 20,
         fontSize: 30,
-        fontWeight: 'bold'
+        fontFamily: 'Poppins-Bold',
+        fontWeight: 'bold',
+        justifyContent: 'flex-start',
+        color: '#373737'
     },
     h1: {
         padding: 20,
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'left',
+        fontFamily: 'Poppins-Italic',
+        color: '#373737'
+    },
+    individualResult: {
+        fontSize: 23,
+        textAlign: 'center',
+        fontFamily: 'Poppins-Bold'
+    },
+    resultContainer: {
+        flexDirection: 'column',
+        // alignItems: 'flex-start',
+        // justifyContent: 'flex-start',
+        margin: 10,
+        justifyContent: 'flex-start',
+        paddingBottom: 20,
     },
     h2: {
         fontSize: 20,
-        textAlign: 'center',
-    }, 
-    infoContainer:{
+        textAlign: 'left',
+    },
+    infoContainer: {
         width: 300,
         height: 60,
         borderRadius: 30,
-        backgroundColor: '#E3EFF0',
+        backgroundColor: '#E9E9FA',
         marginBottom: 40,
         flexDirection: 'column',
         justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
-    infoContainerContent:{
+    infoContainerContent: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
+        fontFamily: 'Poppins-Regular'
     },
     p: {
-        marginTop: 0,
+        marginHorizontal: 20,
+        marginTop: 20,
         padding: 20,
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center',
+        fontFamily: 'Poppins-Italic',
+        color: '#373737',
+        alignSelf: 'flex-end'
     },
     treatmentButton: {
         position: 'absolute',
         width: windowWidth * .9,
         height: 65,
-        backgroundColor: '#469C97',
+        backgroundColor: '#5451F8',
         borderRadius: 10,
         flex: 0,
         alignItems: 'center',
         shadowColor: "#000",
         shadowOffset: {
-        width: 0,
-        height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -181,27 +225,30 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#5451F8',
+        borderRadius: 10,
     },
     buttonText: {
         fontSize: 17,
         color: 'white',
         fontWeight: 'bold',
+        fontFamily: 'Poppins-Bold',
     },
-    modalViewContainer:{
+    modalViewContainer: {
         flex: 1,
         alignItems: 'flex-start',
         backgroundColor: 'white',
         alignSelf: 'center',
         width: windowWidth * .95,
-        height: 600, 
+        height: 600,
         marginTop: windowHeight * .1,
         marginBottom: windowHeight * .05,
-        borderRadius: 30, 
+        borderRadius: 30,
         shadowColor: "#000",
         shadowOffset: {
-        width: 0,
-        height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -211,9 +258,9 @@ const styles = StyleSheet.create({
         marginTop: 30,
         alignSelf: 'center',
     },
-    modalHeaderContainer:{
+    modalHeaderContainer: {
         flex: 0,
-        backgroundColor: '#E3EFF0',
+        backgroundColor: '#E9E9FA',
         alignSelf: 'center',
         justifyContent: 'center',
         width: '100%',
@@ -221,57 +268,63 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         height: 170
     },
-    modalHeader:{
+    modalHeader: {
         alignSelf: 'center',
         textAlign: 'center',
         marginTop: 15,
         marginBottom: 20,
         fontSize: 20,
         fontWeight: 'bold',
+        fontFamily: 'Poppins-Bold',
     },
-    modalDescription:{
-        fontSize: 20,
+    modalDescription: {
+        fontSize: 18,
         textAlign: 'center',
+        fontFamily: 'Poppins-Regular',
+        marginHorizontal: 10,
+
     },
-    scoreHeader:{
+    scoreHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 10,
+        fontFamily: 'Poppins-Regular',
     },
-    scoreContainer:{
+    scoreContainer: {
         height: 90,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    scoreLevel:{
+    scoreLevel: {
         fontWeight: "600",
         fontSize: 18,
         marginLeft: 10,
     },
-    scoreNumber:{
+    scoreNumber: {
         fontStyle: 'italic',
         fontSize: 18,
-        marginRight: 10
+        marginRight: 10,
     },
-    selectedRange:{
-        backgroundColor: "#E3EFF0",
+    selectedRange: {
+        backgroundColor: "#5451F8",
+        color: 'white',
     },
-    thickLine:{
+    thickLine: {
         height: 4,
         width: '100%',
-        backgroundColor: '#469C97',
+        backgroundColor: '#5451F8',
         alignSelf: 'center',
     },
-    modalSubHeader:{
+    modalSubHeader: {
         fontSize: 20,
         fontWeight: 'bold',
-    },  
-    divideLine:{
+    },
+    divideLine: {
         height: 2,
         width: '100%',
-        backgroundColor: '#469C97',
+        backgroundColor: '#5451F8',
         alignSelf: 'center',
         marginLeft: 20,
         marginRight: 20,
@@ -281,7 +334,7 @@ const styles = StyleSheet.create({
         top: 20,
         right: 20,
     },
-    closeModalIcon:{
+    closeModalIcon: {
         fontSize: 25
     },
 })
