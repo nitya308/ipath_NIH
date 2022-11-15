@@ -9,7 +9,7 @@ import Close from '../assets/icons/close.svg';
 
 import firebase from '../services/datastore';
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-const auth = firebase.auth(); 
+const auth = firebase.auth();
 
 function LoginPage({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,42 +19,44 @@ function LoginPage({ navigation }) {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
 
   const onLogin = async () => {
-      try {
-        if (inputEmail !== '' && inputPassword !== '') {
-          await auth.signInWithEmailAndPassword(inputEmail, inputPassword);
-        }
-      } catch (error) {
-        // setLoginError(error.message);
-        alert(error.message);
+    try {
+      if (inputEmail !== '' && inputPassword !== '') {
+        await auth.signInWithEmailAndPassword(inputEmail, inputPassword);
       }
+    } catch (error) {
+      // setLoginError(error.message);
+      alert(error.message);
+    }
   }
 
   return (
     <View style={styles.container}>
-      <Logo style={styles.logo} />
+      <View style={styles.logoWrapper}>
+        <Logo style={styles.logo} />
+      </View>
       {/* <Image style={styles.logo} source={require('../images/fake-logo.png')}></Image> */}
-      <LoginInput autoCapitalize='none' keyboardType='email-address' textContentType="emailAddress" value={inputEmail} onChangeText={text => setInputEmail(text)} backgroundColor='#545454' textColor='#FCFFFF' placeholder="Email"></LoginInput>
-      <LoginInput autoCapitalize='none' textContentType="password" value={inputPassword} onChangeText={text => setInputPassword(text)} placeholder="Password" backgroundColor='#545454' textColor='#FCFFFF' secure={passwordVisibility}></LoginInput>
+      <LoginInput autoCapitalize='none' keyboardType='email-address' textContentType="emailAddress" value={inputEmail} onChangeText={text => setInputEmail(text)} backgroundColor='#FCFCFF' textColor='#373737' placeholder="Email"></LoginInput>
+      <LoginInput autoCapitalize='none' textContentType="password" value={inputPassword} onChangeText={text => setInputPassword(text)} placeholder="Password" backgroundColor='#FCFCFF' textColor='#373737' secure={passwordVisibility}></LoginInput>
       <View style={styles.flexContainer}>
         <Text style={[styles.option, styles.link]} onPress={() => setModalVisible(true)}>Forgot Password?</Text>
       </View>
       <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible); }}>
-          <View style={styles.modalView}>
-            <Pressable style={{ position: 'absolute', top: 10, right: 10}}onPress={() => {setModalVisible(!modalVisible); console.log('presssed');}}>
-              {/* <Text style={{ position: 'absolute', top: 10, right: 10, fontSize:25, zIndex: 90}}>x</Text> */}
-              <Close />
-            </Pressable>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Forgot Password?</Text>
-              <Text style={styles.modalText}>Input your email, and we’ll send you a temporary password to use to log in.</Text>
-              <LoginInput placeholder="Email" value={resetEmail} onChangeText={text => setResetEmail(text)} backgroundColor='#E3EFF0'></LoginInput>
-              <TouchableHighlight style={[styles.signbutton, {width: windowWidth * .6}]} onPress={() => {auth.sendPasswordResetEmail(resetEmail).then(alert('email sent!')); setModalVisible(!modalVisible)}}>
-                <Text style={styles.buttontext}>Submit</Text>
-              </TouchableHighlight>
-            </View>
+        <View style={styles.modalView}>
+          <Pressable style={{ position: 'absolute', top: 10, right: 10 }} onPress={() => { setModalVisible(!modalVisible); console.log('presssed'); }}>
+            {/* <Text style={{ position: 'absolute', top: 10, right: 10, fontSize:25, zIndex: 90}}>x</Text> */}
+            <Close />
+          </Pressable>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Forgot Password?</Text>
+            <Text style={styles.modalText}>Input your email, and we’ll send you a temporary password to use to log in.</Text>
+            <LoginInput placeholder="Email" value={resetEmail} onChangeText={text => setResetEmail(text)} backgroundColor='#E3EFF0'></LoginInput>
+            <TouchableHighlight style={[styles.signbutton, { width: windowWidth * .6 }]} onPress={() => { auth.sendPasswordResetEmail(resetEmail).then(alert('email sent!')); setModalVisible(!modalVisible) }}>
+              <Text style={styles.buttontext}>Submit</Text>
+            </TouchableHighlight>
           </View>
+        </View>
       </Modal>
-      <TouchableHighlight style={[styles.signbutton, {width: windowWidth * .9}]} onPress={onLogin}>
+      <TouchableHighlight style={[styles.signbutton, { width: windowWidth * .9 }]} onPress={onLogin}>
         <Text style={styles.buttontext}>Sign in</Text>
       </TouchableHighlight>
       <Text style={styles.link} onPress={() => navigation.navigate('Create')}>Or Create Account</Text>
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingTop: 100,
     height: windowHeight,
-    backgroundColor: '#373737',
+    backgroundColor: '#060538',
     alignItems: 'center',
     width: windowWidth,
   },
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.1,
     shadowColor: '#000000',
-    shadowOffset:  {width: 3,height: 3},
+    shadowOffset: { width: 3, height: 3 },
   },
   modalView: {
     flex: 1,
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   signbutton: {
-    backgroundColor: '#469C97',
+    backgroundColor: '#5451F8',
     textAlign: 'center',
     fontSize: 20,
     lineHeight: 45,
@@ -158,8 +160,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.3,
     shadowColor: '#000000',
-    shadowOffset:  {width: 3,height: 3},
+    shadowOffset: { width: 3, height: 3 },
+    fontFamily: 'Poppins-Regular',
   },
+  logoWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  }
 });
 
 export default LoginPage;
