@@ -4,10 +4,6 @@ import Checkbox from '../components/checkbox';
 import { useSelector } from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
 import TreatmentItemTagText from '../components/treatment/treatment-tag-text';
-import TreatmentItemTag from '../components/treatment/treatment-item-tag';
-import TreatmentInfo from '../components/treatment/treatment-info';
-import Left from '../assets/icons/left.svg';
-import Right from '../assets/icons/right.svg';
 import { addClick } from '../services/datastore';
 import Pill from '../assets/icons/pill.js';
 import Speech from '../assets/icons/speech.js';
@@ -32,7 +28,6 @@ function TreatmentFlowPage(props) {
     firstName();
     setModalVisible(false);
   }, []);
-
 
   const [scrollRef, setScrollRef] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
@@ -197,7 +192,6 @@ function TreatmentFlowPage(props) {
 
       <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
-          {/* here we need to add image */}
           <View style={[styles.modalHeaderContainer, { backgroundColor: "#90EE90" }]}>
           </View>
           <View style={styles.treatmentsection1}>

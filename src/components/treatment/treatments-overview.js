@@ -14,7 +14,7 @@ import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNat
 
 const treatmentData = {
   "Therapy": {
-    description: "A weekly 30-60 minute session working with a therapist either in person or on a computer: using a program on your own or with support from your clinician by email or phone.",
+    description: "Therapy helps you solve problems and clarify your thoughts. This is usually done in a series of regular in-person or phone visits talking with a therapist, or guided by a computer application.",
     subtitle: "Frequent in-person or remote sessions with a therapist",
     efficacy: "In addition to the 23 out of 100 people that recover without treatment, another 14 out of 100 will recover in 2 months using talk therapy. In addition to the 23 people who recover without treatment, another 26 in 100 people recover with a combination of SSRIs and talk therapy.",
     cost: "Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.",
@@ -27,7 +27,7 @@ const treatmentData = {
     subtitle: "Specialist-prescribed antidepressants",
     efficacy: "In addition to the 23 out of 100 people that experienced an increase in mood levels without treatment, another 17 out of 100 will experience an increase in mood levels in 1 month using antidepressant medication.",
     cost: "Prices vary according to pharmacy and insurance plan. Without insurance, prices vary from $5 to $150+ for a 30-day supply of medication.",
-    sideEffects: "Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common.",
+    sideEffects: "Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common. You may need to try more than one medication to find one that is effective.",
     color: "#51A8F8",
     iconReq: <Pill width={20} height={20} color="#FFFFFF"/>
   },

@@ -9,6 +9,7 @@ import Close from '../assets/icons/close.svg';
 import SavedTreatments from '../components/profile/saved-treatments';
 import { logoutUser } from '../actions/index';
 import { fetchFirstName, fetchSavedTreatments, fetchTreatments } from '../actions';
+import OpenLogo from '../assets/openlogo.png';
 
 import firebase from '../services/datastore';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -47,7 +48,7 @@ function ProfilePage(props) {
 
   return (
     <SafeAreaView>
-      <ScrollView horizontal={true} pagingEnabled={true} ref={(ref) => { setScrollRef(ref) }}>
+      <ScrollView style={{margin:0, padding:0}} horizontal={true} pagingEnabled={true} ref={(ref) => { setScrollRef(ref) }}>
         <View style={styles.container}>
           <Text style={styles.name}>{firstNameValue}</Text>
           <Text style={styles.email}>{user.userEmail}</Text>
@@ -66,9 +67,12 @@ function ProfilePage(props) {
           <TouchableHighlight underlayColor="gray" style={styles.touchable} onPress={() => setLogoutModalVisible(true)}>
             <View style={styles.button}>
               <LogOutIcon strokeColor="#FFFFFF" style={styles.icon} />
-              <Text style={styles.buttonText}>Log Out?</Text>
+              <Text style={styles.buttonText}>Log Out</Text>
             </View>
           </TouchableHighlight>
+          <Text style={styles.subtext}>Created in collaboration between</Text>
+          <View style={{flexDirection: 'row'}}>
+          </View>
         </View>
         <View style={styles.container}>
           {nextPage === 1 ? <SavedTreatments /> : nextPage === 2 ? <Notifications /> : null}
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
   container: {
     margin: 0,
     padding: 0,
-    marginTop: 10,
     flex: 1,
     alignItems: 'center',
     width: windowWidth,
@@ -113,6 +116,11 @@ const styles = StyleSheet.create({
   },
   email: {
     marginTop: 10,
+    fontStyle: 'italic',
+    fontSize: 15
+  },
+  subtext: {
+    marginTop: 100,
     fontStyle: 'italic',
     fontSize: 15
   },
