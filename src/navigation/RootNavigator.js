@@ -76,11 +76,9 @@ function RootNavigator(props) {
   }
   return (
     <NavigationContainer>
-      {user ? <Stack.Navigator initialRouteName='Home' screenOptions={{
-          headerShown: false
-        }}>
-        <Stack.Screen name="HomePage" component={MainTabBar} options={headerOptions} />
-        <Stack.Screen name="Profile" component={Profile} options={headerOptions} />
+      {user ? <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen name="HomePage" component={MainTabBar} options={{headerShown: false, title: 'Home'}} />
+        <Stack.Screen name="Profile" component={Profile}/>
       </Stack.Navigator> : <HomePages />}
     </NavigationContainer>
   );

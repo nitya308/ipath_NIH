@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { View, StyleSheet, Text, ScrollView, Dimensions, Modal, Pressable } from 'react-native';
-import TreatmentItem from '../treatment/treatment-item';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import TreatmentItemTagText from '../treatment/treatment-tag-text';
-import Pill from '../../assets/icons/pill.js';
-import Speech from '../../assets/icons/speech.js';
-import Watch from '../../assets/icons/watch.js';
-import PhoneLink from '../../assets/icons/phonelink.js';
-import WebLink from '../../assets/icons/weblink.js';
-import BackCircle from '../../assets/icons/BackCircle.svg';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, SafeAreaView, Dimensions, Modal, Pressable } from 'react-native';
+import TreatmentItemTagText from '../components/treatment/treatment-tag-text';
+import { addClick } from '../services/datastore';
+import Pill from '../assets/icons/pill.js';
+import Speech from '../assets/icons/speech.js';
+import Watch from '../assets/icons/watch.js';
+import PhoneLink from '../assets/icons/phonelink.js';
+import WebLink from '../assets/icons/weblink.js';
+import BackCircle from '../assets/icons/BackCircle.svg';
+
 
 const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
-function SavedTreatments(props) {
-  const [scrollRef, setScrollRef] = useState(null);
-  const [selectedTreatment, setSelectedTreatment] = useState(null)
-  const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
-  const allTreatments = useSelector((state) => state.treatments.allTreatments);
-  const [modalVisible, setModalVisible] = useState(false);
+
+function TreatmentExpanded(props) {
 
   function calcTypeTag(type) {
     switch (type) {
@@ -62,70 +58,39 @@ function SavedTreatments(props) {
   }
 
   return (
-    <View style={{margin:0}}>
-      <ScrollView horizontal={true} pagingEnabled={true} ref={(ref) => { setScrollRef(ref) }}>
-        <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.title}>Saved Treatments</Text>
-          <View style={styles.list}>
-            {allTreatments.filter((treat) => savedTreatments.includes(treat.id)).map((treatment) => {
-              return (
-                <TreatmentItem key={treatment.id} treatment={treatment} press={() => {
-                  setSelectedTreatment(treatment);
-                  setModalVisible(true);
-                }} />
-              )
-            })}
-          </View>
-        </ScrollView>
-      </ScrollView>
-      <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
+          {/* here we need to add image */}
           <View style={[styles.modalHeaderContainer, { backgroundColor: "#90EE90" }]}>
           </View>
           <View style={styles.treatmentsection1}>
-            <Text style={styles.treatmentName}>{selectedTreatment && selectedTreatment.id}</Text>
-            {selectedTreatment && calcTypeTag(selectedTreatment.data.type)}
-            {selectedTreatment && calcContact("web", selectedTreatment.data.link)}
+            <Text style={styles.treatmentName}>{props.selectedTreatment && props.selectedTreatment.id}</Text>
+            {props.selectedTreatment && calcTypeTag(props.selectedTreatment.data.type)}
+            {props.selectedTreatment && calcContact("web", props.selectedTreatment.data.link)}
           </View>
           <ScrollView style={styles.modalContainer}>
             <Text style={styles.modalSubHeader}>About Us</Text>
-            <Text style={styles.modalDescription}>{selectedTreatment && selectedTreatment.data.desc}</Text>
+            <Text style={styles.modalDescription}>{props.selectedTreatment && props.selectedTreatment.data.desc}</Text>
             <View style={styles.line} />
             <Text style={styles.modalSubHeader}>Process</Text>
-            <Text style={styles.modalDescription}>{selectedTreatment && selectedTreatment.data.process}</Text>
+            <Text style={styles.modalDescription}>{props.selectedTreatment && props.selectedTreatment.data.process}</Text>
             <View style={styles.line} />
             <Text style={styles.modalSubHeader}>Wait time</Text>
-            <Text style={styles.modalDescription}>{selectedTreatment && selectedTreatment.data.time}</Text>
+            <Text style={styles.modalDescription}>{props.selectedTreatment && props.selectedTreatment.data.time}</Text>
             <View style={styles.line} />
           </ScrollView>
-          <Pressable style={styles.closeModal} onPress={() => { setModalVisible(!modalVisible) }}>
-            <BackCircle width="50" height="50" />
-          </Pressable>
         </View>
-      </Modal>
-    </View>
-  )
+  );
 }
-const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
-    marginTop:0,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: windowWidth,
+    margin: 0,
+    padding: 0,
   },
-  title: {
-    fontSize: 30,
-    color: "#000",
-    marginLeft: 5,
-    fontWeight: "600",
-  },
-  list: {
-    flex: 1,
-    alignItems: 'center',
-    paddingBottom: 50,
-    width: '100%',
+  columnsContainer: {
+    flexDirection: 'row',
+    padding: 5,
+    height: 150,
   },
   modalViewContainer: {
     flex: 1,
@@ -207,5 +172,28 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'flex-start'
   },
-})
-export default SavedTreatments;
+  column: {
+    width: "100%",
+    padding: 10,
+  },
+  column50: {
+    width: "50%",
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+  treatmentType: {
+    backgroundColor: "#ffffff",
+    padding: 10,
+    paddingVertical: 20,
+    margin: 5,
+    width: '30%',
+    height: 130,
+    borderRadius: 10,
+    shadowColor: '#171717',
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  }
+});
+
+export default TreatmentExpanded;
