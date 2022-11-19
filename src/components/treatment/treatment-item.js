@@ -1,5 +1,5 @@
 import React from 'react';
-import storage from '@react-native-firebase/storage';
+// import storage from '@react-native-firebase/storage';
 import { useSelector, connect } from 'react-redux';
 import { View, Text, TouchableHighlight, StyleSheet, Image } from 'react-native';
 import { useState, useEffect } from 'react';
@@ -11,9 +11,14 @@ import Speech from '../../assets/icons/speech';
 import Watch from '../../assets/icons/watch';
 import { saveTreatment, deleteSavedTreatment } from '../../actions/index';
 import { addClick } from '../../services/datastore';
+import firebase from '../../services/datastore.js';
+
 
 import TreatmentItemTag from './treatment-item-tag';
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+
+
+const storage = firebase.storage()
 
 function TreatmentItem(props) {
   // const dispatch = useDispatch(); 
@@ -21,9 +26,11 @@ function TreatmentItem(props) {
   const user = useSelector((state) => state.user)
   const [imageUrl, setImageUrl] = useState(undefined);
 
+  console.log('porps trtment',props.treatment);
+
   useEffect(() => {
-    storage()
-      .ref(props.treatment.img) //name in storage in firebase console
+    storage
+      .ref(props.treatment.data.img) //name in storage in firebase console
       .getDownloadURL()
       .then((url) => {
         setImageUrl(url);
