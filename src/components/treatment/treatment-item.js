@@ -1,6 +1,8 @@
 import React from 'react';
+import storage from '@react-native-firebase/storage';
 import { useSelector, connect } from 'react-redux';
-import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, TouchableHighlight, StyleSheet, Image } from 'react-native';
+import { useState, useEffect } from 'react';
 import Bookmark from '../../assets/icons/bookmark';
 import CheckMark from '../../assets/icons/check.js';
 import MapPin from '../../assets/icons/mapPin';
