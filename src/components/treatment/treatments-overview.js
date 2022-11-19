@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, Modal, Pressable, ScrollView } from 'react-native';
 import RightArrow from '../../assets/icons/right.svg';
 import Speech from '../../assets/icons/speech';
 import Pill from '../../assets/icons/pill';
@@ -20,7 +20,7 @@ const treatmentData = {
     cost: "Prices vary from free to $200+ per visit for both in-person and online. Some take insurance.",
     sideEffects: "Talk therapy can cause you to feel uncomfortable, anxious and/or stressed.",
     color: "#9B51F8",
-    iconReq: <Speech width={20} height={20} color="#FFFFFF"/>
+    iconReq: <Speech width={20} height={20} color="#FFFFFF" />
   },
   "Medication": {
     description: "Selective Serotonin Reuptake Inhibitors (SSRIs) are medications that address symptoms by affecting your brain chemistry. These pills are usually taken once per day.",
@@ -29,7 +29,7 @@ const treatmentData = {
     cost: "Prices vary according to pharmacy and insurance plan. Without insurance, prices vary from $5 to $150+ for a 30-day supply of medication.",
     sideEffects: "Nausea, diarrhea, and drowsiness each affect up to 17 out of 100 people. Sexual side effects affect up to 13 out of 100. Sweating, shaking, trouble sleeping and dry mouth are less common. You may need to try more than one medication to find one that is effective.",
     color: "#51A8F8",
-    iconReq: <Pill width={20} height={20} color="#FFFFFF"/>
+    iconReq: <Pill width={20} height={20} color="#FFFFFF" />
   },
   "Watchful Waiting": {
     description: "You will monitor symptoms, but not actively receive treatment (such as medication or therapy). This will involve completing the depression survey every 2 weeks for 12 weeks. Many people monitor symptoms with their doctor. At any time you can decide to try a treatment.",
@@ -38,13 +38,82 @@ const treatmentData = {
     cost: "Prices vary depending on number and type of visits to clinician.",
     sideEffects: "Your symptoms may continue to worsen. About 25 out of 100 people see their symptoms get worse.",
     color: "#EF6068",
-    iconReq: <Watch width={20} height={20} color="#FFFFFF"/>
+    iconReq: <Watch width={20} height={20} color="#FFFFFF" />
   }
 };
 function TreatmentsOverview(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedType, setSelectedType] = useState("Watchful Waiting");
   const user = useSelector((state) => state.user);
+
+  function returnEfficacy() {
+    switch (selectedType) {
+      case "Watchful Waiting":
+        return (
+          <View>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>23 </Text>
+              out of 100 people experience an increase in mood levels in 3 months without treatment.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy1.png')}></Image>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>53 </Text>
+              out of 100 people experience increased mood in a year by visiting a clincian without receiving active treatment.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+          </View>
+        )
+      case "Medication":
+        return (
+          <View>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>23 </Text>
+              out of 100 people experience an increase in mood levels in 3 months without treatment
+              <Text style={{ fontFamily: 'Poppins-Bold' }}> (watchful waiting)</Text>.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy1.png')}></Image>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#51A8F8', fontFamily: 'Poppins-Bold' }}>17 more </Text>
+              people experience an increase in mood levels in 1 month using antidepressant
+              <Text style={{ fontFamily: 'Poppins-Bold' }}> medication</Text>.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#5451F8', fontFamily: 'Poppins-Bold' }}>9 more </Text>
+              people experience an increase in mood levels with a combination of antidepressant
+              <Text style={{ fontFamily: 'Poppins-Bold' }}> medication and therapy</Text>.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+          </View>
+        )
+      case "Therapy":
+        return (
+          <View>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>23 </Text>
+              out of 100 people experience an increase in mood levels in 3 months without treatment
+              <Text style={{ fontFamily: 'Poppins-Bold' }}> (watchful waiting)</Text>.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy1.png')}></Image>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#9B51F8', fontFamily: 'Poppins-Bold' }}>14 more </Text>
+              experience increased mood in 2 months using
+              <Text style={{ fontFamily: 'Poppins-Bold' }}> therapy</Text>.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <Text style={{ color: '#000000', fontSize: 20 }}>
+              <Text style={{ color: '#5451F8', fontFamily: 'Poppins-Bold' }}>12 more </Text>
+              people experience an increase in mood levels with a combination of antidepressant
+              <Text style={{ fontFamily: 'Poppins-Bold' }}> medication and therapy</Text>.
+            </Text>
+            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+          </View>
+        )
+      default:
+        return null;
+    }
+  }
+
   return (
     <View style={styles.options}>
       <Text style={styles.subheader}>Select the options below to learn more.</Text>
@@ -89,7 +158,7 @@ function TreatmentsOverview(props) {
             <Text style={styles.modalDescription}>{treatmentData[selectedType].description}</Text>
             <View style={styles.line} />
             <Text style={styles.modalSubHeader}>Will this work?</Text>
-            <Text style={styles.modalDescription}>{treatmentData[selectedType].efficacy}</Text>
+            <Text style={styles.modalDescription}>{returnEfficacy()}</Text>
             <View style={styles.line} />
             <Text style={styles.modalSubHeader}>Cost</Text>
             <Text style={styles.modalDescription}>{treatmentData[selectedType].cost}</Text>
@@ -189,6 +258,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: '100%',
     paddingLeft: 30,
+    paddingEnd: 15,
     marginTop: 20
   },
   modalHeaderContainer: {
@@ -229,6 +299,7 @@ const styles = StyleSheet.create({
   modalSubHeader: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   closeModal: {
     position: 'absolute',
