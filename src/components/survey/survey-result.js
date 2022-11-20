@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable } from 'react-native';
 import RightArrow from '../../assets/icons/right.svg';
-import Close from '../../assets/icons/close.svg';
+import Back from '../../assets/icons/BackCircle.svg';
 import Infographic from '../../assets/icons/infographic';
 import QuestionMark from '../../assets/icons/questionMark.svg';
-import { openURL } from 'expo-linking';
+import { collectManifestSchemes, openURL } from 'expo-linking';
 import { back } from 'react-native/Libraries/Animated/Easing';
 import ResultModalIcon from '../../assets/icons/resultModalIcon.svg'
 import ResultIcon from '../../assets/icons/ResultsIcon.svg'
@@ -52,8 +52,16 @@ function SurveyResult(props) {
                 </View>
             </TouchableHighlight>
             {renderHotlinePopup()}
-            <Text style={styles.p}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
-            <ResultIcon width={227} height={109.22} />
+            {props.hotline ?
+                <View style={styles.hotlineResultsPage}>
+                    <Text style={styles.pHotlineResultsPage}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
+                    <ResultIcon width={150} height={109.22} />
+                </View> :
+                <View style={styles.noHotlineResultsPage}>
+                    <Text style={styles.p}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
+                    <ResultIcon width={227} height={109.22} />
+                </View>
+            }
             <TouchableHighlight underlayColor='gray' style={styles.treatmentButton} onPress={props.press}>
                 <View style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Learn About Treatments</Text>
@@ -100,7 +108,7 @@ function SurveyResult(props) {
                     </View>
                     <Pressable style={styles.closeModal} onPress={() => { setModalVisible(!modalVisible) }}>
                         {/* <Text style={styles.closeModalIcon}>X</Text> */}
-                        <Close />
+                        <Back width={40} height={40} />
                     </Pressable>
                 </View>
             </Modal>
@@ -198,12 +206,36 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         fontFamily: 'Poppins-Regular'
     },
+    hotlineResultsPage: {
+        flexDirection: 'row',
+        width: 400,
+        justifyContent: 'space-between',
+        padding: 20,
+        marginTop: 10,
+    },
+    noHotlineResultsPage: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    pHotlineResultsPage: {
+        // marginHorizontal: 20,
+        // marginTop: 20,
+        // padding: 20,
+        fontSize: 14,
+        textAlign: 'left',
+        fontFamily: 'Poppins-Italic',
+        color: '#373737',
+        width: 220,
+        // alignSelf: 'flex-end'
+    },
     p: {
         marginHorizontal: 20,
-        marginTop: 20,
-        padding: 20,
+        marginTop: 10,
+        marginBottom: 20,
+        padding: 10,
         fontSize: 18,
-        textAlign: 'center',
+        textAlign: 'left',
         fontFamily: 'Poppins-Italic',
         color: '#373737',
         alignSelf: 'flex-end'
@@ -313,7 +345,7 @@ const styles = StyleSheet.create({
         color: '#545454'
     },
     scoreLevelSelected: {
-        color: '#FCFCFF',
+        color: 'white',
         fontFamily: 'Poppins-Bold',
         fontSize: 18,
         marginRight: 10,
@@ -364,7 +396,8 @@ const styles = StyleSheet.create({
     closeModal: {
         position: 'absolute',
         top: 20,
-        right: 20,
+        left: 20,
+        color: 'black',
     },
     closeModalIcon: {
         fontSize: 25
