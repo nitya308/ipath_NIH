@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-native';
 import Logo from '../assets/icons/logo.svg';
-function FirstPage({ navigation }) {
+function WhatPage({ navigation }) {
   return (
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('WhyiPath')}>
           <View style={styles.flexContainer}>
             <Logo />
             {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
-            <Text style={styles.title}>iPath</Text>
+            <Text style={styles.title}>What is iPath?</Text>
             <Text style={styles.italicSubheading}>Going through cancer treatment is a difficult journey and people may experience feelings of depression. iPath connects people with cancer to trusted services and treatments for their depression symptoms.</Text>
             <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
           </View>
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FirstPage;
+export default WhatPage;

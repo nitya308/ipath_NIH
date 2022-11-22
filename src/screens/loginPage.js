@@ -56,7 +56,7 @@ function LoginPage({ navigation }) {
           </View>
         </View>
       </Modal>
-      <TouchableHighlight style={[styles.signbutton, { width: windowWidth * .9 }]} onPress={onLogin}>
+      <TouchableHighlight disabled= {(inputEmail === '') || (inputPassword === '')} style={(inputEmail === '') || (inputPassword === '') ? [styles.disabledSignbutton, { width: windowWidth * .9 }]:[styles.signbutton, { width: windowWidth * .9 }]} onPress={onLogin}>
         <Text style={styles.buttontext}>Sign in</Text>
       </TouchableHighlight>
       <Text style={styles.link} onPress={() => navigation.navigate('Create')}>Or Create Account</Text>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textAlign: 'center',
     color: '#FCFFFF',
+    fontFamily: 'Poppins-Regular',
   },
   option: {
     flex: 1,
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
     lineHeight: 45,
+    fontFamily: 'Poppins-Regular',
   },
   centeredView: {
     flex: 1,
@@ -134,21 +136,40 @@ const styles = StyleSheet.create({
   modalContent: {
     // padding: 20,
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    fontFamily: 'Poppins-Regular',
   },
   modalTitle: {
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 25,
     paddingBottom: 10,
+    fontFamily: 'Poppins-Regular',
   },
   modalText: {
     fontSize: 15,
     padding: 25,
     textAlign: 'center',
+    fontFamily: 'Poppins-Regular',
   },
   signbutton: {
     backgroundColor: '#5451F8',
+    textAlign: 'center',
+    fontSize: 20,
+    lineHeight: 45,
+    borderRadius: 25,
+    marginLeft: 30,
+    marginRight: 30,
+    height: 50,
+    margin: 20,
+    shadowRadius: 2,
+    shadowOpacity: 0.3,
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    fontFamily: 'Poppins-Regular',
+  },
+  disabledSignbutton: {
+    backgroundColor: '#A0A4A8',
     textAlign: 'center',
     fontSize: 20,
     lineHeight: 45,
