@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
   },
 })
 export default TreatmentsComparison
