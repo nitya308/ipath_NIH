@@ -28,7 +28,7 @@ export default function App() {
     'Poppins-Bold': require('./src/assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Italic': require('./src/assets/fonts/Poppins-Italic.ttf'),
     'Poppins-Light': require('./src/assets/fonts/Poppins-Light.ttf'),
-
+    'Poppins-BoldItal': require('./src/assets/fonts/Poppins-SemiBoldItalic.ttf'),
   });
   
   return(

@@ -25,7 +25,7 @@ function MainTabBar(props){
   return (
       <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#469C97",
+        tabBarActiveTintColor: "#5451F8",
         tabBarStyle: [
           {
             "display": "flex",
