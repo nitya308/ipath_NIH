@@ -10,9 +10,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeIcon from '../assets/icons/HomeIcon.svg'
 import ProfileButtonIcon from '../assets/icons/ProfileButton.svg'
 import PCircle from '../components/survey/p-circle.js';
-import {fetchFirstName } from '../actions';
+import { fetchFirstName } from '../actions';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import SwiperComponent from '../components/homepage/swiper';
+
+
 
 function HomePage(props) {
   const user = useSelector((state) => state.user)
@@ -34,17 +36,20 @@ function HomePage(props) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <TouchableHighlight style={styles.profilebutton} onPress={() => {navigateTo("Profile")}}>
+        <TouchableHighlight style={styles.profilebutton} onPress={() => { navigateTo("Profile") }}>
           <ProfileButtonIcon ></ProfileButtonIcon>
         </TouchableHighlight>
-        <Text style={styles.subtitle}>Good Morning,</Text>
-        <Text style={styles.title}>{firstNameValue}!</Text>
+        {firstNameValue ?
+          <View><Text style={styles.subtitle}>Good Morning,</Text>
+            <Text style={styles.title}>{firstNameValue}!</Text></View>
+          : <View><Text style={styles.subtitle}>Good Morning!</Text>
+            <Text style={styles.title}>{'   '}</Text></View>}
 
         <SwiperComponent></SwiperComponent>
 
         <View style={styles.rowContainer}>
-          <Text style={styles.colText}>Welcome to iPath! Your decision aid tool</Text>
-          <HomeIcon style={styles.homeicon}></HomeIcon>
+          <View><Text style={styles.colText}>Welcome to iPath! Your decision aid tool</Text></View>
+          <View><HomeIcon width={windowWidth * 0.4} style={styles.homeicon}></HomeIcon></View>
         </View>
 
         <TouchableHighlight style={styles.surveyTouchContainer} underlayColor='gray' onPress={() => { navigateTo("Survey"); updatePageView(`${user.userId}`, "page_1"); }}>
@@ -64,30 +69,46 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 25
+    padding: 25,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: '#E9E9FA',
+    height: windowHeight * 0.85,
   },
   rowContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: 'magenta',
   },
   title: {
     fontFamily: 'Poppins-Bold',
     fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: windowHeight*0.02,
+    marginBottom: windowHeight * 0.02,
   },
   subtitle: {
     fontSize: 20,
   },
   colText: {
-    flex: 1,
+    flexDirection: 'column',
     fontSize: 18,
-    paddingTop: 150
+    width: windowWidth * 0.4,
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    fontFamily: 'Poppins-Light',
+    color: '#373737'
+
   },
   surveyButtonText: {
     flex: 2,
     fontSize: 17,
-    lineHeight: 25,
+    lineHeight: 20,
     padding: 20,
+    fontFamily: 'Poppins-Regular',
+    color: '#373737',
+    // flexWrap: 'wrap',
   },
   flexContainer: {
     flex: 1,
@@ -99,7 +120,7 @@ const styles = StyleSheet.create({
   },
   surveyTouchContainer: {
     width: '100%',
-    marginTop: windowHeight*0.09,
+    // marginTop: windowHeight*0.09,
     backgroundColor: '#FFFFFF',
     height: 120,
     borderRadius: 10,
@@ -110,6 +131,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    alignSelf: 'flex-end',
   },
   progcircle: {
     flex: 1,
@@ -132,6 +154,14 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 15
   },
+  homeicon: {
+    height: windowHeight * 0.005,
+    width: windowWidth * 0.005,
+  },
+  welcomeIconAndSurvey: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  }
 });
 
 export default connect(null, { fetchTreatments, fetchSavedTreatments, fetchFirstName })(HomePage);

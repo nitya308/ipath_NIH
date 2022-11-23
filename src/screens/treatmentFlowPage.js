@@ -184,7 +184,7 @@ function TreatmentFlowPage(props) {
               }
             </> :
             <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => { setLoading(true); fakeLoading(); trackClicks(); }}>
-              <Text style={{ color: 'white', fontSize: 20 }}>Explore Treatment Options →</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Bold' }}>Explore Treatment Options →</Text>
             </TouchableHighlight>
           }
         </View>
@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     width: "100%",
+    fontFamily: 'Poppins-Regular',
   },
   treatmentsection1: {
     backgroundColor: "#E9E9FA",
@@ -342,7 +343,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 15,
     paddingTop: 20,
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'Poppins-Light'
   },
   page: {
     width: windowWidth,
@@ -356,7 +358,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     paddingHorizontal: 20,
-    width: "100%"
+    width: "100%",
+    fontFamily: 'Poppins-Bold',
   },
   pageSubheader: {
     color: 'gray',
@@ -364,6 +367,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 20,
     marginTop: 20,
+    fontFamily: 'Poppins-Regular',
   },
   checkboxListContainer: {
     width: '100%',
@@ -377,7 +381,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    backgroundColor: '#469C97',
+    backgroundColor: '#5451F8',
     height: 50,
     width: 50,
     bottom: 50,
@@ -391,7 +395,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#469C97",
+    backgroundColor: '#5451F8',
     bottom: 50,
     right: 30,
     alignItems: 'center',
@@ -401,7 +405,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 70,
     borderRadius: 10,
-    backgroundColor: "#469C97",
+    backgroundColor: "#5451F8",
     alignItems: 'center',
     justifyContent: 'center',
   }

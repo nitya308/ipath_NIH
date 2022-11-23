@@ -32,13 +32,13 @@ function PCircle(props, { navigation }) {
     <View>
       <View style={styles.flexContainer}>
         <ProgressCircle
-          percent={percentRemaining}
+          percent={percentRemaining ? percentRemaining: 100}
           radius={25}
           borderWidth={5}
           color="#5451F8"
           bgcolor="fff"
           shadowColor="#999">
-          <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 18 }}> {daysRemaining} </Text>
+          <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 18 }}> {daysRemaining? daysRemaining: '--'} </Text>
         </ProgressCircle>
         <Text style={{ fontFamily: 'Poppins-Italic'}}>  days </Text>
       </View>

@@ -6,13 +6,15 @@ function SurveyIntro(props) {
   return (
     <View style={styles.container}>
       <View style={styles.flexContainer}>
-        <View style={styles.iconConatienr}>
+        <View style={styles.iconContainer}>
           <Clipboard width={80} height={80} stroke={1} strokeColor="#5451F8" />
         </View>
-        <Text style={styles.title}>PHQ-9</Text>
-        <Text style={styles.subTitle}>Depression Screening Survey</Text>
-        <Text style={styles.infoText}>Before  all users take this 9-question survey as a reliable way to determine whether you are displaying symptoms of depression. </Text>
-        <Text style={styles.infoText}>There are many treatments and options to help, and we will walk you through these after the survey.</Text>
+        <View>
+          <Text style={styles.title}>PHQ-9</Text>
+          <Text style={styles.subTitle}>Depression Screening Survey</Text>
+          <Text style={styles.infoText}>Before  all users take this 9-question survey as a reliable way to determine whether you are displaying symptoms of depression. </Text>
+          <Text style={styles.infoText}>There are many treatments and options to help, and we will walk you through these after the survey.</Text>
+        </View>
         <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableHighlight>
@@ -31,8 +33,13 @@ const styles = StyleSheet.create({
     height: windowHeight,
     flex: 0,
     alignItems: 'flex-start',
+    height: windowHeight,
   },
-  iconConatienr: {
+  flexContainer:{
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  iconContainer: {
     alignSelf: 'flex-end',
     marginVertical: 40
   },
@@ -57,7 +64,6 @@ const styles = StyleSheet.create({
   },
   startButton: {
     width: windowWidth * .85,
-    marginTop: 100,
     height: 60,
     backgroundColor: "#5451F8",
     borderRadius: 30,

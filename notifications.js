@@ -12,6 +12,7 @@ Notifications.setNotificationHandler({
 });
 
 export async function schedulePushNotification() {
+  try{
   identifier = await Notifications.scheduleNotificationAsync({
     content: {
       title: 'It’s been two weeks!',
@@ -22,6 +23,7 @@ export async function schedulePushNotification() {
       repeats: true
     },
   });
+} catch{}
 }
 
 export async function surveyFinishedReminder() {
