@@ -35,7 +35,7 @@ function HomePage(props) {
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
+      <View style={windowHeight < 670? styles.containerSS : styles.container}>
         <TouchableHighlight style={styles.profilebutton} onPress={() => { navigateTo("Profile") }}>
           <ProfileButtonIcon ></ProfileButtonIcon>
         </TouchableHighlight>
@@ -74,6 +74,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#E9E9FA',
     height: windowHeight * 0.85,
+  },
+  containerSS: {
+    padding: 25,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: '#E9E9FA',
+    height: windowHeight * 0.9,
   },
   rowContainer: {
     flexDirection: 'row',

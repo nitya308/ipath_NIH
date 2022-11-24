@@ -15,9 +15,11 @@ function SurveyIntro(props) {
           <Text style={styles.infoText}>Before  all users take this 9-question survey as a reliable way to determine whether you are displaying symptoms of depression. </Text>
           <Text style={styles.infoText}>There are many treatments and options to help, and we will walk you through these after the survey.</Text>
         </View>
-        <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
-          <Text style={styles.buttonText}>Get Started</Text>
-        </TouchableHighlight>
+        <View>
+          <TouchableHighlight underlayColor="gray" style={styles.startButton} onPress={props.transition}>
+            <Text style={styles.buttonText}>Get Started</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     </View>
   )
@@ -35,13 +37,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     height: windowHeight,
   },
-  flexContainer:{
+  flexContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   iconContainer: {
     alignSelf: 'flex-end',
-    marginVertical: 40
   },
   title: {
     fontSize: 30,

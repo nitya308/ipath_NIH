@@ -123,8 +123,8 @@ function TreatmentFlowPage(props) {
   return (
     <SafeAreaView>
       <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => { setScrollRef(ref) }}>
-        <View style={styles.page}>
-          <Text style={[styles.pageHeader, { fontSize: 25 }]}>Which treatment option(s) would you like to explore?</Text>
+        <View style={windowHeight < 670 ? styles.pageSS : styles.page}>
+          <Text style={windowHeight < 670 ? [styles.pageHeader, { fontSize: 20 }] : [styles.pageHeader, { fontSize: 25 }]}>Which treatment option(s) would you like to explore?</Text>
           <View style={styles.columnsContainer}>
             <TouchableHighlight style={medFilter ? [styles.treatmentType, { backgroundColor: "#51A8F8" }] : styles.treatmentType} onPress={() => setMedFilter(!medFilter)}>
               <TreatmentFilterCard selected={medFilter} title="Medication" icon={<Pill height={40} color={medFilter ? "#FFFFFF" : null}></Pill>}></TreatmentFilterCard>
@@ -349,6 +349,11 @@ const styles = StyleSheet.create({
   page: {
     width: windowWidth,
     height: windowHeight * .8,
+    alignItems: 'center',
+  },
+  pageSS: {
+    width: windowWidth,
+    height: windowHeight * .9,
     alignItems: 'center',
   },
   pageHeader: {

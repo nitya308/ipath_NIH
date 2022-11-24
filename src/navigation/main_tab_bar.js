@@ -24,7 +24,16 @@ function MainTabBar(props){
 
   return (
       <Tab.Navigator
-      screenOptions={{
+      screenOptions={windowHeight < 670? {
+        tabBarActiveTintColor: "#5451F8",
+        tabBarStyle: [
+          {
+            "display": "flex",
+            "height": 60,
+          },
+          null
+        ]
+      } : {
         tabBarActiveTintColor: "#5451F8",
         tabBarStyle: [
           {
