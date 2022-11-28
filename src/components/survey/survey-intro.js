@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   },
   startButton: {
     width: windowWidth * .85,
+    marginTop: windowHeight * 0.1,
     height: 60,
     backgroundColor: "#5451F8",
     borderRadius: 30,

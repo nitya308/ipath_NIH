@@ -3,6 +3,12 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, Modal, P
 import RightArrow from '../../assets/icons/right.svg';
 import Speech from '../../assets/icons/speech';
 import Pill from '../../assets/icons/pill';
+import EfficWaiting from '../../assets/icons/efficwaiting.svg';
+import EfficWaiting2 from '../../assets/icons/efficwaiting2.svg';
+import EfficMed from '../../assets/icons/med1.svg';
+import EfficMed2 from '../../assets/icons/med2.svg';
+import EfficTherapy from '../../assets/icons/therapy1.svg';
+import EfficTherapy2 from '../../assets/icons/therapy2.svg';
 import Watch from '../../assets/icons/watch';
 import Close from '../../assets/icons/close.svg';
 import Back from '../../assets/icons/back.svg';
@@ -55,12 +61,12 @@ function TreatmentsOverview(props) {
               <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>23 </Text>
               out of 100 people experience an increase in mood levels in 3 months without treatment.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy1.png')}></Image>
+            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>53 </Text>
               out of 100 people experience increased mood in a year by visiting a clincian without receiving active treatment.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <EfficWaiting2 style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
           </View>
         )
       case "Medication":
@@ -71,19 +77,19 @@ function TreatmentsOverview(props) {
               out of 100 people experience an increase in mood levels in 3 months without treatment
               <Text style={{ fontFamily: 'Poppins-Bold' }}> (watchful waiting)</Text>.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy1.png')}></Image>
+            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#51A8F8', fontFamily: 'Poppins-Bold' }}>17 more </Text>
               people experience an increase in mood levels in 1 month using antidepressant
               <Text style={{ fontFamily: 'Poppins-Bold' }}> medication</Text>.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <EfficMed style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#5451F8', fontFamily: 'Poppins-Bold' }}>9 more </Text>
               people experience an increase in mood levels with a combination of antidepressant
               <Text style={{ fontFamily: 'Poppins-Bold' }}> medication and therapy</Text>.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <EfficMed2 style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
           </View>
         )
       case "Therapy":
@@ -94,19 +100,19 @@ function TreatmentsOverview(props) {
               out of 100 people experience an increase in mood levels in 3 months without treatment
               <Text style={{ fontFamily: 'Poppins-Bold' }}> (watchful waiting)</Text>.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy1.png')}></Image>
+            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#9B51F8', fontFamily: 'Poppins-Bold' }}>14 more </Text>
               experience increased mood in 2 months using
               <Text style={{ fontFamily: 'Poppins-Bold' }}> therapy</Text>.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <EfficTherapy style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#5451F8', fontFamily: 'Poppins-Bold' }}>12 more </Text>
               people experience an increase in mood levels with a combination of antidepressant
               <Text style={{ fontFamily: 'Poppins-Bold' }}> medication and therapy</Text>.
             </Text>
-            <Image style={{ alignSelf: 'flex-end', marginVertical: 5 }} source={require('../../assets/efficacy2.png')}></Image>
+            <EfficTherapy2 style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
           </View>
         )
       default:

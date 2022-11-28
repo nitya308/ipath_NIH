@@ -15,6 +15,8 @@ import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
 import FakeLoading from '../components/treatment/fake-loading';
 import { fetchFirstName } from '../actions';
 import { connect } from 'react-redux';
+import SelectDropdown from 'react-native-select-dropdown';
+import DownArrow from '../assets/icons/DownArrow.svg';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -45,15 +47,17 @@ function TreatmentFlowPage(props) {
   const [loading, setLoading] = useState(false)
 
   // Treatment sort options
-  const [accessFilter, setAccessFilter] = useState(false);
-  const [costFilter, setCostFilter] = useState(false);
+  const [accessFilter, setAccessFilter] = useState(true);
+  const [costFilter, setCostFilter] = useState(true);
+
+  const options = ["COST", "TIME"]
 
   const [selectedTreatment, setSelectedTreatment] = useState(null);
 
   const selectingTreatments = (treatment) => {
-    console.log("in page=", treatment);
+    // console.log("in page=", treatment);
     setSelectedTreatment(treatment);
-    console.log("finaly=", selectedTreatment);
+    // console.log("finaly=", selectedTreatment);
   };
 
   function calcTypeTag(type) {
@@ -80,9 +84,9 @@ function TreatmentFlowPage(props) {
     switch (contacttype) {
       case "web":
         return (
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding:10}}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 10 }}>
             <WebLink width={30} height={30}></WebLink>
-            <Text style={{fontSize: 20, lineHeight: 30}}>{info}</Text>
+            <Text style={{ fontSize: 20, lineHeight: 30 }}>{info}</Text>
           </View>
         )
       case "phone":
@@ -101,6 +105,10 @@ function TreatmentFlowPage(props) {
 
   const fakeLoading = () => {
     setTimeout(() => setRenderList(true), 6000);
+  }
+
+  const renderDownArrow = () => {
+    return <DownArrow></DownArrow>;
   }
 
   const trackClicks = () => {
@@ -138,17 +146,45 @@ function TreatmentFlowPage(props) {
           </View>
           <Text style={styles.pageHeader}>How would you like to receive treatment?</Text>
           <View style={styles.checkboxListContainer}>
-            <View style={styles.column50}>
-              <Checkbox style={styles.checkbox} isChecked={personFilter} onPress={() => setPersonFilter(!personFilter)} title="In-Person" />
+            <View style={{flex: 1}}>
+              <Checkbox style={styles.checkbox} isChecked={!remoteFilter} onPress={() => { setPersonFilter(true); setRemoteFilter(false) }} title="In-Person" />
             </View>
-            <View style={styles.column50}>
-              <Checkbox style={styles.checkbox} isChecked={remoteFilter} onPress={() => setRemoteFilter(!remoteFilter)} title="Remote" />
+            <View style={{flex: 1}}>
+              <Checkbox style={styles.checkbox} isChecked={!personFilter} onPress={() => { setRemoteFilter(true); setPersonFilter(false); }} title="Remote" />
+            </View>
+            <View>
+              <Checkbox style={styles.checkbox} isChecked={remoteFilter && personFilter} onPress={() => { setRemoteFilter(true); setPersonFilter(true); }} title="Either" />
             </View>
           </View>
           {loading ?
-            <>
-              <Text style={styles.pageHeader}>Treatment providers: dropdown TBA</Text>
-            </>
+            <View style={{ flexDirection: 'row', paddingLeft: 20, padding: 10, alignContent: 'space-between' }}>
+              <Text style={{ flex: 1, fontSize: 19, marginTop: 10, fontFamily: 'Poppins-Bold', }}>
+                Treatment options:
+              </Text>
+              <SelectDropdown
+                data={options}
+                renderDropdownIcon={renderDownArrow}
+                buttonStyle={{ backgroundColor: "#FFFFFF", width: 185, borderRadius: 15, height: 40 }}
+                buttonTextStyle={{ fontSize: 17 }}
+                dropdownStyle={{ borderRadius: 10 }}
+                defaultButtonText={costFilter ? "SORT BY: COST" : "SORT BY: TIME"}
+                onSelect={(selectedItem) => {
+                  if (selectedItem == "COST") {
+                    setCostFilter(true);
+                    setAccessFilter(false);
+                  }
+                  else {
+                    setCostFilter(false);
+                    setAccessFilter(true);
+                  }
+                }}
+                buttonTextAfterSelection={(selectedItem) => {
+                  return ("SORT BY: " + selectedItem);
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }} />
+            </View>
             :
             <>
               <Text style={styles.pageHeader}>What is most important to you?</Text>
@@ -166,7 +202,7 @@ function TreatmentFlowPage(props) {
           {loading ?
             <>
               {renderList ?
-                <>
+                <View style={{ flex: 1 }}>
                   <TreatmentsList
                     therapy={therapyFilter}
                     med={medFilter}
@@ -178,7 +214,7 @@ function TreatmentFlowPage(props) {
                     treat={selectingTreatments}
                     display={setModalVisible}
                   />
-                </>
+                </View>
                 :
                 <FakeLoading></FakeLoading>
               }
@@ -314,8 +350,8 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
   },
-  column50: {
-    width: "50%",
+  column33: {
+    width: "33%",
     flex: 1,
     paddingHorizontal: 10,
   },
@@ -350,11 +386,13 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight * .8,
     alignItems: 'center',
+    flex: 1
   },
   pageSS: {
     width: windowWidth,
     height: windowHeight * .9,
     alignItems: 'center',
+    flex: 1
   },
   pageHeader: {
     fontWeight: 'bold',
@@ -379,7 +417,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 0,
     paddingHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    alignContent: 'space-between'
   },
   checkbox: {
     width: "100%",
