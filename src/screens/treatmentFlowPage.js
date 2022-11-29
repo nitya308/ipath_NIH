@@ -43,15 +43,15 @@ function TreatmentFlowPage(props) {
   const [waitingFilter, setWaitingFilter] = useState(false);
 
   // Treatment location filters
-  const [personFilter, setPersonFilter] = useState(false);
-  const [remoteFilter, setRemoteFilter] = useState(false);
+  const [personFilter, setPersonFilter] = useState(true);
+  const [remoteFilter, setRemoteFilter] = useState(true);
 
   const [renderList, setRenderList] = useState(false);
   const [loading, setLoading] = useState(false)
 
   // Treatment sort options
   const [accessFilter, setAccessFilter] = useState(true);
-  const [costFilter, setCostFilter] = useState(true);
+  const [costFilter, setCostFilter] = useState(false);
 
   const options = ["COST", "TIME"]
 
@@ -123,7 +123,7 @@ function TreatmentFlowPage(props) {
   }
 
   const trackClicks = () => {
-    console.log("here");
+    //console.log("here");
     if (medFilter) addClick(`users/${user.userId}`, "filter-med", new Date());
     if (therapyFilter) addClick(`users/${user.userId}`, "filter-therapy", new Date());
     if (waitingFilter) addClick(`users/${user.userId}`, "filter-wait", new Date());
@@ -157,10 +157,10 @@ function TreatmentFlowPage(props) {
           </View>
           <Text style={styles.pageHeader}>How would you like to receive treatment?</Text>
           <View style={styles.checkboxListContainer}>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Checkbox style={styles.checkbox} isChecked={!remoteFilter} onPress={() => { setPersonFilter(true); setRemoteFilter(false) }} title="In-Person" />
             </View>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Checkbox style={styles.checkbox} isChecked={!personFilter} onPress={() => { setRemoteFilter(true); setPersonFilter(false); }} title="Remote" />
             </View>
             <View>
@@ -244,7 +244,7 @@ function TreatmentFlowPage(props) {
           <View style={styles.treatmentsection1}>
             <Text style={styles.treatmentName}>{selectedTreatment && selectedTreatment.id}</Text>
             {selectedTreatment && calcTypeTag(selectedTreatment.data.type)}
-            {selectedTreatment && calcContact("web", selectedTreatment.data.link)}
+            {selectedTreatment && calcContact(selectedTreatment.data.linkType || "web", selectedTreatment.data.link)}
           </View>
           <ScrollView style={styles.modalContainer}>
             <Text style={styles.modalSubHeader}>About Us</Text>
