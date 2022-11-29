@@ -49,6 +49,7 @@ function TreatmentsComparison(props) {
   };
 
   return (
+    <View style={{flex: 1}}>
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.subheader}>Tap on a question to learn more about each treatment type.</Text>
       {modalOne ? <CompareBlock close={() => { console.log("closing"); setModalOne(false); }} title="How does this work?" waiting={compareData[1].waiting} med={compareData[1].med} therapy={compareData[1].therapy} width={windowWidth * .9}></CompareBlock> :
@@ -98,6 +99,7 @@ function TreatmentsComparison(props) {
         </View>
       </TouchableHighlight>
     </ScrollView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
     color: '#545454'
   },
   container: {
-    flex: 1,
     alignItems: 'center',
     width: windowWidth,
     backgroundColor: "#FFFFFF",
@@ -211,9 +212,9 @@ const styles = StyleSheet.create({
   },
   compareButton: {
     width: windowWidth * .9,
-    height: '10%',
+    height: 50,
     paddingLeft: 10,
-    marginTop: 10,
+    marginTop: 20,
     backgroundColor: "#5451F8",
     borderRadius: 10,
     shadowColor: "#000",
