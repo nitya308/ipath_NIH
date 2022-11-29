@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView, SafeAreaView, Dimensions, Modal, Pressable } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableHighlight, ScrollView, SafeAreaView, Dimensions, Modal, Pressable } from 'react-native';
 import Checkbox from '../components/checkbox';
 import { useSelector } from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
@@ -19,13 +19,16 @@ import TreatmentFilterCard from '../components/treatment/treatmentfiltercard';
 import FakeLoading from '../components/treatment/fake-loading';
 import { fetchFirstName } from '../actions';
 import { connect } from 'react-redux';
+import firebase from '../services/datastore.js';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
+const storage = firebase.storage()
 
 
 function TreatmentFlowPage(props) {
   const user = useSelector((state) => state.user);
+
 
   useEffect(() => {
     const firstName = async () => { fetchFirstName(user.userId); }
@@ -54,11 +57,19 @@ function TreatmentFlowPage(props) {
   const [costFilter, setCostFilter] = useState(false);
 
   const [selectedTreatment, setSelectedTreatment] = useState(null);
+  const [imageUrl, setImageUrl] = useState(undefined);
 
   const selectingTreatments = (treatment) => {
-    console.log("in page=", treatment);
+    // console.log("in page=", treatment);
     setSelectedTreatment(treatment);
-    console.log("finaly=", selectedTreatment);
+    storage
+      .refFromURL(treatment.data.fullimg) //name in storage in firebase console
+      .getDownloadURL()
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((e) => console.log('Errors while downloading => ', e));
+    // console.log("finaly=", selectedTreatment);
   };
 
   function calcTypeTag(type) {
@@ -85,9 +96,9 @@ function TreatmentFlowPage(props) {
     switch (contacttype) {
       case "web":
         return (
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding:10}}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 10 }}>
             <WebLink width={30} height={30}></WebLink>
-            <Text style={{fontSize: 20, lineHeight: 30}}>{info}</Text>
+            <Text style={{ fontSize: 20, lineHeight: 30 }}>{info}</Text>
           </View>
         )
       case "phone":
@@ -198,8 +209,7 @@ function TreatmentFlowPage(props) {
       <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
           {/* here we need to add image */}
-          <View style={[styles.modalHeaderContainer, { backgroundColor: "#90EE90" }]}>
-          </View>
+          <Image style={styles.modalHeaderContainer} source={{ uri: imageUrl }}></Image>
           <View style={styles.treatmentsection1}>
             <Text style={styles.treatmentName}>{selectedTreatment && selectedTreatment.id}</Text>
             {selectedTreatment && calcTypeTag(selectedTreatment.data.type)}
@@ -253,8 +263,10 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
     height: 100,
-    width: '100%',
+    aspectRatio: 1,
+    opacity: 0.9,
   },
   modalContainer: {
     width: '100%',

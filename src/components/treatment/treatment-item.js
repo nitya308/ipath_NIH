@@ -26,11 +26,11 @@ function TreatmentItem(props) {
   const user = useSelector((state) => state.user)
   const [imageUrl, setImageUrl] = useState(undefined);
 
-  console.log('porps trtment',props.treatment);
+  console.log('props treatment',props.treatment);
 
   useEffect(() => {
     storage
-      .ref(props.treatment.data.img) //name in storage in firebase console
+      .refFromURL(props.treatment.data.img) //name in storage in firebase console
       .getDownloadURL()
       .then((url) => {
         setImageUrl(url);
