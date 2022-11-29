@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        width: '100%'
     },
     title: {
         fontSize: 20,

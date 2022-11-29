@@ -84,8 +84,7 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     // backgroundColor: 'magenta',
   },
   title: {
@@ -100,7 +99,9 @@ const styles = StyleSheet.create({
   colText: {
     flexDirection: 'column',
     fontSize: 18,
-    width: windowWidth * 0.4,
+    padding: 0,
+    paddingTop: 120,
+    width: windowWidth * 0.48,
     flexWrap: 'wrap',
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -110,8 +111,8 @@ const styles = StyleSheet.create({
   },
   surveyButtonText: {
     flex: 2,
-    fontSize: 17,
-    lineHeight: 20,
+    fontSize: 15,
+    lineHeight: 25,
     padding: 20,
     fontFamily: 'Poppins-Regular',
     color: '#373737',
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   },
   homeicon: {
     height: windowHeight * 0.005,
-    width: windowWidth * 0.005,
+    width: windowWidth * 0.003,
   },
   welcomeIconAndSurvey: {
     flexDirection: 'column',
