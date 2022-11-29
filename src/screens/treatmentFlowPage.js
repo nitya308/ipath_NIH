@@ -4,10 +4,6 @@ import Checkbox from '../components/checkbox';
 import { useSelector } from 'react-redux';
 import TreatmentsList from '../components/treatment/treatments-list';
 import TreatmentItemTagText from '../components/treatment/treatment-tag-text';
-import TreatmentItemTag from '../components/treatment/treatment-item-tag';
-import TreatmentInfo from '../components/treatment/treatment-info';
-import Left from '../assets/icons/left.svg';
-import Right from '../assets/icons/right.svg';
 import { addClick } from '../services/datastore';
 import Pill from '../assets/icons/pill.js';
 import Speech from '../assets/icons/speech.js';
@@ -20,6 +16,8 @@ import FakeLoading from '../components/treatment/fake-loading';
 import { fetchFirstName } from '../actions';
 import { connect } from 'react-redux';
 import firebase from '../services/datastore.js';
+import SelectDropdown from 'react-native-select-dropdown';
+import DownArrow from '../assets/icons/DownArrow.svg';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -35,7 +33,6 @@ function TreatmentFlowPage(props) {
     firstName();
     setModalVisible(false);
   }, []);
-
 
   const [scrollRef, setScrollRef] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
@@ -53,8 +50,10 @@ function TreatmentFlowPage(props) {
   const [loading, setLoading] = useState(false)
 
   // Treatment sort options
-  const [accessFilter, setAccessFilter] = useState(false);
-  const [costFilter, setCostFilter] = useState(false);
+  const [accessFilter, setAccessFilter] = useState(true);
+  const [costFilter, setCostFilter] = useState(true);
+
+  const options = ["COST", "TIME"]
 
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [imageUrl, setImageUrl] = useState(undefined);
@@ -119,6 +118,10 @@ function TreatmentFlowPage(props) {
     setTimeout(() => setRenderList(true), 6000);
   }
 
+  const renderDownArrow = () => {
+    return <DownArrow></DownArrow>;
+  }
+
   const trackClicks = () => {
     console.log("here");
     if (medFilter) addClick(`users/${user.userId}`, "filter-med", new Date());
@@ -139,8 +142,8 @@ function TreatmentFlowPage(props) {
   return (
     <SafeAreaView>
       <ScrollView horizontal={true} pagingEnabled={true} scrollEnabled={false} ref={(ref) => { setScrollRef(ref) }}>
-        <View style={styles.page}>
-          <Text style={[styles.pageHeader, { fontSize: 25 }]}>Which treatment option(s) would you like to explore?</Text>
+        <View style={windowHeight < 670 ? styles.pageSS : styles.page}>
+          <Text style={windowHeight < 670 ? [styles.pageHeader, { fontSize: 20 }] : [styles.pageHeader, { fontSize: 25 }]}>Which treatment option(s) would you like to explore?</Text>
           <View style={styles.columnsContainer}>
             <TouchableHighlight style={medFilter ? [styles.treatmentType, { backgroundColor: "#51A8F8" }] : styles.treatmentType} onPress={() => setMedFilter(!medFilter)}>
               <TreatmentFilterCard selected={medFilter} title="Medication" icon={<Pill height={40} color={medFilter ? "#FFFFFF" : null}></Pill>}></TreatmentFilterCard>
@@ -154,17 +157,45 @@ function TreatmentFlowPage(props) {
           </View>
           <Text style={styles.pageHeader}>How would you like to receive treatment?</Text>
           <View style={styles.checkboxListContainer}>
-            <View style={styles.column50}>
-              <Checkbox style={styles.checkbox} isChecked={personFilter} onPress={() => setPersonFilter(!personFilter)} title="In-Person" />
+            <View style={{flex: 1}}>
+              <Checkbox style={styles.checkbox} isChecked={!remoteFilter} onPress={() => { setPersonFilter(true); setRemoteFilter(false) }} title="In-Person" />
             </View>
-            <View style={styles.column50}>
-              <Checkbox style={styles.checkbox} isChecked={remoteFilter} onPress={() => setRemoteFilter(!remoteFilter)} title="Remote" />
+            <View style={{flex: 1}}>
+              <Checkbox style={styles.checkbox} isChecked={!personFilter} onPress={() => { setRemoteFilter(true); setPersonFilter(false); }} title="Remote" />
+            </View>
+            <View>
+              <Checkbox style={styles.checkbox} isChecked={remoteFilter && personFilter} onPress={() => { setRemoteFilter(true); setPersonFilter(true); }} title="Either" />
             </View>
           </View>
           {loading ?
-            <>
-              <Text style={styles.pageHeader}>Treatment providers: dropdown TBA</Text>
-            </>
+            <View style={{ flexDirection: 'row', paddingLeft: 20, padding: 10, alignContent: 'space-between' }}>
+              <Text style={{ flex: 1, fontSize: 19, marginTop: 10, fontFamily: 'Poppins-Bold', }}>
+                Treatment options:
+              </Text>
+              <SelectDropdown
+                data={options}
+                renderDropdownIcon={renderDownArrow}
+                buttonStyle={{ backgroundColor: "#FFFFFF", width: 185, borderRadius: 15, height: 40 }}
+                buttonTextStyle={{ fontSize: 17 }}
+                dropdownStyle={{ borderRadius: 10 }}
+                defaultButtonText={costFilter ? "SORT BY: COST" : "SORT BY: TIME"}
+                onSelect={(selectedItem) => {
+                  if (selectedItem == "COST") {
+                    setCostFilter(true);
+                    setAccessFilter(false);
+                  }
+                  else {
+                    setCostFilter(false);
+                    setAccessFilter(true);
+                  }
+                }}
+                buttonTextAfterSelection={(selectedItem) => {
+                  return ("SORT BY: " + selectedItem);
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }} />
+            </View>
             :
             <>
               <Text style={styles.pageHeader}>What is most important to you?</Text>
@@ -182,7 +213,7 @@ function TreatmentFlowPage(props) {
           {loading ?
             <>
               {renderList ?
-                <>
+                <View style={{ flex: 1 }}>
                   <TreatmentsList
                     therapy={therapyFilter}
                     med={medFilter}
@@ -194,13 +225,13 @@ function TreatmentFlowPage(props) {
                     treat={selectingTreatments}
                     display={setModalVisible}
                   />
-                </>
+                </View>
                 :
                 <FakeLoading></FakeLoading>
               }
             </> :
             <TouchableHighlight underlayColor='gray' style={styles.applyButton} onPress={() => { setLoading(true); fakeLoading(); trackClicks(); }}>
-              <Text style={{ color: 'white', fontSize: 20 }}>Explore Treatment Options →</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Bold' }}>Explore Treatment Options →</Text>
             </TouchableHighlight>
           }
         </View>
@@ -281,6 +312,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     width: "100%",
+    fontFamily: 'Poppins-Regular',
   },
   treatmentsection1: {
     backgroundColor: "#E9E9FA",
@@ -331,8 +363,8 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
   },
-  column50: {
-    width: "50%",
+  column33: {
+    width: "33%",
     flex: 1,
     paddingHorizontal: 10,
   },
@@ -360,12 +392,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 15,
     paddingTop: 20,
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'Poppins-Light'
   },
   page: {
     width: windowWidth,
     height: windowHeight * .8,
     alignItems: 'center',
+    flex: 1
+  },
+  pageSS: {
+    width: windowWidth,
+    height: windowHeight * .9,
+    alignItems: 'center',
+    flex: 1
   },
   pageHeader: {
     fontWeight: 'bold',
@@ -374,7 +414,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     paddingHorizontal: 20,
-    width: "100%"
+    width: "100%",
+    fontFamily: 'Poppins-Bold',
   },
   pageSubheader: {
     color: 'gray',
@@ -382,20 +423,22 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 20,
     marginTop: 20,
+    fontFamily: 'Poppins-Regular',
   },
   checkboxListContainer: {
     width: '100%',
     flexDirection: 'row',
     padding: 0,
     paddingHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    alignContent: 'space-between'
   },
   checkbox: {
     width: "100%",
   },
   backButton: {
     position: 'absolute',
-    backgroundColor: '#469C97',
+    backgroundColor: '#5451F8',
     height: 50,
     width: 50,
     bottom: 50,
@@ -409,7 +452,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#469C97",
+    backgroundColor: '#5451F8',
     bottom: 50,
     right: 30,
     alignItems: 'center',
@@ -419,7 +462,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 70,
     borderRadius: 10,
-    backgroundColor: "#469C97",
+    backgroundColor: "#5451F8",
     alignItems: 'center',
     justifyContent: 'center',
   }

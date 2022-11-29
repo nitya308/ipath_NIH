@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 function TreatmentItemTagText(props) {
-  console.log(props);
   return (
     <>
       <View style={styles.container}>

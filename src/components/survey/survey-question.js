@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 function surveyQuestion(props) {
   const renderBackButton = () => {
     return (
@@ -14,25 +17,25 @@ function surveyQuestion(props) {
 
   return (
     <View style={styles.questionContainer}>
-      <Text style={styles.questionText}>{props.questionTitle}</Text>
-      <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={() => { props.set(0); props.press(); }}>
+      <Text style={windowHeight < 670 ? styles.questionTextSS: styles.questionText}>{props.questionTitle}</Text>
+      <TouchableHighlight style={windowHeight < 670 ? styles.touchContainerSS : styles.touchContainer} underlayColor='gray' onPress={() => { props.set(0); props.press(); }}>
         <View style={[styles.answer, props.selAns == 0 ? styles.selectedAnswer : null]}>
-          <Text style={[styles.answerText, props.selAns == 0 ? styles.selectedAnswerText : null]}>Not at all</Text>
+          <Text style={windowHeight < 670 ? [styles.answerTextSS, props.selAns == 0 ? styles.selectedAnswerText : null] : [styles.answerText, props.selAns == 0 ? styles.selectedAnswerText : null]}>Not at all</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={() => { props.set(1); props.press(); }}>
+      <TouchableHighlight style={windowHeight < 670 ? styles.touchContainerSS : styles.touchContainer} underlayColor='gray' onPress={() => { props.set(1); props.press(); }}>
         <View style={[styles.answer, props.selAns == 1 ? styles.selectedAnswer : null]}>
-          <Text style={[styles.answerText, props.selAns == 1 ? styles.selectedAnswerText : null]}>Several days</Text>
+          <Text style={windowHeight < 670 ? [styles.answerTextSS, props.selAns == 1 ? styles.selectedAnswerText : null] : [styles.answerText, props.selAns == 1 ? styles.selectedAnswerText : null]}>Several days</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={() => { props.set(2); props.press(); }}>
+      <TouchableHighlight style={windowHeight < 670 ? styles.touchContainerSS : styles.touchContainer} underlayColor='gray' onPress={() => { props.set(2); props.press(); }}>
         <View style={[styles.answer, props.selAns == 2 ? styles.selectedAnswer : null]}>
-          <Text style={[styles.answerText, props.selAns == 2 ? styles.selectedAnswerText : null]}>More than half of days</Text>
+          <Text style={windowHeight < 670 ? [styles.answerTextSS, props.selAns == 2 ? styles.selectedAnswerText : null] : [styles.answerText, props.selAns == 2 ? styles.selectedAnswerText : null]}>More than half of days</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight style={styles.touchContainer} underlayColor='gray' onPress={() => { props.set(3); props.press(); }}>
+      <TouchableHighlight style={windowHeight < 670 ? styles.touchContainerSS : styles.touchContainer} underlayColor='gray' onPress={() => { props.set(3); props.press(); }}>
         <View style={[styles.answer, props.selAns == 3 ? styles.selectedAnswer : null]}>
-          <Text style={[styles.answerText, props.selAns == 3 ? styles.selectedAnswerText : null]}>Nearly every day</Text>
+          <Text style={windowHeight < 670 ? [styles.answerTextSS, props.selAns == 3 ? styles.selectedAnswerText : null] : [styles.answerText, props.selAns == 3 ? styles.selectedAnswerText : null]}>Nearly every day</Text>
         </View>
       </TouchableHighlight>
       {renderBackButton()}
@@ -40,8 +43,7 @@ function surveyQuestion(props) {
     </View>
   );
 }
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+
 
 const styles = StyleSheet.create({
   questionContainer: {
@@ -66,12 +68,26 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left',
   },
+  questionTextSS: {
+    fontSize: 15,
+    padding: 5,
+    marginTop: 10,
+    marginBottom: 5,
+    textAlign: 'left',
+  },
   touchContainer: {
     height: windowHeight * .08,
     width: windowWidth * .75,
     borderRadius: 30,
     alignSelf: 'center',
     marginVertical: 10
+  },
+  touchContainerSS: {
+    height: windowHeight * .08,
+    width: windowWidth * .75,
+    borderRadius: 30,
+    alignSelf: 'center',
+    marginVertical: 5,
   },
   answer: {
     flex: 1,
@@ -94,6 +110,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 15,
     fontSize: 20,
+    color: "#FFFFFF",
+    fontFamily: 'Poppins-Bold'
+  },
+  answerTextSS: {
+    textAlign: 'center',
+    padding: 10,
+    fontSize: 18,
     color: "#FFFFFF",
     fontFamily: 'Poppins-Bold'
   },

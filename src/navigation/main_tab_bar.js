@@ -5,6 +5,7 @@ import HomeStack from './HomeNavigation';
 import SurveyPage from '../screens/surveyPage';
 import TreatmentPage from '../screens/treatmentPage';
 import TreatmentFlowPage from '../screens/treatmentFlowPage';
+import { Dimensions } from 'react-native';
 
 // TODO: AUTH
 import Home from '../assets/icons/home';
@@ -13,6 +14,8 @@ import Book from '../assets/icons/book';
 import List from '../assets/icons/list'; 
 
 const Tab = createBottomTabNavigator();
+const windowHeight = Dimensions.get('window').height;
+
 
 function MainTabBar(props){
   const tabBarListeners = ({ navigation, route }) => ({
@@ -21,8 +24,17 @@ function MainTabBar(props){
 
   return (
       <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: "#469C97",
+      screenOptions={windowHeight < 670? {
+        tabBarActiveTintColor: "#5451F8",
+        tabBarStyle: [
+          {
+            "display": "flex",
+            "height": 60,
+          },
+          null
+        ]
+      } : {
+        tabBarActiveTintColor: "#5451F8",
         tabBarStyle: [
           {
             "display": "flex",

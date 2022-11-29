@@ -14,7 +14,6 @@ const windowWidth = Dimensions.get('window').width;
 
 function TreatmentsList(props) {
   const user = useSelector((state) => state.user);
-  console.log(props)
   const savedTreatments = useSelector((state) => state.treatments.savedTreatments);
   const allTreatments = useSelector((state) => state.treatments.allTreatments);
 
@@ -58,9 +57,9 @@ function TreatmentsList(props) {
               allTreatments?.filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).sort(compare).map((treatment) => {
                 return (
                   <TreatmentItem key={treatment.id} press={() => {
-                    console.log('here');
+                    // console.log('here');
                     props.display(true);
-                    console.log('treatment=', treatment);
+                    // console.log('treatment=', treatment);
                     props.treat(treatment);
                   }} treatment={treatment} />
                 )
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
     margin: 0,
     padding: 0,
-    paddingTop: '1%',
   },
   filtersContainer: {
     flexDirection: 'row',

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CompareBlock from './compare_block';
 import DownArrow from '../../assets/icons/DownArrow.svg'
+import { ScrollView } from 'react-native';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -48,12 +49,12 @@ function TreatmentsComparison(props) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.subheader}>Tap on a question to learn more about each treatment type.</Text>
       {modalOne ? <CompareBlock close={() => { console.log("closing"); setModalOne(false); }} title="How does this work?" waiting={compareData[1].waiting} med={compareData[1].med} therapy={compareData[1].therapy} width={windowWidth * .9}></CompareBlock> :
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalOne(!modalOne); addClick(`users/${user.userId}`, "compare-howwork", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.buttonText}>How does this work?</Text>
+            <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>How does this work?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
@@ -61,7 +62,7 @@ function TreatmentsComparison(props) {
       {modalTwo ? <CompareBlock close={() => { console.log("closing"); setModalTwo(false); }} title="How much does this cost?" waiting={compareData[2].waiting} med={compareData[2].med} therapy={compareData[2].therapy} width={windowWidth * .9}></CompareBlock> :
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalTwo(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.buttonText}>How much does this cost?</Text>
+            <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>How much does this cost?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
@@ -69,7 +70,7 @@ function TreatmentsComparison(props) {
       {modalThree ? <CompareBlock close={() => { console.log("closing"); setModalThree(false); }} title="Will this work?" waiting={compareData[3].waiting} med={compareData[3].med} therapy={compareData[3].therapy} width={windowWidth * .9}></CompareBlock> :
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalThree(true); addClick(`users/${user.userId}`, "compare-willwork", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.buttonText}>Will this work?</Text>
+            <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>Will this work?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
@@ -77,7 +78,7 @@ function TreatmentsComparison(props) {
       {modalFour ? <CompareBlock close={() => { console.log("closing"); setModalFour(false); }} title="What are possible side effects??" waiting={compareData[4].waiting} med={compareData[4].med} therapy={compareData[4].therapy} width={windowWidth * .9}></CompareBlock> :
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFour(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.buttonText}>What are possible side effects?</Text>
+            <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>What are possible side effects?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
@@ -85,7 +86,7 @@ function TreatmentsComparison(props) {
       {modalFive ? <CompareBlock close={() => { console.log("closing"); setModalFive(false); }} title="How quickly can I access this?" waiting={compareData[5].waiting} med={compareData[5].med} therapy={compareData[5].therapy} width={windowWidth * .9}></CompareBlock> :
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFive(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.buttonText}>How quickly can I access this?</Text>
+            <Text style={windowHeight < 670 ? styles.buttonTextSS :styles.buttonText}>How quickly can I access this?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
           </View>
         </TouchableHighlight>
@@ -96,7 +97,7 @@ function TreatmentsComparison(props) {
           <RightArrow styles={styles.arrow} />
         </View>
       </TouchableHighlight>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subheader: {
-    margin: 20,
+    margin: 15,
+    marginBottom: 0,
     fontSize: 18,
     fontFamily: "Poppins-Italic",
     color: '#545454'
@@ -116,7 +118,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: windowWidth,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    height: windowHeight * 2,
   },
   button: {
     width: windowWidth * .9,
@@ -138,6 +141,12 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: 30,
     fontSize: 20,
+  },
+  buttonTextSS: {
+    fontFamily: 'Poppins-Bold',
+    textAlign: 'left',
+    lineHeight: 30,
+    fontSize: 15,
   },
   downicon: {
     paddingVertical: 15,
@@ -204,7 +213,7 @@ const styles = StyleSheet.create({
     width: windowWidth * .9,
     height: '10%',
     paddingLeft: 10,
-    marginTop: 60,
+    marginTop: 10,
     backgroundColor: "#5451F8",
     borderRadius: 10,
     shadowColor: "#000",
@@ -227,6 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
   },
 })
 export default TreatmentsComparison

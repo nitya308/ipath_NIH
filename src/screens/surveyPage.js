@@ -59,7 +59,7 @@ function SurveyPage(props) {
       if (selectedId == 8) {
         return (
           <TouchableHighlight underlayColor="gray" style={styles.submitButton} onPress={() => { addSurveyRes(`${user.userId}`, scores, new Date()); updateLastSurveyed(`${user.userId}`, new Date()); introRef.current.scrollToEnd(); setControlsVisible(false); cancelPushNotifications(); schedulePushNotification(); }}>
-            <Text style={styles.backText}>Submit</Text>
+            <Text style={styles.backText}>SUBMIT</Text>
           </TouchableHighlight>
         );
       } else {
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 15,
-    width: 130,
+    width: 180,
     height: 50,
     backgroundColor: '#5451F8',
     flex: 1,
@@ -237,6 +237,41 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    paddingHorizontal: 40,
+  },
+  submitText : {
+    color: '#FCFCFF',
+    fontFamily: 'Poppins-Bold',
+    alignSelf: 'center',
+  },
+  submitButton: {
+    width: 100,
+    height: 50,
+    flex: 1,
+    justifyContent: 'center',
+    padding: 10,
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    backgroundColor: '#FCFCFF',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  backText: {
+    fontFamily: 'Poppins-Bold',
+    textAlign: 'left',
+    color: 'black',
+    fontSize: 20
   },
   progressContainer: {
     flex: 0,

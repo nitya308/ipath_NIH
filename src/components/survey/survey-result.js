@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Modal, Pressable } from 'react-native';
 import RightArrow from '../../assets/icons/right.svg';
-import Close from '../../assets/icons/close.svg';
+import Back from '../../assets/icons/BackCircle.svg';
 import Infographic from '../../assets/icons/infographic';
 import QuestionMark from '../../assets/icons/questionMark.svg';
-import { openURL } from 'expo-linking';
+import { collectManifestSchemes, openURL } from 'expo-linking';
 import { back } from 'react-native/Libraries/Animated/Easing';
+import ResultModalIcon from '../../assets/icons/resultModalIcon.svg'
+import ResultIcon from '../../assets/icons/ResultsIcon.svg'
+
+
 
 function SurveyResult(props) {
     const [modalVisible, setModalVisible] = useState('false');
@@ -37,8 +41,8 @@ function SurveyResult(props) {
             <View style={styles.resultHeaderContainer}>
                 <Text style={styles.resultTitle}>Survey Results</Text>
             </View>
-            <View style={styles.resultContainer}>
-                <Text style={styles.h1}>Based on your survey results, you are displaying symptoms of </Text>
+            <View style={windowHeight < 670 ? [styles.resultContainer, {margin: 5}]: styles.resultContainer}>
+                <Text style={windowHeight < 670 ? styles.h1SS : styles.h1}>Based on your survey results, you are displaying symptoms of </Text>
                 <Text style={styles.individualResult}>{result}</Text>
             </View>
             <TouchableHighlight underlayColor="gray" style={styles.infoContainer} onPress={() => setModalVisible(true)}>
@@ -48,8 +52,16 @@ function SurveyResult(props) {
                 </View>
             </TouchableHighlight>
             {renderHotlinePopup()}
-            <Infographic width={250} height={80} />
-            <Text style={styles.p}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
+            {props.hotline ?
+                <View style={styles.hotlineResultsPage}>
+                    <Text style={styles.pHotlineResultsPage}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
+                    <ResultIcon width={150} height={109.22} />
+                </View> :
+                <View style={ windowHeight < 670 ? [styles.noHotlineResultsPage, {justifyContent: 'flex-start'}] : styles.noHotlineResultsPage}>
+                    <Text style={ windowHeight < 670 ? [styles.p, {fontSize: 15, marginBottom: 5, paddingBottom: 1}] : styles.p}>Depression is more common than you might think. Around 1 in 4 patients with cancer display symptoms of depression.</Text>
+                    {windowHeight < 670 ? <ResultIcon width={90} height={90} /> : <ResultIcon width={227} height={109.22} />}
+                </View>
+            }
             <TouchableHighlight underlayColor='gray' style={styles.treatmentButton} onPress={props.press}>
                 <View style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Learn About Treatments</Text>
@@ -58,44 +70,45 @@ function SurveyResult(props) {
             </TouchableHighlight>
             <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => { setModalVisible(!modalVisible) }}>
                 <View style={styles.modalViewContainer}>
-                    <View style={styles.modalHeaderContainer}>
+                    <View style={windowHeight < 670 ? [styles.modalHeaderContainer, {height: 90, marginTop: 20}] : styles.modalHeaderContainer}>
                         <Text style={styles.modalHeader}>What does this mean?</Text>
-                        <Text style={styles.modalDescription}>Depression symptoms are grouped into the following categories based on points assigned to PHQ-9 responses:</Text>
+                        <Text style={windowHeight < 670 ? styles.modalDescriptionSS : styles.modalDescription}>Depression symptoms are grouped into the following categories based on points assigned to PHQ-9 responses:</Text>
                     </View>
                     <View style={styles.modalContainer}>
                         <View style={styles.scoreHeader}>
                             <Text style={styles.scoreNumber}>Where am I?</Text>
                             <Text style={styles.scoreLevel}>Severity Level</Text>
                         </View>
-                        <View style={styles.thickLine} />
-                        <View style={[styles.scoreContainer, result === "No Depression" ? styles.selectedRange : null]}>
-                            <Text style={styles.scoreLevel}>Minimal Depression</Text>
-                            <Text style={styles.scoreNumber}>0-4</Text>
+                        <View style={result === "No Depression" ? styles.transparentThickLine : styles.thickLine} />
+                        <View style={windowHeight < 670 ? [styles.scoreContainer, {height: 70}, result === "No Depression" ? styles.selectedRange : null] : [styles.scoreContainer, result === "No Depression" ? styles.selectedRange : null]}>
+                            {result === "No Depression" ? <ResultModalIcon style={styles.homeicon}></ResultModalIcon> : <View />}
+                            <Text style={result === "No Depression" ? styles.scoreLevelSelected : styles.scoreLevel}>Minimal Depression</Text>
+
                         </View>
-                        <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result === "Mild Depression" ? styles.selectedRange : null]}>
-                            <Text style={styles.scoreLevel}>Mild Depression</Text>
-                            <Text style={styles.scoreNumber}>5-9</Text>
+                        <View style={result === "No Depression" || result === "Mild Depression" ? styles.transparentLine : styles.divideLine}></View>
+                        <View style={windowHeight < 670 ? [styles.scoreContainer, {height: 70}, result === "Mild Depression" ? styles.selectedRange : null] : [styles.scoreContainer, result === "Mild Depression" ? styles.selectedRange : null]}>
+                            {result === "Mild Depression" ? <ResultModalIcon style={styles.homeicon}></ResultModalIcon> : <View />}
+                            <Text style={result === "Mild Depression" ? styles.scoreLevelSelected : styles.scoreLevel}>Mild Depression</Text>
                         </View>
-                        <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result === "Moderate Depression" ? styles.selectedRange : null]}>
-                            <Text style={styles.scoreLevel}>Moderate Depression</Text>
-                            <Text style={styles.scoreNumber}>10-14</Text>
+                        <View style={result === "Moderate Depression" || result === "Mild Depression" ? styles.transparentLine : styles.divideLine}></View>
+                        <View style={windowHeight < 670 ? [styles.scoreContainer, {height: 70}, result === "Moderate Depression" ? styles.selectedRange : null] : [styles.scoreContainer, result === "Moderate Depression" ? styles.selectedRange : null]}>
+                            {result === "Moderate Depression" ? <ResultModalIcon style={styles.homeicon}></ResultModalIcon> : <View />}
+                            <Text style={result === "Moderate Depression" ? styles.scoreLevelSelected : styles.scoreLevel}>Moderate Depression</Text>
                         </View>
-                        <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result === "Moderate to Severe Depression" ? styles.selectedRange : null]}>
-                            <Text style={styles.scoreLevel}>Moderately Severe Depression</Text>
-                            <Text style={styles.scoreNumber}>15-19</Text>
+                        <View style={result === "Moderate Depression" || result === "Moderate to Severe Depression" ? styles.transparentLine : styles.divideLine}></View>
+                        <View style={windowHeight < 670 ? [styles.scoreContainer, {height: 70}, result === "Moderate to Severe Depression" ? styles.selectedRange : null] : [styles.scoreContainer, result === "Moderate to Severe Depression" ? styles.selectedRange : null]}>
+                            {result === "Moderate to Severe Depression" ? <ResultModalIcon style={styles.homeicon}></ResultModalIcon> : <View />}
+                            <Text style={result === "Moderate to Severe Depression" ? styles.scoreLevelSelected : styles.scoreLevel}>Moderately Severe Depression</Text>
                         </View>
-                        <View style={styles.divideLine}></View>
-                        <View style={[styles.scoreContainer, result === "Severe Depression" ? styles.selectedRange : null]}>
-                            <Text style={styles.scoreLevel}>Severe Depression</Text>
-                            <Text style={styles.scoreNumber}>20+</Text>
+                        <View style={result === "Severe Depression" || result === "Moderate to Severe Depression" ? styles.transparentLine : styles.divideLine}></View>
+                        <View style={windowHeight < 670 ? [styles.scoreContainer, {height: 70}, result === "Severe Depression" ? styles.selectedRange : null] : [styles.scoreContainer, result === "Severe Depression" ? styles.selectedRange : null]}>
+                            {result === "Severe Depression" ? <ResultModalIcon style={styles.homeicon}></ResultModalIcon> : <View />}
+                            <Text style={result === "Severe Depression" ? styles.scoreLevelSelected : styles.scoreLevel}>Severe Depression</Text>
                         </View>
                     </View>
-                    <Pressable style={styles.closeModal} onPress={() => { setModalVisible(!modalVisible) }}>
+                    <Pressable style={windowHeight < 670 ? [styles.closeModal, {top: 10, left: 10}]: styles.closeModal} onPress={() => { setModalVisible(!modalVisible) }}>
                         {/* <Text style={styles.closeModalIcon}>X</Text> */}
-                        <Close />
+                        <Back width={40} height={40} />
                     </Pressable>
                 </View>
             </Modal>
@@ -145,7 +158,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Bold',
         fontWeight: 'bold',
         justifyContent: 'flex-start',
-        color: '#373737'
+        color: '#373737',
     },
     h1: {
         padding: 20,
@@ -154,10 +167,17 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Italic',
         color: '#373737'
     },
+    h1SS: {
+        padding: 5,
+        fontSize: 15,
+        textAlign: 'left',
+        fontFamily: 'Poppins-Italic',
+        color: '#373737'
+    },
     individualResult: {
         fontSize: 23,
         textAlign: 'center',
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-BoldItal'
     },
     resultContainer: {
         flexDirection: 'column',
@@ -191,14 +211,38 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+    },
+    hotlineResultsPage: {
+        flexDirection: 'row',
+        width: 400,
+        justifyContent: 'space-between',
+        padding: 20,
+        marginTop: 10,
+    },
+    noHotlineResultsPage: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    pHotlineResultsPage: {
+        // marginHorizontal: 20,
+        // marginTop: 20,
+        // padding: 20,
+        fontSize: 14,
+        textAlign: 'left',
+        fontFamily: 'Poppins-Italic',
+        color: '#373737',
+        width: 220,
+        // alignSelf: 'flex-end'
     },
     p: {
         marginHorizontal: 20,
-        marginTop: 20,
-        padding: 20,
+        marginTop: 10,
+        marginBottom: 20,
+        padding: 10,
         fontSize: 18,
-        textAlign: 'center',
+        textAlign: 'left',
         fontFamily: 'Poppins-Italic',
         color: '#373737',
         alignSelf: 'flex-end'
@@ -238,7 +282,7 @@ const styles = StyleSheet.create({
     modalViewContainer: {
         flex: 1,
         alignItems: 'flex-start',
-        backgroundColor: 'white',
+        backgroundColor: '#FCFCFF',
         alignSelf: 'center',
         width: windowWidth * .95,
         height: 600,
@@ -257,10 +301,11 @@ const styles = StyleSheet.create({
         width: '90%',
         marginTop: 30,
         alignSelf: 'center',
+        color: '#545454',
     },
     modalHeaderContainer: {
         flex: 0,
-        backgroundColor: '#E9E9FA',
+        backgroundColor: '#FCFCFF',
         alignSelf: 'center',
         justifyContent: 'center',
         width: '100%',
@@ -276,13 +321,22 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         fontFamily: 'Poppins-Bold',
+        color: '#545454',
     },
     modalDescription: {
         fontSize: 18,
-        textAlign: 'center',
+        textAlign: 'left',
         fontFamily: 'Poppins-Regular',
         marginHorizontal: 10,
-
+        color: '#545454',
+    },
+    modalDescriptionSS: {
+        fontSize: 12,
+        textAlign: 'left',
+        fontFamily: 'Poppins-Regular',
+        marginHorizontal: 10,
+        marginLeft: 30,
+        color: '#545454',
     },
     scoreHeader: {
         flexDirection: 'row',
@@ -296,11 +350,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: 15,
+    },
+    scoreContainerSS: {
+        height: 90,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 15,
     },
     scoreLevel: {
         fontWeight: "600",
         fontSize: 18,
-        marginLeft: 10,
+        marginRight: 10,
+        color: '#545454'
+    },
+    scoreLevelSelected: {
+        color: 'white',
+        fontFamily: 'Poppins-Bold',
+        fontSize: 18,
+        marginRight: 10,
+        flexWrap: 'wrap'
     },
     scoreNumber: {
         fontStyle: 'italic',
@@ -309,12 +379,20 @@ const styles = StyleSheet.create({
     },
     selectedRange: {
         backgroundColor: "#5451F8",
-        color: 'white',
+        color: '#FCFCFF',
+        padding: 15,
+        borderRadius: 10,
     },
     thickLine: {
         height: 4,
         width: '100%',
         backgroundColor: '#5451F8',
+        alignSelf: 'center',
+    },
+    transparentThickLine: {
+        height: 4,
+        width: '100%',
+        backgroundColor: '#FCFCFF',
         alignSelf: 'center',
     },
     modalSubHeader: {
@@ -329,10 +407,19 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
     },
+    transparentLine: {
+        height: 2,
+        width: '100%',
+        backgroundColor: '#FCFCFF',
+        alignSelf: 'center',
+        marginLeft: 20,
+        marginRight: 20,
+    },
     closeModal: {
         position: 'absolute',
         top: 20,
-        right: 20,
+        left: 20,
+        color: 'black',
     },
     closeModalIcon: {
         fontSize: 25
