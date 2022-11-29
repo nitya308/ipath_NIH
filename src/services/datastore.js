@@ -1,6 +1,7 @@
 import 'expo-firestore-offline-persistence'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/storage';
 import 'firebase/compat/firestore';
 import Constants from 'expo-constants';
 // import apiKeys from '../services/keys.js';
@@ -55,12 +56,6 @@ export function getTreatmentById(treatID) {
 // Favourite a treatment
 export function updateFavTreatment(userID, treatID) {
   return users.doc(userID).update({ 'bookmarked-treatments': firebase.firestore.FieldValue.arrayUnion(treatID) });
-  // .then(() => {
-  //   console.log(`Added ${treatID} to user ${userID}'s list of fav treatments`);
-  // })
-  // .catch((error) => {
-  //   console.log('Error updating goal: ', error);
-  // });
 };
 
 // Unfavourite a treatment
@@ -130,7 +125,7 @@ export const addSurveyRes = (userID, scores, date) => {
       console.log(`Error adding new survey result: ${error}`);
     })
 
-  
+
 };
 
 export const updateLastSurveyed = (userID, date) => {
@@ -157,19 +152,7 @@ export const updateFirstName = (userID, firstName) => {
 
 // Get all treatments
 export function getTreatments() {
-  // alert('called get treatments')
   return treatments.get()
-  // .then((querySnapshot) => {
-  //   console.log(querySnapshot);
-  //   // return(querySnapshot);
-  //   querySnapshot.forEach((doc) => {
-  //     // doc.data() is never undefined for query doc snapshots
-  //     console.log(doc.id);
-  //   });
-  // })
-  // .catch((error) => {
-  //   console.log("Error getting documents: ", error);
-  // });
 };
 
 // ================ ANALYTICS FUNCTIONS =================
@@ -199,10 +182,10 @@ export function updatePageView(userID, pageID) {
   console.log(`attempting update of ${userID} \'s page views to add ${pageID}`);
   console.log(userID);
   return users.doc(userID).update({ 'tutorial_views': { pageID: 1 } })
-  .then(() => {
-    console.log(`Added ${pageID} to user ${userID}'s list of page views`);
-  })
-  .catch((error) => {
-    console.log('Error updating goal: ', error);
-  });
+    .then(() => {
+      console.log(`Added ${pageID} to user ${userID}'s list of page views`);
+    })
+    .catch((error) => {
+      console.log('Error updating goal: ', error);
+    });
 };
