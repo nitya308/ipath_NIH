@@ -87,7 +87,7 @@ function TreatmentItem(props) {
           </View>
         </View>
         <View style={styles.rightHalfOfCard}>
-          <Image style={styles.placeholderRectangle} source={{ uri: imageUrl }}></Image>
+          {imageUrl ? <Image style={styles.placeholderRectangle} source={{ uri: imageUrl }}></Image> : <Text>Image Not Available</Text>}
           <View style={styles.learnMore}>
             <Text style={styles.learnText}> LEARN MORE </Text>
           </View>
