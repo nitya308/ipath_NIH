@@ -3,16 +3,16 @@ import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-n
 import Logo from '../assets/icons/logo.svg';
 function WhyPage({ navigation }) {
   return (
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('HowiPath')}>
-          <View style={styles.flexContainer}>
-            <Logo />
-            {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
-            <Text style={styles.title}> Why iPath?</Text>
-            <Text style={styles.italicSubheading}>iPath has been developed with patients from St. Johnsbury, clinicians and researchers at Dartmouth College. We have identified local and online services that can help with symptoms ofdepression, some of which are available at no or low cost.</Text>
-            <Text style={styles.italicSubheading}>We have identified local and online services that can help with symptoms of depression, some of which are available at no or low cost.</Text>
-            <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
-          </View>
-        </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('HowiPath')}>
+      <View style={styles.flexContainer}>
+        <Logo />
+        <Text style={styles.title}>Why iPath?</Text>
+        <View style={{ marginBottom: 35 }}>
+          <Text style={styles.italicSubheading}>iPath has been developed with patients from St. Johnsbury, clinicians and researchers at Dartmouth College. We have identified local and online services that can help with symptoms ofdepression, some of which are available at no or low cost.</Text>
+        </View>
+        <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -23,23 +23,22 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingHorizontal: 20,
     textAlign: 'left',
-    flexWrap: 'wrap',
-    width: '100%',
   },
   logo: {
     alignContent: 'center',
     width: 150,
     height: 150,
-    margin: 30
+    margin: 30,
+    flex: 1.5
   },
   title: {
     fontFamily: 'Poppins-Bold',
     fontSize: 45,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#5451F8',
     marginTop: 20,
-    flex: 1.5,
+    paddingVertical: 20,
   },
   flexContainer: {
     paddingTop: 100,
@@ -48,7 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     backgroundColor: '#FCFCFF',
-    width: '100%',
   }
 });
 
