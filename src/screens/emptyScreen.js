@@ -15,7 +15,7 @@ function EmptyScreen(props, { navigation }) {
   useEffect(() => {
     const lastDate = async () => { fetchLastSurveyed(user.userId); }
     lastDate();
-    console.log('printing user in useefffect', user);
+    // console.log('printing user in useefffect', user);
     const firstName = async () => { fetchFirstName(user.userId); }
     firstName();
   }, []);
@@ -23,17 +23,17 @@ function EmptyScreen(props, { navigation }) {
   const lastSurveyedValue = useSelector((state) => state.user.lastSurveyed);
   const firstNameValue = useSelector((state) => state.user.firstName);
   // const lastSurveyedDate = new Date(lastSurveyedValue);
-  console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', lastSurveyedValue);
+  // console.log('PRINTING LSD OBJECT FROM EmptyScreen.js \n', lastSurveyedValue);
   const date1 = new Date(lastSurveyedValue)
   const date2 = new Date()
   const diffTime = date2.getTime() - date1.getTime();
   const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
   const daysRemaining = 14 - diffDays;
   const percentRemaining = 100 * (daysRemaining / 14);
-  console.log('date from LSD:\n', date1);
-  console.log('current date:\n', date2);
-  console.log('difference in time:\n', diffTime);
-  console.log('difference in days:\n', diffDays);
+  //console.log('date from LSD:\n', date1);
+  //console.log('current date:\n', date2);
+  //console.log('difference in time:\n', diffTime);
+  //console.log('difference in days:\n', diffDays);
 
   // const ctdn = new Date().toISOString - lastSurveyedDate
 

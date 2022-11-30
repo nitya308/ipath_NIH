@@ -72,12 +72,10 @@ export function deleteFavTreatment(userID, treatID) {
 export function createUser(uid, email, firstName) {
 
   const tutorial_views = {
-    "page_1": 0,
-    "page_2": 0,
-    "page_3": 0,
-    "page_4": 0,
-    "page_5": 0,
-    "page_6": 0
+    "overview": 0,
+    "comapre": 0,
+    "filter": 0,
+    "cards": 0,
   }
 
   users.doc(uid).set({

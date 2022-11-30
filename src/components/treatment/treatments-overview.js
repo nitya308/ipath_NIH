@@ -15,8 +15,7 @@ import Back from '../../assets/icons/back.svg';
 import Chevron from '../../assets/icons/chevron.svg';
 import { addClick } from '../../services/datastore';
 import { useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { Overlay } from '@rneui/themed';
 
 const treatmentData = {
   "Therapy": {
@@ -52,6 +51,15 @@ function TreatmentsOverview(props) {
   const [selectedType, setSelectedType] = useState("Watchful Waiting");
   const user = useSelector((state) => state.user);
 
+  const OverlayComponent = () => {
+    const [visible, setVisible] = useState(false);
+
+    const toggleOverlay = () => {
+      setVisible(!visible);
+    };
+    
+  };
+
   function returnEfficacy() {
     switch (selectedType) {
       case "Watchful Waiting":
@@ -61,12 +69,12 @@ function TreatmentsOverview(props) {
               <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>23 </Text>
               out of 100 people experience an increase in mood levels in 3 months without treatment.
             </Text>
-            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#FF0000', fontFamily: 'Poppins-Bold' }}>53 </Text>
               out of 100 people experience increased mood in a year by visiting a clincian without receiving active treatment.
             </Text>
-            <EfficWaiting2 style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficWaiting2 style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
           </View>
         )
       case "Medication":
@@ -77,19 +85,19 @@ function TreatmentsOverview(props) {
               out of 100 people experience an increase in mood levels in 3 months without treatment
               <Text style={{ fontFamily: 'Poppins-Bold' }}> (watchful waiting)</Text>.
             </Text>
-            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#51A8F8', fontFamily: 'Poppins-Bold' }}>17 more </Text>
               people experience an increase in mood levels in 1 month using antidepressant
               <Text style={{ fontFamily: 'Poppins-Bold' }}> medication</Text>.
             </Text>
-            <EfficMed style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficMed style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#5451F8', fontFamily: 'Poppins-Bold' }}>9 more </Text>
               people experience an increase in mood levels with a combination of antidepressant
               <Text style={{ fontFamily: 'Poppins-Bold' }}> medication and therapy</Text>.
             </Text>
-            <EfficMed2 style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficMed2 style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
           </View>
         )
       case "Therapy":
@@ -100,19 +108,19 @@ function TreatmentsOverview(props) {
               out of 100 people experience an increase in mood levels in 3 months without treatment
               <Text style={{ fontFamily: 'Poppins-Bold' }}> (watchful waiting)</Text>.
             </Text>
-            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficWaiting style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#9B51F8', fontFamily: 'Poppins-Bold' }}>14 more </Text>
               experience increased mood in 2 months using
               <Text style={{ fontFamily: 'Poppins-Bold' }}> therapy</Text>.
             </Text>
-            <EfficTherapy style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficTherapy style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
             <Text style={{ color: '#000000', fontSize: 20 }}>
               <Text style={{ color: '#5451F8', fontFamily: 'Poppins-Bold' }}>12 more </Text>
               people experience an increase in mood levels with a combination of antidepressant
               <Text style={{ fontFamily: 'Poppins-Bold' }}> medication and therapy</Text>.
             </Text>
-            <EfficTherapy2 style={{ alignSelf: 'flex-end', marginVertical: 5 }}/>
+            <EfficTherapy2 style={{ alignSelf: 'flex-end', marginVertical: 5 }} />
           </View>
         )
       default:
@@ -183,6 +191,15 @@ function TreatmentsOverview(props) {
           <RightArrow styles={styles.arrow} />
         </View>
       </TouchableHighlight>
+
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <Text style={styles.textPrimary}>Hello!</Text>
+        <Text style={styles.textSecondary}>
+          Welcome to React Native Elements
+        </Text>
+        <Button title="Close" onPress={toggleOverlay} />
+      </Overlay>
+
     </View>
   )
 }
