@@ -1,8 +1,6 @@
 #  🛣 iPath
 
-# CHANGE EVERYTHING BELOW HERE
-
-The COVID-19 risk assessment and behavior change mobile application
+Mobile application connecting cancer patients with depression treatments
 
 ## Designs
 <!-- [Screenshot description] -->
