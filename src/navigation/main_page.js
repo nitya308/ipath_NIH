@@ -16,7 +16,6 @@ const HomePages = (props) => {
       <Stack.Navigator screenOptions={{
         headerShown: false
       }}>
-        <Stack.Screen name="iPath" component={FirstPage}/>
         <Stack.Screen name="WhatiPath" component={WhatPage}/>
         <Stack.Screen name="WhyiPath" component={WhyPage}/>
         <Stack.Screen name="HowiPath" component={HowPage}/>

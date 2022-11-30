@@ -3,15 +3,22 @@ import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-n
 import Logo from '../assets/icons/logo.svg';
 function HowPage({ navigation }) {
   return (
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
-          <View style={styles.flexContainer}>
-            <Logo />
-            {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
-            <Text style={styles.title}>How does this work?</Text>
-            <Text style={styles.italicSubheading}>Going through cancer treatment is a difficult journey and people may experience feelings of depression. iPath connects people with cancer to trusted services and treatments for their depression symptoms.</Text>
-            <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
-          </View>
-        </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
+      <View style={styles.flexContainer}>
+        {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
+        <Text style={styles.title}>How does this work?</Text>
+        <Text style={styles.italicSubheading}>It works in 3 easy steps.
+        </Text>
+        <Text style={styles.italicSubheading}>1. You will complete 9 questions to assess your depression symptoms.
+        </Text>
+        <Text style={styles.italicSubheading}>2. You will then learn about different ways that patients with cancer or recovering from cancer can tackle depression symptoms.
+        </Text>
+        <Text style={styles.italicSubheading}>3. Finally you can connect to a service or treatment that best fits with you what is most important to you.
+
+        </Text>
+        <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -21,8 +28,8 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 17,
     paddingHorizontal: 20,
-    textAlign: 'center',
-    flex: 2,
+    textAlign: 'left',
+    flexWrap: 'wrap',
   },
   logo: {
     alignContent: 'center',

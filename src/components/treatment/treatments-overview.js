@@ -15,7 +15,6 @@ import Back from '../../assets/icons/back.svg';
 import Chevron from '../../assets/icons/chevron.svg';
 import { addClick } from '../../services/datastore';
 import { useSelector } from 'react-redux';
-import { Overlay } from '@rneui/themed';
 
 const treatmentData = {
   "Therapy": {
@@ -51,14 +50,7 @@ function TreatmentsOverview(props) {
   const [selectedType, setSelectedType] = useState("Watchful Waiting");
   const user = useSelector((state) => state.user);
 
-  const OverlayComponent = () => {
-    const [visible, setVisible] = useState(false);
 
-    const toggleOverlay = () => {
-      setVisible(!visible);
-    };
-    
-  };
 
   function returnEfficacy() {
     switch (selectedType) {
@@ -191,15 +183,6 @@ function TreatmentsOverview(props) {
           <RightArrow styles={styles.arrow} />
         </View>
       </TouchableHighlight>
-
-      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <Text style={styles.textPrimary}>Hello!</Text>
-        <Text style={styles.textSecondary}>
-          Welcome to React Native Elements
-        </Text>
-        <Button title="Close" onPress={toggleOverlay} />
-      </Overlay>
-
     </View>
   )
 }
