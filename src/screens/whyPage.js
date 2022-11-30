@@ -8,7 +8,8 @@ function WhyPage({ navigation }) {
             <Logo />
             {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
             <Text style={styles.title}> Why iPath?</Text>
-            <Text style={styles.italicSubheading}>Going through cancer treatment is a difficult journey and people may experience feelings of depression. iPath connects people with cancer to trusted services and treatments for their depression symptoms.</Text>
+            <Text style={styles.italicSubheading}>iPath has been developed with patients from St. Johnsbury, clinicians and researchers at Dartmouth College. We have identified local and online services that can help with symptoms ofdepression, some of which are available at no or low cost.</Text>
+            <Text style={styles.italicSubheading}>We have identified local and online services that can help with symptoms of depression, some of which are available at no or low cost.</Text>
             <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -21,8 +22,9 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 17,
     paddingHorizontal: 20,
-    textAlign: 'center',
-    flex: 2,
+    textAlign: 'left',
+    flexWrap: 'wrap',
+    width: '100%',
   },
   logo: {
     alignContent: 'center',
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     backgroundColor: '#FCFCFF',
+    width: '100%',
   }
 });
 

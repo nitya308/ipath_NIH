@@ -8,7 +8,8 @@ function WhatPage({ navigation }) {
             <Logo />
             {/* <Image style={styles.logo} source = {require('../images/fake-logo.png')}></Image> */}
             <Text style={styles.title}>What is iPath?</Text>
-            <Text style={styles.italicSubheading}>Going through cancer treatment is a difficult journey and people may experience feelings of depression. iPath connects people with cancer to trusted services and treatments for their depression symptoms.</Text>
+            <Text style={styles.italicSubheading}>Going through cancer treatment is a difficult journey and people may experience feelings of depression. iPath connects people with cancer to trusted services and treatments for their depression symptoms.
+            iPath connects people with cancer to trusted services and treatments for their depression symptoms.</Text>
             <Text style={styles.italicSubheading}>tap anywhere to continue</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -21,8 +22,8 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 17,
     paddingHorizontal: 20,
-    textAlign: 'center',
-    flex: 2,
+    textAlign: 'left',
+    flexWrap: 'wrap',
   },
   logo: {
     alignContent: 'center',
