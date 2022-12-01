@@ -13,7 +13,7 @@ export default function TreatmentFilterCard(props) {
 const styles = StyleSheet.create({
   treatmentTypetext: {
     textAlign: 'center',
-    fontSize: 17,
+    fontSize: 15,
     paddingVertical: 10,
     fontFamily: 'Poppins-Bold',
   },

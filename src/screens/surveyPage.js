@@ -159,7 +159,7 @@ const questionData = [
   },
   {
     id: 6,
-    title: "7. How often have you had trouble concentrating on things, such as reading the newspaper or watching television in the past two weeks??"
+    title: "7. How often have you had trouble concentrating on things, such as reading the newspaper or watching television in the past two weeks?"
   },
   {
     id: 7,

@@ -125,7 +125,7 @@ function TreatmentsOverview(props) {
       <Text style={styles.subheader}>Select the options below to learn more.</Text>
       <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#51A8F8" }]} onPress={() => { setSelectedType("Medication"); setModalVisible(true); addClick(`users/${user.userId}`, "option-med", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Pill width={35} height={35} style={styles.icon} color="#FFFFFF" />
+          <Pill width={40} height={35} style={styles.icon} color="#FFFFFF" />
           <Text style={styles.optionHeader}>Medication</Text>
           <View style={{ position: 'absolute', right: 10 }}>
             <Chevron color="#FFFFFF" />
@@ -134,7 +134,7 @@ function TreatmentsOverview(props) {
       </TouchableHighlight>
       <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#EF6068" }]} onPress={() => { setSelectedType("Watchful Waiting"); setModalVisible(true); addClick(`users/${user.userId}`, "option-wwaiting", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Watch width={35} height={35} style={styles.icon} color="#FFFFFF" />
+          <Watch width={40} height={35} style={styles.icon} color="#FFFFFF" />
           <Text style={styles.optionHeader}>Watchful Waiting</Text>
           <View style={{ position: 'absolute', right: 10 }}>
             <Chevron color="#FFFFFF" />
@@ -143,14 +143,14 @@ function TreatmentsOverview(props) {
       </TouchableHighlight>
       <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#9B51F8" }]} onPress={() => { setSelectedType("Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
         <View style={styles.optionContainer}>
-          <Speech width={35} height={35} style={styles.icon} color="#FFFFFF" />
-          <Text style={styles.optionHeader}>Talk Therapy</Text>
+          <Speech height={35} width={50} style={styles.icon} color="#FFFFFF" />
+          <Text style={styles.optionHeader}>Therapy</Text>
           <View style={{ position: 'absolute', right: 10 }}>
             <Chevron color="#FFFFFF" />
           </View>
         </View>
       </TouchableHighlight>
-      <Text style={{ fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight: '500' }}>A combination of Medication and Talk Therapy can also be an effective treatment method.</Text>
+      <Text style={{ fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight: '500' }}>A combination of Medication and Therapy can also be an effective treatment method.</Text>
       <Modal animationType="none" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
           <View style={[styles.modalHeaderContainer, { backgroundColor: treatmentData[selectedType].color }]}>
@@ -231,8 +231,8 @@ const styles = StyleSheet.create({
   optionHeader: {
     fontSize: 22,
     fontWeight: '500',
-    marginLeft: "10%",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    marginLeft: 20,
   },
   optionText: {
     fontSize: 19,

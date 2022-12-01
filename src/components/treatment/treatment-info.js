@@ -23,7 +23,7 @@ function TreatmentInfo(props){
                         </View>
                         <View style={styles.trait}>
                             <CheckMark width={30} height={30} strokeColor="#469C97" />
-                            <Text style={styles.typeText}>Talk Therapy</Text>
+                            <Text style={styles.typeText}>Therapy</Text>
                         </View>
                     </View>
                 )         
@@ -45,7 +45,7 @@ function TreatmentInfo(props){
                 return (
                     <View style={styles.trait}>
                         <CheckMark width={30} height={30} strokeColor="#469C97" />
-                        <Text style={styles.typeText}>Talk Therapy</Text>
+                        <Text style={styles.typeText}>Therapy</Text>
                     </View>
                 )
             default:
