@@ -52,7 +52,7 @@ function TreatmentsList(props) {
         <View style={styles.list}>
           {
             allTreatments?.filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).length === 0 ?
-              <Text>No treatments meet these criteria</Text>
+              <View style={styles.noTreatmentsMessageBox}><Text style={styles.noTreatmentsMessage}>Please select a Treatment Type by tapping one or more of the icons above.</Text></View>
               :
               allTreatments?.filter((treat) => checkTypeFilters(treat) && checkLocFilters(treat)).sort(compare).map((treatment) => {
                 return (
@@ -197,6 +197,28 @@ const styles = StyleSheet.create({
   applyButtonText: {
     color: 'white',
     fontSize: 15
+  },
+  noTreatmentsMessage: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: 'white',
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
+    fontSize: 18,
+  },
+  noTreatmentsMessageBox: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   }
 })
 export default connect(null, { fetchTreatments })(TreatmentsList);
