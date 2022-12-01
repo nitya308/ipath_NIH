@@ -84,7 +84,7 @@ function TreatmentsComparison(props) {
           </View>
         </TouchableHighlight>
       }
-      {modalFour ? <CompareBlock close={() => { console.log("closing"); setModalFour(false); }} title="What are possible side effects??" waiting={compareData[4].waiting} med={compareData[4].med} therapy={compareData[4].therapy} width={windowWidth * .9}></CompareBlock> :
+      {modalFour ? <CompareBlock close={() => { console.log("closing"); setModalFour(false); }} title="What are possible side effects?" waiting={compareData[4].waiting} med={compareData[4].med} therapy={compareData[4].therapy} width={windowWidth * .9}></CompareBlock> :
         <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { closeAll();setModalFour(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>What are possible side effects?</Text>
