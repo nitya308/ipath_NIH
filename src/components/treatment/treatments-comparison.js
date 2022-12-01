@@ -48,12 +48,20 @@ function TreatmentsComparison(props) {
     }
   };
 
+  const closeAll = ()=>{
+    setModalOne(false);
+    setModalTwo(false);
+    setModalThree(false);
+    setModalFour(false);
+    setModalFive(false);
+  };
+
   return (
     <View style={{flex: 1}}>
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.subheader}>Tap on a question to learn more about each treatment type.</Text>
       {modalOne ? <CompareBlock close={() => { console.log("closing"); setModalOne(false); }} title="How does this work?" waiting={compareData[1].waiting} med={compareData[1].med} therapy={compareData[1].therapy} width={windowWidth * .9}></CompareBlock> :
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalOne(!modalOne); addClick(`users/${user.userId}`, "compare-howwork", new Date()); }}>
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { closeAll(); setModalOne(!modalOne); addClick(`users/${user.userId}`, "compare-howwork", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>How does this work?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
@@ -61,7 +69,7 @@ function TreatmentsComparison(props) {
         </TouchableHighlight>
       }
       {modalTwo ? <CompareBlock close={() => { console.log("closing"); setModalTwo(false); }} title="How much does this cost?" waiting={compareData[2].waiting} med={compareData[2].med} therapy={compareData[2].therapy} width={windowWidth * .9}></CompareBlock> :
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalTwo(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { closeAll();setModalTwo(true); addClick(`users/${user.userId}`, "compare-cost", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>How much does this cost?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
@@ -69,7 +77,7 @@ function TreatmentsComparison(props) {
         </TouchableHighlight>
       }
       {modalThree ? <CompareBlock close={() => { console.log("closing"); setModalThree(false); }} title="Will this work?" waiting={compareData[3].waiting} med={compareData[3].med} therapy={compareData[3].therapy} width={windowWidth * .9}></CompareBlock> :
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalThree(true); addClick(`users/${user.userId}`, "compare-willwork", new Date()); }}>
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { closeAll();setModalThree(true); addClick(`users/${user.userId}`, "compare-willwork", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>Will this work?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
@@ -77,7 +85,7 @@ function TreatmentsComparison(props) {
         </TouchableHighlight>
       }
       {modalFour ? <CompareBlock close={() => { console.log("closing"); setModalFour(false); }} title="What are possible side effects??" waiting={compareData[4].waiting} med={compareData[4].med} therapy={compareData[4].therapy} width={windowWidth * .9}></CompareBlock> :
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFour(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { closeAll();setModalFour(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={windowHeight < 670 ? styles.buttonTextSS : styles.buttonText}>What are possible side effects?</Text>
             <DownArrow style={styles.downicon}></DownArrow>
@@ -85,7 +93,7 @@ function TreatmentsComparison(props) {
         </TouchableHighlight>
       }
       {modalFive ? <CompareBlock close={() => { console.log("closing"); setModalFive(false); }} title="How quickly can I access this?" waiting={compareData[5].waiting} med={compareData[5].med} therapy={compareData[5].therapy} width={windowWidth * .9}></CompareBlock> :
-        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { setModalFive(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
+        <TouchableHighlight underlayColor="gray" style={styles.button} onPress={() => { closeAll();setModalFive(true); addClick(`users/${user.userId}`, "compare-sideffects", new Date()); }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={windowHeight < 670 ? styles.buttonTextSS :styles.buttonText}>How quickly can I access this?</Text>
             <DownArrow style={styles.downicon}></DownArrow>

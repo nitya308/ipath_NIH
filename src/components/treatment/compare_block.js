@@ -15,7 +15,7 @@ function CompareBlock(props) {
             <UpArrow style={styles.upicon}></UpArrow>
         </View>
       </TouchableWithoutFeedback>
-      <ScrollView>
+      <View>
         <View style={styles.modalRestContainer}>
           <Text style={styles.modalSubHeader}>Watchful Waiting</Text>
           <Text style={styles.modalDescription}>{props.waiting}</Text>
@@ -26,7 +26,7 @@ function CompareBlock(props) {
           <Text style={styles.modalSubHeader}>Therapy</Text>
           <Text style={styles.modalDescription}>{props.therapy}</Text>
         </View>
-      </ScrollView>
+      </View>
     </View>
 
   )
@@ -37,7 +37,6 @@ export default CompareBlock
 const styles = StyleSheet.create({
   modalViewContainer: {
     marginTop: 30,
-    height: 300,
     backgroundColor: 'white',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
