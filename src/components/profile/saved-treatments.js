@@ -26,7 +26,7 @@ function SavedTreatments(props) {
         return (
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
             <TreatmentItemTagText icon={<Pill width={20} height={20} />} name="Medication" />
-            <TreatmentItemTagText icon={<Speech width={18} height={18} />} name="Therapy" />
+            <TreatmentItemTagText icon={<Speech width={30} height={10} />} name="Therapy" />
           </View>
         )
       case "Watchful Waiting":
@@ -34,7 +34,7 @@ function SavedTreatments(props) {
       case "Medication":
         return <TreatmentItemTagText icon={<Pill width={20} height={20} />} name="Medication" />;
       case "Therapy":
-        return <TreatmentItemTagText icon={<Speech width={18} height={18} />} name="Therapy" />;
+        return <TreatmentItemTagText icon={<Speech width={30} height={10} />} name="Therapy" />;
       default:
         return null;
     }

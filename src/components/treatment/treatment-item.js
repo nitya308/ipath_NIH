@@ -44,7 +44,7 @@ function TreatmentItem(props) {
         return (
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
             <TreatmentItemTag icon={<Pill width={20} height={20} />} />
-            <TreatmentItemTag icon={<Speech width={18} height={18} />} />
+            <TreatmentItemTag icon={<Speech width={24} height={18} />} />
           </View>
         )
       case "Watchful Waiting":
@@ -52,7 +52,7 @@ function TreatmentItem(props) {
       case "Medication":
         return <TreatmentItemTag icon={<Pill width={20} height={20} />} />;
       case "Therapy":
-        return <TreatmentItemTag icon={<Speech width={18} height={18} />} />;
+        return <TreatmentItemTag icon={<Speech width={24} height={18} />} />;
       default:
         return null;
     }
