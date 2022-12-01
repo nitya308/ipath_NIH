@@ -144,13 +144,13 @@ function TreatmentsOverview(props) {
       <TouchableHighlight underlayColor="gray" style={[styles.option, { backgroundColor: "#9B51F8" }]} onPress={() => { setSelectedType("Therapy"); setModalVisible(true); addClick(`users/${user.userId}`, "option-talktherapy", new Date()); }}>
         <View style={styles.optionContainer}>
           <Speech width={35} height={35} style={styles.icon} color="#FFFFFF" />
-          <Text style={styles.optionHeader}>Talk Therapy</Text>
+          <Text style={styles.optionHeader}>Therapy</Text>
           <View style={{ position: 'absolute', right: 10 }}>
             <Chevron color="#FFFFFF" />
           </View>
         </View>
       </TouchableHighlight>
-      <Text style={{ fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight: '500' }}>A combination of Medication and Talk Therapy can also be an effective treatment method.</Text>
+      <Text style={{ fontStyle: 'italic', paddingHorizontal: "6%", fontSize: 18, marginTop: 20, fontWeight: '500' }}>A combination of Medication and Therapy can also be an effective treatment method.</Text>
       <Modal animationType="none" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalViewContainer}>
           <View style={[styles.modalHeaderContainer, { backgroundColor: treatmentData[selectedType].color }]}>
