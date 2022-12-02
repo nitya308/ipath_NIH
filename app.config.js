@@ -17,13 +17,15 @@ export default {
     },
     assetBundlePatterns: ['**/*'],
     ios: {
-      supportsTablet: true
+      supportsTablet: true,
+      "bundleIdentifier": "ipath.ejected"
     },
     android: {
       adaptiveIcon: {
         foregroundImage: './src/assets/adaptive-icon.png',
         backgroundColor: '#FFFFFF'
-      }
+      },
+      "package": "ipath.ejected"
     },
     web: {
       favicon: './src/assets/favicon.png'
