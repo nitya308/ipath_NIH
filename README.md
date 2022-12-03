@@ -164,6 +164,7 @@ Below we document treatments to help in adding new treatment providers as they a
 * _quickAccess_: boolean, true if treatment has a quick access option, false if not
 * _side-eff_: String, 2-3 line description of side effects
 * _solo_: number, 0 if treatment is self-guided, 1 if treatment is consult with a physician
+* _time_": String, How long the treatment takes to work
 * _type_: String, options are "Medication/Therapy", "Medication", "Therapy" and "Watchful Waiting"
 * _wait_": String, 1 line on wait time for treatment
 * _waitOrder_: number, how long is takes to access relative to other treatments, used when sorting by wait time
