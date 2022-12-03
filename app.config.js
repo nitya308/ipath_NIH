@@ -36,7 +36,10 @@ export default {
       projectId: process.env.PROJECT_ID,
       storageBucket: process.env.STORAGE_BUCKET,
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
-      appId: process.env.APP_ID
+      appId: process.env.APP_ID,
+      eas: {
+        projectId: "dafe47ea-9deb-4808-8a27-4dded809e3b9"
+      }
     }
   }
 };

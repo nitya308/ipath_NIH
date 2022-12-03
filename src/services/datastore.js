@@ -1,8 +1,8 @@
 import 'expo-firestore-offline-persistence'
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/storage';
-import 'firebase/compat/firestore';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/firestore';
 import Constants from 'expo-constants';
 // import apiKeys from '../services/keys.js';
 
