@@ -1,6 +1,6 @@
 # iPath
 
-Mobile application connecting cancer patients with depression treatments
+Mobile application connecting cancer patients with depression treatments. iPath has been developed with patients from St. Johnsbury, clinicians and researchers at Dartmouth College.
 
 ## Designs
 <!-- [Screenshot description] -->
@@ -26,7 +26,7 @@ Mobile application connecting cancer patients with depression treatments
 
 ## Architecture
 ### Tech Stack 🥞
-The app is built using React-Native, Expo (v0.39.0.0), and Redux.
+The app is built using React-Native, Expo (v0.39.0.0), and Redux. The database used is Google Cloud Firestore and images are stored using FirebaseStorage.
 
 Features:
 * Dashboard with carousel and countdown until next survey
@@ -40,9 +40,8 @@ Features:
 
 #### Packages 📦
 * [react-native-swiper](https://github.com/leecade/react-native-swiper)
-### Style
-<!-- [Describe notable code style conventions] -->
-
+* [react-native-select-dropdown](https://www.npmjs.com/package/react-native-select-dropdown)
+* [cloud firestore offline persistence](https://firebase.google.com/docs/firestore/manage-data/enable-offline)
 
 ### Data Models
 <!-- [Brief escription of typical data models.] -->
@@ -147,3 +146,25 @@ We would like to thank everyone at DALI for all of their unwavering support.
 
 ---
 Designed and developed by [@DALI Lab](https://github.com/dali-lab)
+
+### Firestore Database fields documentation
+There are 4 collections in the firestore database: users, survey-res, clicks and treatments <br/>
+Below we document treatments to help in adding new treatment providers as they are discovered. <br/> <br/>
+**Treatments**: A document in this collection should have the following fields:
+* _blurb_: String, one line tagline for treatment
+* _cost_: String, description of insurance or out of pocket cost policies
+* _costNumber_: integer, 1, 2 or 3, describes number of dollar signs displayed after treatments
+* _desc_: String, one to two line description of provider
+* _fullimg_: String, reference to wide image from Firebase Storage, example format: "gs://ipath-dev-368120.appspot.com/treatment-photos/page ePsychiatry.jpg"
+* _img_: String, reference to small square image from Firebase Storage, example format "gs://ipath-dev-368120.appspot.com/treatment-photos/ePsychiatry.jpg"
+* _insurance_: boolean, true if accepts insurance, false if not
+* _link_: String, link to provider website or phone number
+* _linkType_: String, "phone" if the link is a phone number, null otherwise
+* _place_: String, can have one of 3 values, "in-person", "telehealth" or "in-person/telehealth"
+* _quickAccess_: boolean, true if treatment has a quick access option, false if not
+* _side-eff_: String, 2-3 line description of side effects
+* _solo_: number, 0 if treatment is self-guided, 1 if treatment is consult with a physician
+* _type_: String, options are "Medication/Therapy", "Medication", "Therapy" and "Watchful Waiting"
+* _wait_": String, 1 line on wait time for treatment
+* _waitOrder_: number, how long is takes to access relative to other treatments, used when sorting by wait time
+---
