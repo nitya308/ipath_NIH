@@ -8,20 +8,13 @@ Mobile application connecting cancer patients with depression treatments. iPath 
 
 <!-- [2-4 screenshots from the app] -->
 
-### The Dashboard
-<img src="https://user-images.githubusercontent.com/64368452/204871797-ae9ca0db-5fed-4901-973c-20e69f4ecbec.PNG" width="250">
-<br>
+### Dashboard & Survey Page
 
-### The Survey Page
+<img src="https://user-images.githubusercontent.com/64368452/204871797-ae9ca0db-5fed-4901-973c-20e69f4ecbec.PNG" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="https://user-images.githubusercontent.com/64368452/204872115-c77a1374-ee23-4879-8a98-06f4cb228d1a.PNG" width="250">
-<br>
 
-### The Learn Page
-<img src="https://user-images.githubusercontent.com/64368452/204871910-7671c09c-a5ef-4917-8631-ffdfbe9f9f6d.PNG" width="250">
-<br>
-
-### Treatment Filtering and Sorting
-<img src="https://user-images.githubusercontent.com/64368452/204871961-99d46c53-b187-49ef-af18-a32c64959148.PNG" width="250">
+### The Learn Page  &  Treatment Filtering and Sorting
+<img src="https://user-images.githubusercontent.com/64368452/204871910-7671c09c-a5ef-4917-8631-ffdfbe9f9f6d.PNG" width="250"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/64368452/204871961-99d46c53-b187-49ef-af18-a32c64959148.PNG" width="250">
 <br>
 
 ## Architecture
